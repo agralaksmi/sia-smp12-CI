@@ -9,15 +9,26 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="modal_ubahtahunajaran">Ubah Data Tahun Ajaran</h4>
+        <h4 class="modal-title" id="">Ubah Data Tahun Ajaran</h4>
       </div>
       <form class="" action="<?php echo base_url('Admin/update_tahun_ajaran') ?>" method="post">
         <div class="modal-body">
           <!-- MULAI MEMBUAT FORM MENU -->
+          <input type="hidden" class="form-control" id="id_tahun_ajaran" placeholder="" name="id_tahun_ajaran" required>
+
           <div class="form-group">
             <label for="">Tahun Ajaran</label>
             <input type="text" class="form-control" id="tahun_ajaran" placeholder="" name="tahun_ajaran" required>
             <p class="help-block"></p>
+          </div>
+          <div class="form-group">
+            <label for="">Status</label>
+            <label class="checkbox-inline">
+            <input type="radio" required="required" name="status" id="status1" value="aktif">Aktif
+            </label>
+            <label class="checkbox-inline">
+              <input type="radio" required="required" name="status" id="status2" value="nonaktif">NonAktif
+            </label>
           </div>
 
           <!--  AKHIR MODAL MENU -->
@@ -48,6 +59,15 @@
               <label for="">Tahun Ajaran</label>
               <input type="text" class="form-control" id="" placeholder="Masukkan Tahun Ajaran" name="tahun_ajaran" required>
               <p class="help-block"></p>
+            </div>
+            <div class="form-group">
+              <label for="">Status</label>
+              <label class="checkbox-inline">
+              <input type="radio" required="required" name="status" id="status1" value="aktif">Aktif
+              </label>
+              <label class="checkbox-inline">
+                <input type="radio" required="required" name="status" id="status2" value="nonaktif">NonAktif
+              </label>
             </div>
             <!--  AKHIR MODAL MENU -->
             <div class="modal-footer">
@@ -166,7 +186,7 @@
               <?php } ?>
               <?php if ($this->session->flashdata('edit')) { ?>
                 <div class="">
-                  <div class="alert alert-warning"><?php echo $this->session->flashdata('edit'); ?></div>
+                  <div class="alert alert-success"><?php echo $this->session->flashdata('edit'); ?></div>
                 </div>
               <?php } ?>
               <?php if ($this->session->flashdata('delete')) { ?>
@@ -174,6 +194,11 @@
                   <div class="alert alert-danger"><?php echo $this->session->flashdata('delete'); ?></div>
                 </div>
               <?php } ?>
+              <?php if ($this->session->flashdata('exist')) { ?>
+              <div class="">
+                <div class="alert alert-warning"><?php echo $this->session->flashdata('exist'); ?></div>
+              </div>
+            <?php } ?>
             </div>
 
             <!-- menampilkan Tabel -->
@@ -183,6 +208,7 @@
                   <tr class="bg-blue" align="center">
                     <th>No</th>
                     <th>Tahun Ajaran</th>
+                    <th>Status</th>
                     <th>Aksi</th>
                   </tr>
                 </thead>
@@ -191,6 +217,7 @@
                     <tr>
                       <td><?php echo $no++ ?></td>
                       <td><?php echo $input_tahun_ajaran->tahun_ajaran?></td>
+                      <td><?php echo $input_tahun_ajaran->status?></td>
                       <td>
 
                       <form class="" action="<?php echo base_url('Admin/delete_tahun_ajaran') ?>" method="post">
@@ -237,13 +264,36 @@ function edit_tahun_ajaran(id_tahun_ajaran){
     url: '<?php echo base_url('Admin/edit_tahun_ajaran?id_tahun_ajaran=') ?>'+id_tahun_ajaran,
     success: function(data){
       $response = $(data);
+      var id_tahun_ajaran = $response.filter('#id_tahun_ajaran').text();
       var tahun_ajaran = $response.filter('#tahun_ajaran').text();
+      var status = $response.filter('#status').text();
       //menampilkan ke Modal
+      $('#id_tahun_ajaran').val(id_tahun_ajaran);
       $('#tahun_ajaran').val(tahun_ajaran);
+      // $('#semester').val(semester);
+      // if (status==='aktif') {
+      //   $('#status1').prop('checked','true');
+      //   $('#status2').removeAttr('checked');
+      // } else {
+      //   $('#status1').removeAttr('checked');
+      //   $('#status2').prop('checked','true');
+      // }
       $('#modal_ubahtahunajaran').modal('show');
     }
   });
 }
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function () {
+  if (document.getElementById('status').value=="aktif"){
+         document.getElementById('status1').checked=true;
+     }else {
+       document.getElementById('status2').checked=true;
+     }
+});
+
 </script>
 </body>
 </html>

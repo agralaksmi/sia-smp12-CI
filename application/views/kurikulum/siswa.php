@@ -353,7 +353,12 @@
             <?php } ?>
             <?php if ($this->session->flashdata('hapus')) { ?>
               <div class="">
-                <div class="alert alert-success"><?php echo $this->session->flashdata('hapus'); ?></div>
+                <div class="alert alert-danger"><?php echo $this->session->flashdata('hapus'); ?></div>
+              </div>
+            <?php } ?>
+            <?php if ($this->session->flashdata('exist')) { ?>
+              <div class="">
+                <div class="alert alert-warning"><?php echo $this->session->flashdata('exist'); ?></div>
               </div>
             <?php } ?>
           </div>

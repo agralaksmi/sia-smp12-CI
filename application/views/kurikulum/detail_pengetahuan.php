@@ -31,10 +31,10 @@
               </div>
               <div class="form-group">
                 <label for="">Nama Siswa</label>
-                <select class="form-control" id="id_siswa" name="id_siswa" required>
-                  <option value="">:Pilih:.</option>
+                <select class="form-control" id="id_siswa" name="id_siswa">
+                  <option value="">.:Pilih:.</option>
                   <?php foreach ($tb_siswa as $data_tb_siswa): ?>
-                    <option value="<?php echo $data_tb_siswa->id_siswa ?>"><?php echo $data_tb_siswa->nama_siswa ?></option>
+                    <option value="<?php echo $data_tb_siswa->id_siswa ?>"><?php echo $data_tb_siswa->nama_siswa ?> //  <?php echo $data_tb_siswa->nisn ?></option>
                   <?php endforeach; ?>
                 </select>
                 <p class="help-block"></p>
@@ -114,10 +114,10 @@
                 </div>
                 <div class="form-group">
                   <label for="">Nama Siswa</label>
-                  <select class="form-control" id="id_siswa" name="id_siswa" required>
-                    <option value="">:Pilih:.</option>
+                  <select class="form-control" id="id_siswa" name="id_siswa">
+                    <option value="">.:Pilih:.</option>
                     <?php foreach ($tb_siswa as $data_tb_siswa): ?>
-                      <option value="<?php echo $data_tb_siswa->id_siswa ?>"><?php echo $data_tb_siswa->nama_siswa ?></option>
+                      <option value="<?php echo $data_tb_siswa->id_siswa ?>"><?php echo $data_tb_siswa->nama_siswa ?> //  <?php echo $data_tb_siswa->nisn ?></option>
                     <?php endforeach; ?>
                   </select>
                   <p class="help-block"></p>
@@ -132,14 +132,14 @@
                   <input type="text" class="form-control" id="tugas2" required placeholder="0" name="tugas2" onkeyup="sum();" />
                   <p class="help-block"></p>
                 </div>
+              </div>
+              <!-- MULAI MEMBAGI 2 MENU-->
+              <div class="col-md-6">
                 <div class="form-group">
                   <label for="">Tugas 3</label>
                   <input type="text" class="form-control" id="tugas3" placeholder="0" name="tugas3" onkeyup="sum();" />
                   <p class="help-block"></p>
                 </div>
-              </div>
-              <!-- MULAI MEMBAGI 2 MENU-->
-              <div class="col-md-6">
                 <div class="form-group">
                   <label for="">Tugas 4</label>
                   <input type="text" class="form-control" id="tugas4" placeholder="0" name="tugas4" onkeyup="sum();" />
@@ -286,56 +286,103 @@
               <?php } ?>
             </div>
             <!-- menampilkan Tabel -->
-            <div class="box-body table-responsive">
-              <table class="table table-hover table-bordered table-responsive">
-                <thead>
-                  <tr class="bg-blue" align="center">
-                    <th>No</th>
-                    <th>Mata Pelajaran</th>
-                    <th>Nama Siswa</th>
-                    <th>NH T1</th>
-                    <th>NH T2</th>
-                    <th>NH T3</th>
-                    <th>NH T4</th>
-                    <th> UTS</th>
-                    <th> UAS</th>
-                    <th>Hasil Akhir</th>
-                    <th>Predikat</th>
-                    <th>Deskripsi</th>
-                    <th>Aksi</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php $no =1; foreach ($tb_detail_pengetahuan as $input_detail_pengetahuan):?>
-                    <tr>
-                      <td><?php echo $no++ ?></td>
-                      <td><?php echo $input_detail_pengetahuan->nama_mapel?></td>
-                      <td><?php echo $input_detail_pengetahuan->nama_siswa?></td>
-                      <td><?php echo $input_detail_pengetahuan->tugas1?></td>
-                      <td><?php echo $input_detail_pengetahuan->tugas2?></td>
-                      <td><?php echo $input_detail_pengetahuan->tugas3?></td>
-                      <td><?php echo $input_detail_pengetahuan->tugas4?></td>
-                      <td><?php echo $input_detail_pengetahuan->uts?></td>
-                      <td><?php echo $input_detail_pengetahuan->uas?></td>
-                      <td><?php echo $input_detail_pengetahuan->ulangan_harian?></td>
-                      <td><?php echo $input_detail_pengetahuan->nilai?></td>
-                      <td><?php echo $input_detail_pengetahuan->deskripsi?></td>
-                      <td>
-                        <form class="" action="<?php echo base_url('admin/delete_detail_pengetahuan') ?>" method="post">
-                          <!-- Kelima-->
-                          <button type="button" class="btn btn-warning" onclick="edit_detail_pengetahuan('<?php echo $input_detail_pengetahuan->id_detail_pengetahuan; ?>')">
-                            <i class="fa fa-edit"></i>
-                          </button>
-                          <input type="hidden" name="id_detail_pengetahuan" value="<?php echo $input_detail_pengetahuan->id_detail_pengetahuan; ?>">
-                          <button type="submit" class="btn btn-danger" name="delete_detail_pengetahuan" onclick="return confirm('Apakah ANda Yakin Ingin Menghapus Data ini ? ?')">
-                            <i class="fa fa-trash-o"></i>
-                          </button>
-                        </form>
-                      </td>
+            <div class="box-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <form class="" action="" method="post">
+                    <div class="row">
+                      <div class="col-sm-2">
+                        Kelas :
+                      </div>
+                      <div class="col-sm-3">
+                        <select class="form-control" name="">
+                          <option value="" name="">Pilih</option>
+                          <?php foreach ($tb_kelas as $data_tb_kelas): ?>
+                            <option value="<?php echo $data_tb_kelas->id_kelas ?>"><?php echo $data_tb_kelas->tingkat ?><?php echo $data_tb_kelas->nama_kelas ?></option>
+                          <?php endforeach; ?>
+                        </select>
+                      </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                      <div class="col-sm-2">
+                        Mapel :
+                      </div>
+                      <div class="col-sm-3">
+                        <select class="form-control" name="">
+                          <option value="" name=""></option>
+                          <?php foreach ($tb_mapel as $data_tb_mapel): ?>
+                            <option value="<?php echo $data_tb_mapel->id_mapel ?>"><?php echo $data_tb_mapel->nama_mapel ?></option>
+                          <?php endforeach; ?>
+                        </select>
+                      </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                      <div class="col-sm-2">
+                        Semester :
+                      </div>
+                      <div class="col-sm-3">
+                        <input type="text" name="semester" value="<?php echo $semester_sekarang?>" readonly>
+                      </div>
+                    </div>
+                    <br>
+                  </form>
+                </div>
+              </div>
+              <br>
+              <div class="table-responsive">
+                <table class="table table-hover table-bordered table-responsive">
+                  <thead>
+                    <tr class="bg-blue" align="center">
+                      <th>No</th>
+                      <th>Mata Pelajaran</th>
+                      <th>Nama Siswa</th>
+                      <th>T1</th>
+                      <th>T2</th>
+                      <th>T3</th>
+                      <th>T4</th>
+                      <th>UTS</th>
+                      <th>UAS</th>
+                      <th>Hasil Akhir</th>
+                      <th>Predikat</th>
+                      <th>Deskripsi</th>
+                      <th>Aksi</th>
                     </tr>
-                  <?php endforeach; ?>
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    <?php $no =1; foreach ($tb_detail_pengetahuan as $input_detail_pengetahuan):?>
+                      <tr>
+                        <td><?php echo $no++ ?></td>
+                        <td><?php echo $input_detail_pengetahuan->nama_mapel?></td>
+                        <td><?php echo $input_detail_pengetahuan->nama_siswa?></td>
+                        <td><?php echo $input_detail_pengetahuan->tugas1?></td>
+                        <td><?php echo $input_detail_pengetahuan->tugas2?></td>
+                        <td><?php echo $input_detail_pengetahuan->tugas3?></td>
+                        <td><?php echo $input_detail_pengetahuan->tugas4?></td>
+                        <td><?php echo $input_detail_pengetahuan->uts?></td>
+                        <td><?php echo $input_detail_pengetahuan->uas?></td>
+                        <td><?php echo $input_detail_pengetahuan->ulangan_harian?></td>
+                        <td><?php echo $input_detail_pengetahuan->nilai?></td>
+                        <td><?php echo $input_detail_pengetahuan->deskripsi?></td>
+                        <td>
+                          <form class="" action="<?php echo base_url('admin/delete_detail_pengetahuan') ?>" method="post">
+                            <!-- Kelima-->
+                            <button type="button" class="btn btn-warning" onclick="edit_detail_pengetahuan('<?php echo $input_detail_pengetahuan->id_detail_pengetahuan; ?>')">
+                              <i class="fa fa-edit"></i>
+                            </button>
+                            <input type="hidden" name="id_detail_pengetahuan" value="<?php echo $input_detail_pengetahuan->id_detail_pengetahuan; ?>">
+                            <button type="submit" class="btn btn-danger" name="delete_detail_pengetahuan" onclick="return confirm('Apakah ANda Yakin Ingin Menghapus Data ini ? ?')">
+                              <i class="fa fa-trash-o"></i>
+                            </button>
+                          </form>
+                        </td>
+                      </tr>
+                    <?php endforeach; ?>
+                  </tbody>
+                </table>
+              </div>
+
             </div> <!-- /.box-body -->
           </div> <!-- /.box -->
         </div>

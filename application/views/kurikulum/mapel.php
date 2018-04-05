@@ -210,7 +210,7 @@
               <?php } ?>
               <?php if ($this->session->flashdata('edit')) { ?>
                 <div class="">
-                  <div class="alert alert-warning"><?php echo $this->session->flashdata('edit'); ?></div>
+                  <div class="alert alert-success"><?php echo $this->session->flashdata('edit'); ?></div>
                 </div>
               <?php } ?>
               <?php if ($this->session->flashdata('delete')) { ?>
@@ -218,6 +218,11 @@
                   <div class="alert alert-danger"><?php echo $this->session->flashdata('delete'); ?></div>
                 </div>
               <?php } ?>
+              <?php if ($this->session->flashdata('exist')) { ?>
+            <div class="">
+              <div class="alert alert-warning"><?php echo $this->session->flashdata('exist'); ?></div>
+            </div>
+          <?php } ?>
             </div>
 
             <!-- menampilkan Tabel -->

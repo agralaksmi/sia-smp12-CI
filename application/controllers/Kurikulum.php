@@ -68,6 +68,7 @@ class Kurikulum extends CI_Controller {
 		$data['tb_guru'] = $this->model_guru->get_inputguru();
 		$this->load->view('kurikulum/guru',$data);
 	}
+
 	public function guru_ampu()
 	{
 		cek_auth();
@@ -76,13 +77,22 @@ class Kurikulum extends CI_Controller {
 		$this->load->model('model_kelas');
 		$this->load->model('model_tahun_ajaran');
 		$this->load->model('model_mapel');
+		$bulan = (integer) date('m');
+
+		if ($bulan >= 1 && $bulan <= 6) {
+			$data['semester_sekarang'] = 'genap';
+		} else {
+			$data['semester_sekarang'] = 'ganjil';
+		}
+
 		$data['tb_guru_ampu'] = $this->model_guru_ampu->get_inputguru_ampu();
 		$data['tb_guru'] = $this->model_guru->get_inputguru();
 		$data['tb_kelas'] = $this->model_kelas->get_inputkelas();
-		$data['tb_tahun_ajaran'] = $this->model_tahun_ajaran->get_inputtahunajaran();
+		$data['tb_tahun_ajaran'] = $this->model_tahun_ajaran->get_tahun_ajaran_aktif();
 		$data['tb_mapel'] = $this->model_mapel->get_inputmapel();
 		$this->load->view('kurikulum/guru_ampu',$data);
 	}
+
 	public function wali_kelas()
 	{
 		cek_auth();
@@ -93,22 +103,22 @@ class Kurikulum extends CI_Controller {
 		$data['tb_wali_kelas'] = $this->model_wali_kelas->get_inputwali_kelas();
 		$data['tb_guru'] = $this->model_guru->get_inputguru();
 		$data['tb_kelas'] = $this->model_kelas->get_inputkelas();
-		$data['tb_tahun_ajaran'] = $this->model_tahun_ajaran->get_inputtahunajaran();
+		$data['tb_tahun_ajaran'] = $this->model_tahun_ajaran->get_tahun_ajaran_aktif();
 		$this->load->view('kurikulum/wali_kelas',$data);
 	}
 	public function siswa_pertahun()
-		{
-			cek_auth();
-			$this->load->model('model_siswa_pertahun');
-			$this->load->model('model_siswa');
-			$this->load->model('model_tahun_ajaran');
-			$this->load->model('model_kelas');
-			$data['tb_siswa_pertahun'] = $this->model_siswa_pertahun->get_inputsiswapertahun();
-			$data['tb_siswa'] = $this->model_siswa->get_inputsiswa();
-			$data['tb_kelas'] = $this->model_kelas->get_inputkelas();
-			$data['tb_tahun_ajaran'] = $this->model_tahun_ajaran->get_inputtahunajaran();
-			$this->load->view('kurikulum/siswa_pertahun',$data);
-		}
+	{
+		cek_auth();
+		$this->load->model('model_siswa_pertahun');
+		$this->load->model('model_siswa');
+		$this->load->model('model_tahun_ajaran');
+		$this->load->model('model_kelas');
+		$data['tb_siswa_pertahun'] = $this->model_siswa_pertahun->get_inputsiswapertahun();
+		$data['tb_siswa'] = $this->model_siswa->get_inputsiswa();
+		$data['tb_kelas'] = $this->model_kelas->get_inputkelas();
+		$data['tb_tahun_ajaran'] = $this->model_tahun_ajaran->get_tahun_ajaran_aktif();
+		$this->load->view('kurikulum/siswa_pertahun',$data);
+	}
 	public function hak_akses()
 	{
 		cek_auth();
@@ -184,13 +194,22 @@ class Kurikulum extends CI_Controller {
 		$this->load->model('model_mapel');
 		$this->load->model('model_siswa');
 		$this->load->model('model_deskripsi_mapel');
+		$this->load->model('model_kelas');
+		$bulan = (integer) date('m');
+
+		if ($bulan >= 1 && $bulan <= 6) {
+			$data['semester_sekarang'] = 'genap';
+		} else {
+			$data['semester_sekarang'] = 'ganjil';
+		}
 
 		if ($this->session->userdata('hak_akses')=="guru") {
 			$data['tb_mapel'] = $this->model_mapel->get_inputmapel2($this->session->userdata('id_guru'));
 		}
 		else {
-			$data['tb_mapel'] = $this->model_mapel->get_inputmapel();
+			$data['tb_mapel'] = $this->model_mapel->get_inputmapel('nama_mapel');
 		}
+		$data['tb_kelas'] = $this->model_kelas->get_inputkelas();
 		$data['tb_siswa'] = $this->model_siswa->get_inputsiswa();
 		$data['tb_deskripsi_mapel'] = $this->model_deskripsi_mapel->get_inputdeskripsimapel();
 		$data['tb_detail_pengetahuan'] =$this->model_detail_pengetahuan->get_inputdetailpengetahuan();
@@ -265,24 +284,30 @@ class Kurikulum extends CI_Controller {
 		// $this->load->view('js_cetak');
 	}
 	public function rapor_hal3()
-{
-	$id_rapor = $this->input->get('id_rapor');
-	$this->load->model('model_rapor');
-	$data['tb_rapor'] =$this->model_rapor->get_rapor_judul($id_rapor);
-	$data['tb_nilai_matkul'] =$this->model_rapor->get_rapor_pengetahuan2($data['tb_rapor']->id_siswa,"B");
-	$data['tb_ekskul'] =$this->model_rapor->rapor_ekskul($data['tb_rapor']->id_siswa);
-	$data['tb_presensi'] =$this->model_rapor->presensi($data['tb_rapor']->id_siswa);
-	$data['sakit']=0;
-	$data['ijin']=0;
-	$data['tanpa_ket']=0;
-	foreach ($data['tb_presensi'] as $key => $value) {
-		$data['sakit']=$data['sakit']+$value->sakit;
-		$data['ijin']=$data['ijin']+$value->ijin;
-		$data['tanpa_ket']=$data['tanpa_ket']+$value->tanpa_ket;
+	{
+		$id_rapor = $this->input->get('id_rapor');
+		$this->load->model('model_rapor');
+		$data['tb_rapor'] =$this->model_rapor->get_rapor_judul($id_rapor);
+		$data['tb_nilai_matkul'] =$this->model_rapor->get_rapor_pengetahuan2($data['tb_rapor']->id_siswa,"B");
+		$data['tb_ekskul'] =$this->model_rapor->rapor_ekskul($data['tb_rapor']->id_siswa);
+		$data['tb_presensi'] =$this->model_rapor->presensi($data['tb_rapor']->id_siswa);
+		$data['sakit']=0;
+		$data['ijin']=0;
+		$data['tanpa_ket']=0;
+		foreach ($data['tb_presensi'] as $key => $value) {
+			$data['sakit']=$data['sakit']+$value->sakit;
+			$data['ijin']=$data['ijin']+$value->ijin;
+			$data['tanpa_ket']=$data['tanpa_ket']+$value->tanpa_ket;
+		}
+		$this->load->view('kurikulum/rapor_hal3',$data);
 	}
-	$this->load->view('kurikulum/rapor_hal3',$data);
-}
-
-
-
+	public function get_guru_from_siswa($id_siswa='')
+	{
+		$this->load->model('model_presensi');
+		$guru = $this->model_presensi->select_kelas_siswa($id_siswa);
+		$this->output
+					->set_content_type('application/json')
+					->set_output(json_encode($guru));
+		// echo json_encode($guru);
+	}
 }

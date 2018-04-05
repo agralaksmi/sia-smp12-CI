@@ -12,6 +12,8 @@ class model_detail_pengetahuan extends CI_Model
   public function get_inputdetailpengetahuan(){
     $this->db->join('tb_siswa','tb_detail_pengetahuan.id_siswa=tb_siswa.id_siswa');
     $this->db->join('tb_mapel','tb_detail_pengetahuan.id_mapel=tb_mapel.id_mapel');
+    // $this->db->join('tb_wali_kelas','tb_detail_pengetahuan.id_wali_kelas=tb_wali_kelas.id_wali_kelas');
+    // $this->db->join('tb_kelas','tb_detail_pengetahuan.id_kelas=tb_kelas.id_kelas');
     $this->db->join('tb_deskripsi_mapel','tb_detail_pengetahuan.id_deskripsi_mapel=tb_deskripsi_mapel.id_deskripsi_mapel');
     $query = $this->db->get('tb_detail_pengetahuan');
     return $query->result();

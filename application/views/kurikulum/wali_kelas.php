@@ -11,7 +11,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 class="modal-title" id="modal_ubahwalikelas">Ubah Data Wali Kelas</h4>
       </div>
-      <form class="" action="<?php echo base_url('admin/update_guru_ampu') ?>" method="post">
+      <form class="" action="<?php echo base_url('admin/update_wali_kelas') ?>" method="post">
         <div class="modal-body">
           <!-- MULAI MEMBUAT FORM MENU -->
           <input type="hidden" class="form-control" id="id_wali_kelas" placeholder="" name="id_wali_kelas" required>
@@ -34,21 +34,10 @@
             <p class="help-block"></p>
           </div>
           <div class="form-group">
-            <label for="">Semester</label>
-            <select class="form-control" id="" name="semester" required>
-                <option value="Ganjil">Ganjil</option>
-                <option value="Genap">Genap</option>
-            </select>
-            <p class="help-block">Contoh :Genap</p>
-          </div>
-          <div class="form-group">
             <label for="">Tahun Ajaran</label>
-            <select class="form-control" id="id_tahun_ajaran" name="id_tahun_ajaran" required>
-              <?php foreach ($tb_tahun_ajaran as $data_tb_tahun_ajaran): ?>
-                <option value="<?php echo $data_tb_tahun_ajaran->id_tahun_ajaran ?>"><?php echo $data_tb_tahun_ajaran->tahun_ajaran ?></option>
-              <?php endforeach; ?>
-            </select>
-            <p class="help-block">Contoh :2017/2018</p>
+            <input type="hidden" class="from-control" name="id_tahun_ajaran" value="<?php echo $tb_tahun_ajaran->id_tahun_ajaran ?>">
+            <input type="text" class="form-control" class="" name="" value="<?php echo $tb_tahun_ajaran->tahun_ajaran ?>"readonly>
+            <p class="help-block"></p>
           </div>
 
           <!--  AKHIR MODAL MENU -->
@@ -96,21 +85,10 @@
               <p class="help-block"></p>
             </div>
             <div class="form-group">
-              <label for="">Semester</label>
-              <select class="form-control" id="" name="semester" required>
-                  <option value="Ganjil">Ganjil</option>
-                  <option value="Genap">Genap</option>
-              </select>
-              <p class="help-block">Contoh :Genap</p>
-            </div>
-            <div class="form-group">
               <label for="">Tahun Ajaran</label>
-              <select class="form-control" id="" name="id_tahun_ajaran" required>
-                <?php foreach ($tb_tahun_ajaran as $data_tb_tahun_ajaran): ?>
-                  <option value="<?php echo $data_tb_tahun_ajaran->id_tahun_ajaran ?>"><?php echo $data_tb_tahun_ajaran->tahun_ajaran ?></option>
-                <?php endforeach; ?>
-              </select>
-              <p class="help-block">Contoh :2017/2018</p>
+              <input type="hidden" class="from-control" name="id_tahun_ajaran" value="<?php echo $tb_tahun_ajaran->id_tahun_ajaran ?>">
+              <input type="text" class="form-control" class="" name="" value="<?php echo $tb_tahun_ajaran->tahun_ajaran ?>"readonly>
+              <p class="help-block"></p>
             </div>
 
             <!--  AKHIR MODAL MENU -->
@@ -230,7 +208,7 @@
               <?php } ?>
               <?php if ($this->session->flashdata('edit')) { ?>
                 <div class="">
-                  <div class="alert alert-warning"><?php echo $this->session->flashdata('edit'); ?></div>
+                  <div class="alert alert-success"><?php echo $this->session->flashdata('edit'); ?></div>
                 </div>
               <?php } ?>
               <?php if ($this->session->flashdata('delete')) { ?>
@@ -238,6 +216,11 @@
                   <div class="alert alert-danger"><?php echo $this->session->flashdata('delete'); ?></div>
                 </div>
               <?php } ?>
+              <?php if ($this->session->flashdata('exist')) { ?>
+             <div class="">
+               <div class="alert alert-warning"><?php echo $this->session->flashdata('exist'); ?></div>
+             </div>
+           <?php } ?>
             </div>
 
             <!-- menampilkan Tabel -->
@@ -248,7 +231,6 @@
                     <th>No</th>
                     <th>Nama Wali Kelas</th>
                     <th>Kelas</th>
-                    <th>Semester</th>
                     <th>Tahun Ajaran</th>
                     <th>Aksi</th>
                   </tr>
@@ -259,7 +241,6 @@
                       <td><?php echo $no++ ?></td>
                       <td><?php echo $input_wali_kelas->nama_guru?></td>
                       <td><?php echo $input_wali_kelas->tingkat?><?php echo $input_wali_kelas->nama_kelas?></td>
-                      <td><?php echo $input_wali_kelas->semester?></td>
                       <td><?php echo $input_wali_kelas->tahun_ajaran?></td>
                       <td>
                         <!-- ketiga delete -->
@@ -313,13 +294,12 @@ function edit_wali_kelas(id_wali_kelas){
       var id_wali_kelas = $response.filter('#id_wali_kelas').text();
       var id_guru = $response.filter('#id_guru').text();
       var id_kelas = $response.filter('#id_kelas').text();
-      var semester = $response.filter('#semester').text();
       var id_tahun_ajaran = $response.filter('#id_tahun_ajaran').text();
+
       //menampilkan ke Modal
       $('#id_wali_kelas').val(id_wali_kelas);
       $('#id_guru').val(id_guru);
       $('#id_kelas').val(id_kelas);
-      $('#semester').val(semester);
       $('#id_tahun_ajaran').val(id_tahun_ajaran);
       $('#modal_ubahwalikelas').modal('show');
     }

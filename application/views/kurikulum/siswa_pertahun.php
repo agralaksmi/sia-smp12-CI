@@ -36,11 +36,8 @@
           </div>
           <div class="form-group">
             <label for="">Tahun Ajaran</label>
-            <select class="form-control" id="id_tahun_ajaran" name="id_tahun_ajaran" required>
-              <?php foreach ($tb_tahun_ajaran as $data_tb_tahun_ajaran): ?>
-                <option value="<?php echo $data_tb_tahun_ajaran->id_tahun_ajaran ?>"><?php echo $data_tb_tahun_ajaran->tahun_ajaran ?></option>
-              <?php endforeach; ?>
-            </select>
+          <input type="hidden" class="form-control" id="" placeholder="" name="id_tahun_ajaran" value="<?php echo $tb_tahun_ajaran->id_tahun_ajaran ?>">
+          <input type="text" class="form-control" id="" placeholder="" name="" value="<?php echo $tb_tahun_ajaran->tahun_ajaran ?>" readonly>
             <p class="help-block"></p>
           </div>
 
@@ -90,12 +87,8 @@
             </div>
             <div class="form-group">
               <label for="">Tahun Ajaran</label>
-              <select class="form-control" id="" name="id_tahun_ajaran" required>
-                <option value="">.:Pilih:.</option>
-                <?php foreach ($tb_tahun_ajaran as $data_tb_tahun_ajaran): ?>
-                  <option value="<?php echo $data_tb_tahun_ajaran->id_tahun_ajaran ?>"><?php echo $data_tb_tahun_ajaran->tahun_ajaran ?></option>
-                <?php endforeach; ?>
-              </select>
+            <input type="hidden" class="form-control" id="" placeholder="" name="id_tahun_ajaran" value="<?php echo $tb_tahun_ajaran->id_tahun_ajaran ?>">
+            <input type="text" class="form-control" id="" placeholder="" name="" value="<?php echo $tb_tahun_ajaran->tahun_ajaran ?>" readonly>
               <p class="help-block"></p>
             </div>
 
@@ -216,12 +209,17 @@
               <?php } ?>
               <?php if ($this->session->flashdata('edit')) { ?>
                 <div class="">
-                  <div class="alert alert-warning"><?php echo $this->session->flashdata('edit'); ?></div>
+                  <div class="alert alert-success"><?php echo $this->session->flashdata('edit'); ?></div>
                 </div>
               <?php } ?>
               <?php if ($this->session->flashdata('delete')) { ?>
                 <div class="">
                   <div class="alert alert-danger"><?php echo $this->session->flashdata('delete'); ?></div>
+                </div>
+              <?php } ?>
+              <?php if ($this->session->flashdata('exist')) { ?>
+                <div class="">
+                  <div class="alert alert-warning"><?php echo $this->session->flashdata('exist'); ?></div>
                 </div>
               <?php } ?>
             </div>

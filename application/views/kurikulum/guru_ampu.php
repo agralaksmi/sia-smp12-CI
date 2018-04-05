@@ -44,21 +44,15 @@
           </div>
           <div class="form-group">
             <label for="">Semester</label>
-            <select class="form-control" id="" name="semester" required>
-                <option value="Ganjil">Ganjil</option>
-                <option value="Genap">Genap</option>
-            </select>
-            <p class="help-block">Contoh :Genap</p>
+            <input type="text"  class="form-control" name="semester" value="<?php echo $semester_sekarang?>" readonly>
           </div>
           <div class="form-group">
             <label for="">Tahun Ajaran</label>
-            <select class="form-control" id="id_tahun_ajaran" name="id_tahun_ajaran" required>
-              <?php foreach ($tb_tahun_ajaran as $data_tb_tahun_ajaran): ?>
-                <option value="<?php echo $data_tb_tahun_ajaran->id_tahun_ajaran ?>"><?php echo $data_tb_tahun_ajaran->tahun_ajaran ?></option>
-              <?php endforeach; ?>
-            </select>
-            <p class="help-block">Contoh :2017/2018</p>
+            <input type="hidden" class="from-control" name="id_tahun_ajaran" value="<?php echo $tb_tahun_ajaran->id_tahun_ajaran ?>">
+            <input type="text" class="form-control" class="" name="" value="<?php echo $tb_tahun_ajaran->tahun_ajaran ?>"readonly>
+            <p class="help-block"></p>
           </div>
+
 
           <!--  AKHIR MODAL MENU -->
 
@@ -116,20 +110,15 @@
             </div>
             <div class="form-group">
               <label for="">Semester</label>
-              <select class="form-control" id="" name="semester" required>
-                  <option value="Ganjil">Ganjil</option>
-                  <option value="Genap">Genap</option>
-              </select>
-              <p class="help-block">Contoh :Genap</p>
+              <input type="text"  class="form-control" name="semester" value="<?php echo $semester_sekarang?>" readonly>
             </div>
+
+
             <div class="form-group">
               <label for="">Tahun Ajaran</label>
-              <select class="form-control" id="" name="id_tahun_ajaran" required>
-                <?php foreach ($tb_tahun_ajaran as $data_tb_tahun_ajaran): ?>
-                  <option value="<?php echo $data_tb_tahun_ajaran->id_tahun_ajaran ?>"><?php echo $data_tb_tahun_ajaran->tahun_ajaran ?></option>
-                <?php endforeach; ?>
-              </select>
-              <p class="help-block">Contoh :2017/2018</p>
+              <input type="hidden" class="from-control" name="id_tahun_ajaran" value="<?php echo $tb_tahun_ajaran->id_tahun_ajaran ?>">
+              <input type="text" class="form-control" class="" name="" value="<?php echo $tb_tahun_ajaran->tahun_ajaran ?>"readonly>
+              <p class="help-block"></p>
             </div>
 
             <!--  AKHIR MODAL MENU -->
@@ -249,7 +238,7 @@
               <?php } ?>
               <?php if ($this->session->flashdata('edit')) { ?>
                 <div class="">
-                  <div class="alert alert-warning"><?php echo $this->session->flashdata('edit'); ?></div>
+                  <div class="alert alert-success"><?php echo $this->session->flashdata('edit'); ?></div>
                 </div>
               <?php } ?>
               <?php if ($this->session->flashdata('delete')) { ?>
@@ -257,6 +246,11 @@
                   <div class="alert alert-danger"><?php echo $this->session->flashdata('delete'); ?></div>
                 </div>
               <?php } ?>
+              <?php if ($this->session->flashdata('exist')) { ?>
+              <div class="">
+                <div class="alert alert-warning"><?php echo $this->session->flashdata('exist'); ?></div>
+              </div>
+            <?php } ?>
             </div>
 
             <!-- menampilkan Tabel -->

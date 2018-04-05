@@ -9,8 +9,11 @@ class model_mapel extends CI_Model
   {
     $this->load->database();
   }
-  public function get_inputmapel(){
+  public function get_inputmapel($group=null){
     // $this->db->join('tb_guru','tb_mapel.id_guru=tb_guru.id_guru');
+    if ($group=='nama_mapel') {
+      $this->db->group_by($group);
+    }
     $this->db->join('tb_kelas','tb_mapel.id_kelas=tb_kelas.id_kelas');
     $query = $this->db->get('tb_mapel');
     return $query->result();

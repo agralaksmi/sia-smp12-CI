@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 29 Jan 2018 pada 13.32
+-- Generation Time: 05 Apr 2018 pada 22.08
 -- Versi Server: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -30,7 +30,7 @@ CREATE TABLE `tb_deskripsi_mapel` (
   `id_deskripsi_mapel` int(11) NOT NULL,
   `id_mapel` int(11) DEFAULT NULL,
   `jenis_deskripsi` enum('Pengetahuan','Ketrampilan','','') DEFAULT NULL,
-  `nilai` enum('A','B') NOT NULL,
+  `nilai` enum('A','B','C','D') NOT NULL,
   `deskripsi` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -39,24 +39,11 @@ CREATE TABLE `tb_deskripsi_mapel` (
 --
 
 INSERT INTO `tb_deskripsi_mapel` (`id_deskripsi_mapel`, `id_mapel`, `jenis_deskripsi`, `nilai`, `deskripsi`) VALUES
-(1, 1, 'Pengetahuan', 'B', 'Memahami Teks Lisan tulis, fungsional iklan, surat pribadi, dan monolog pendek sederhana berbentuk naratif dan report dalam konteks kehidupan sehari hari.'),
-(3, 1, 'Pengetahuan', 'A', 'Memahami dengan baik bahasa asing dan fasih berbicara'),
-(4, 17, 'Pengetahuan', 'A', 'Memahami dengan Baik sifat bilangan perangkat, bentuk akar, pola dan barisan bilangan aritmatika dan geometri.'),
-(5, 17, 'Pengetahuan', 'B', 'Memahami dengan baik sifat bilangan berpangkat, bentuk akar, pola dan barisan bilangan aritmatika dan geometri.'),
-(6, 10, 'Pengetahuan', 'A', 'Memahami sangat Baik dalam Seni budaya '),
-(7, 10, 'Ketrampilan', 'B', 'memahami dengan baik dalam hal seni '),
-(8, 15, 'Pengetahuan', 'A', 'Mempunyai kemampuan yang baik dalam  permainan  bola besar dan bola kecil serta aktivitas kebugaran jasmani.'),
-(9, 15, 'Ketrampilan', 'B', 'Mempunyai keterampilan yang baik dalam  permainan  bola besar dan bola kecil serta aktivitas kebugaran jasmani.'),
-(10, 16, 'Pengetahuan', 'A', 'Mempunyai pengetahuan sangat baik tentang sesorah, pranatacara dan menulis berita.'),
-(11, 16, 'Pengetahuan', 'B', 'Mempunyai pengetahuan baik tentang sesorah, pranatacara dan menulis berita.'),
-(12, 16, 'Ketrampilan', 'A', 'Mempunyai keterampilan sangat baik dalam:  pidato dan menulis karangan tentang etika berlalu lintas, dalam Bahasa Jawa.'),
-(13, 16, 'Ketrampilan', 'B', 'Mempunyai keterampilan baik dalam:  pidato dan menulis karangan tentang etika berlalu lintas, dalam Bahasa Jawa.'),
-(14, 1, 'Ketrampilan', 'A', 'Sangat terampil dalam menulis kalimat pendek dan sederhana terkait dengan iklan, surat pribadi serta menyusun kalimat acak menjadi teks naratif dan report.'),
-(15, 1, 'Ketrampilan', 'B', 'Terampil dalam menulis kalimat pendek dan sederhana terkait dengan iklan, surat pribadi serta menyusun kalimat acak menjadi teks naratif dan report.'),
-(16, 10, 'Pengetahuan', 'B', 'Mempunyai kemampuan baik dalam mengaransir secara sederhana, karya seni musik, atau lagu Asia dan menggambar flora, fauna, ragam hias pada bahan tekstil dan kayu.'),
-(17, 10, 'Ketrampilan', 'A', 'Sangat Memahami dengan baik dalam mengaransir secara sederhana, karya seni musik, atau lagu Asia dan menggambar flora, fauna, ragam hias pada bahan tekstil dan kayu.'),
-(19, 17, 'Ketrampilan', 'A', 'Mempunyai keterampilan sangat baik dalam menyelesaikan soal yang berhubungan dengan  sifat bilangan berpangkat, bentuk akar, pola dan barisan bilangan aritmatika dan geometri.'),
-(20, 17, 'Ketrampilan', 'B', 'Mempunyai keterampilan baik dalam menyelesaikan soal yang berhubungan dengan  sifat bilangan berpangkat, bentuk akar, pola dan barisan bilangan aritmatika dan geometri.');
+(22, 18, 'Pengetahuan', 'A', 'Baik Sekali'),
+(23, 18, 'Pengetahuan', 'B', 'Baik'),
+(24, 18, 'Pengetahuan', 'C', 'Cukup'),
+(25, 18, 'Pengetahuan', 'D', 'Kurang'),
+(26, 19, 'Ketrampilan', 'D', 'jjjjjjjj');
 
 -- --------------------------------------------------------
 
@@ -77,7 +64,7 @@ CREATE TABLE `tb_deskripsi_sikap` (
 
 INSERT INTO `tb_deskripsi_sikap` (`id_deskripsi_sikap`, `jenis_deskripsi`, `nilai`, `deskripsi`) VALUES
 (4, 'Deskripsi Spiritual', 'A', 'Baik Sekali'),
-(8, 'Deskripsi Sosial', 'A', 'Baik Sekali');
+(8, 'Deskripsi Sosial', 'A', 'Baik Sekali Kali');
 
 -- --------------------------------------------------------
 
@@ -101,12 +88,10 @@ CREATE TABLE `tb_detail_ketrampilan` (
 --
 
 INSERT INTO `tb_detail_ketrampilan` (`id_detail_ketrampilan`, `id_mapel`, `id_siswa`, `nilai_praktek`, `nilai_folio`, `nilai_proyek`, `nilai_akhir`, `id_deskripsi_mapel`) VALUES
-(1, 1, 1, 89, 90, 89, 89, 12),
-(5, 10, 1, 89, 78, 67, 78, 7),
-(6, 15, 1, 78, 78, 78, 78, 7),
-(7, 16, 1, 89, 89, 78, 85, 7),
-(8, 17, 1, 78, 90, 90, 86, 12),
-(9, 15, 6, 78, 90, 78, 82, 7);
+(17, 19, 30, 44, 45, 34, 41, NULL),
+(18, 19, 30, 45, 67, 56, 56, 26),
+(19, 18, 34, 80, 90, 90, 87, NULL),
+(20, 19, 34, 50, 90, 45, 62, NULL);
 
 -- --------------------------------------------------------
 
@@ -125,20 +110,22 @@ CREATE TABLE `tb_detail_pengetahuan` (
   `tugas4` int(11) DEFAULT NULL,
   `uts` int(11) DEFAULT NULL,
   `uas` int(11) DEFAULT NULL,
-  `ulangan_harian` int(15) DEFAULT NULL
+  `ulangan_harian` int(15) DEFAULT NULL,
+  `id_wali_kelas` int(11) NOT NULL,
+  `id_kelas` int(11) NOT NULL,
+  `id_tahun_ajaran` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `tb_detail_pengetahuan`
 --
 
-INSERT INTO `tb_detail_pengetahuan` (`id_detail_pengetahuan`, `id_mapel`, `id_siswa`, `id_deskripsi_mapel`, `tugas1`, `tugas2`, `tugas3`, `tugas4`, `uts`, `uas`, `ulangan_harian`) VALUES
-(3, 1, 1, 1, 86, 87, 86, 60, 60, 70, 70),
-(9, 10, 1, 1, 67, 89, 56, 45, 90, 67, 74),
-(10, 15, 1, 1, 90, 67, 89, 56, 78, 90, 81),
-(11, 16, 1, 1, 89, 67, 56, 78, 90, 45, 69),
-(12, 17, 1, 3, 90, 90, 89, 78, 89, 90, 89),
-(13, 1, 6, 1, 67, 89, 67, 90, 67, 78, 74);
+INSERT INTO `tb_detail_pengetahuan` (`id_detail_pengetahuan`, `id_mapel`, `id_siswa`, `id_deskripsi_mapel`, `tugas1`, `tugas2`, `tugas3`, `tugas4`, `uts`, `uas`, `ulangan_harian`, `id_wali_kelas`, `id_kelas`, `id_tahun_ajaran`) VALUES
+(21, 18, 30, 25, 56, 45, 45, 34, 56, 89, 63, 0, 0, 0),
+(22, 19, 30, 25, 78, 45, 34, 23, 45, 67, 52, 0, 0, 0),
+(23, 19, 31, 25, 67, 78, 90, 90, 66, 55, 67, 0, 0, 0),
+(24, 18, 34, 23, 70, 80, 80, 67, 90, 90, 85, 0, 0, 0),
+(25, 18, 35, 25, 78, 56, 45, 34, 56, 78, 62, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -157,9 +144,9 @@ CREATE TABLE `tb_ekskul` (
 --
 
 INSERT INTO `tb_ekskul` (`id_ekskul`, `id_guru`, `nama_ekskul`) VALUES
-(1, 5, 'bola'),
-(2, 11, 'tari'),
-(4, 6, 'basket');
+(5, 11, 'TAEKWONDO'),
+(6, 8, 'Sepak Bola'),
+(7, 6, 'balet');
 
 -- --------------------------------------------------------
 
@@ -175,20 +162,26 @@ CREATE TABLE `tb_guru` (
   `tanggal_lahir` date DEFAULT NULL,
   `golongan_ruang` varchar(50) DEFAULT NULL,
   `tingkatan` varchar(50) DEFAULT NULL,
-  `tugas_tertentu` varchar(50) DEFAULT NULL,
-  `foto` varchar(255) DEFAULT NULL
+  `tugas_tertentu` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `tb_guru`
 --
 
-INSERT INTO `tb_guru` (`id_guru`, `nip`, `nama_guru`, `jenis_kelamin`, `tanggal_lahir`, `golongan_ruang`, `tingkatan`, `tugas_tertentu`, `foto`) VALUES
-(3, '195301101984032002', 'Hj. SUBIASTUTI, BA.', 'perempuan', '1951-12-24', 'IV A', 'Guru Pembina', ' Pembinaan Ketaqwaan', ''),
-(4, ' 195301101984032002', ' RR. MURHADIYATI, S.Pd.', 'perempuan', '0953-10-11', 'IV A', 'Guru Pembina', ' Wakil Kepala Sekolah Urs.Humas', ''),
-(5, '195710181979032003', ' MARLIA NURROCHMA, S.Pd.', 'perempuan', '1959-10-18', 'IV A', 'Guru Pembina', '-', ''),
-(6, '196812302007012009', ' SRI RETNO KUMOLO, S.Pd.', 'perempuan', '1970-12-30', 'III A', 'Guru Muda', 'Sosial dan Kekeluargaan', ''),
-(8, '19591129 198103 2 00', 'MUHAMMAD FAHRUL STYAWAN,S.Pd.', 'laki-laki', '1989-12-27', 'III A', 'Guru Muda', '-', '');
+INSERT INTO `tb_guru` (`id_guru`, `nip`, `nama_guru`, `jenis_kelamin`, `tanggal_lahir`, `golongan_ruang`, `tingkatan`, `tugas_tertentu`) VALUES
+(3, '195301101984032002', 'Hj. SUBIASTUTI, BA.', 'perempuan', '1951-12-24', 'IV A', 'Guru Pembina', ' Pembinaan Ketaqwaan'),
+(4, ' 195301101984032002', ' RR. MURHADIYATI, S.Pd.', 'perempuan', '0953-10-11', 'IV A', 'Guru Pembina', ' Wakil Kepala Sekolah Urs.Humas'),
+(5, '195710181979032003', ' MARLIA NURROCHMA, S.Pd.', 'perempuan', '1959-10-18', 'IV B', 'Guru Pembina', '-'),
+(6, '196812302007012009', ' SRI RETNO KUMOLO, S.Pd.', 'perempuan', '1970-12-30', 'III A', 'Guru Muda', 'Sosial dan Kekeluargaan'),
+(8, '19591129 198103 200', 'MUHAMMAD FAHRUL STYAWAN,S.Pd.', 'perempuan', '1989-12-27', 'III A', 'Guru Muda', '-'),
+(11, '195303281979031003', 'ABDUL MAJID', 'laki-laki', '1953-03-28', 'IV A', 'Honorer Daerah', '-'),
+(12, '198409202010012008', 'BACHAR HERU LAKSONO', 'laki-laki', '1960-12-31', '-', 'Honorer Daerah', '-'),
+(13, '196501171986032005', ' RUMIYATI, A.Ma.', 'perempuan', '1962-01-17', 'III. D', 'Guru Dewasa Tk.I', '-'),
+(14, '19651006 200801200', 'Dra. KASMINAH', 'perempuan', '1972-02-16', 'III B', 'Guru Pertama', ' Pembinaan Pendidikan Bela Negara'),
+(15, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(16, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(17, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -202,17 +195,20 @@ CREATE TABLE `tb_guru_ampu` (
   `id_mapel` int(11) DEFAULT NULL,
   `id_kelas` int(11) DEFAULT NULL,
   `semester` varchar(10) DEFAULT NULL,
-  `tahun_ajaran` varchar(15) DEFAULT NULL
+  `id_tahun_ajaran` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `tb_guru_ampu`
 --
 
-INSERT INTO `tb_guru_ampu` (`id_guru_ampu`, `id_guru`, `id_mapel`, `id_kelas`, `semester`, `tahun_ajaran`) VALUES
-(1, 2, 2, 1, NULL, NULL),
-(9, 3, 1, 12, 'Ganjil', '2017/2018'),
-(10, 5, 10, 2, 'Ganjil', '2018/2019');
+INSERT INTO `tb_guru_ampu` (`id_guru_ampu`, `id_guru`, `id_mapel`, `id_kelas`, `semester`, `id_tahun_ajaran`) VALUES
+(19, 13, 19, 12, 'Ganjil', 3),
+(20, 11, 17, 0, '1', NULL),
+(21, 13, 18, 12, 'Genap', 1),
+(22, 12, 18, 13, 'Ganjil', 1),
+(23, 13, 18, 19, 'Genap', 1),
+(24, 5, 20, 15, 'Genap', 1);
 
 -- --------------------------------------------------------
 
@@ -236,7 +232,9 @@ INSERT INTO `tb_hak_akses` (`username`, `password`, `nama`, `hak_akses`, `id_gur
 ('agra', 'agra', 'agra laksmi', 'kurikulum', 0),
 ('iseng', 'iseng', 'a', 'guru', 4),
 ('jambret', 'jambret', 'aa', 'guru', 0),
-('suyud', 'suyud', 'suyud', 'kurikulum', 3),
+('seni', 'seni', 'Marlia', 'guru', 5),
+('sri', 'sri', 'Sri Retno Kumolo', 'guru', 6),
+('subiastuti', 'subiastuti', 'wooooooooooooooooooo', 'guru', 3),
 ('tata', 'tata', 'yyy', 'wali_kelas', 0);
 
 -- --------------------------------------------------------
@@ -247,7 +245,6 @@ INSERT INTO `tb_hak_akses` (`username`, `password`, `nama`, `hak_akses`, `id_gur
 
 CREATE TABLE `tb_kelas` (
   `id_kelas` int(11) NOT NULL,
-  `id_guru` int(11) DEFAULT NULL,
   `nama_kelas` varchar(5) DEFAULT NULL,
   `tingkat` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -256,10 +253,16 @@ CREATE TABLE `tb_kelas` (
 -- Dumping data untuk tabel `tb_kelas`
 --
 
-INSERT INTO `tb_kelas` (`id_kelas`, `id_guru`, `nama_kelas`, `tingkat`) VALUES
-(2, 6, 'A', 'VIII'),
-(11, 6, 'A', 'VII'),
-(12, 3, 'B', 'VII');
+INSERT INTO `tb_kelas` (`id_kelas`, `nama_kelas`, `tingkat`) VALUES
+(12, 'A', '7'),
+(13, 'B', '7'),
+(14, 'C', '7'),
+(15, 'A', '8'),
+(17, 'B', '8'),
+(19, 'C', '8'),
+(20, 'A', '9'),
+(21, 'B', '9'),
+(22, 'C', '9');
 
 -- --------------------------------------------------------
 
@@ -281,11 +284,10 @@ CREATE TABLE `tb_mapel` (
 --
 
 INSERT INTO `tb_mapel` (`id_mapel`, `id_guru`, `id_kelas`, `nama_mapel`, `kelompok`, `kkm`) VALUES
-(1, 3, 2, 'inggris', 'A', 78),
-(10, 4, 2, 'seni budaya', 'B', 78),
-(15, 6, 2, 'Jasmani, Olah Raga dan Kesehatan', 'B', 78),
-(16, 5, 2, 'Bahasa Jawa', 'B', 78),
-(17, 8, 2, 'Matematika', 'A', 78);
+(18, 3, 12, 'bahasa indonesia', 'A', 78),
+(19, 11, 12, 'Matematika', 'A', 78),
+(20, NULL, 12, 'Bahasa Inggris', 'B', 78),
+(22, NULL, 13, 'bahasa indonesia', 'A', 78);
 
 -- --------------------------------------------------------
 
@@ -307,11 +309,9 @@ CREATE TABLE `tb_nilai_ekskul` (
 --
 
 INSERT INTO `tb_nilai_ekskul` (`id_nilai_ekskul`, `id_ekskul`, `id_siswa`, `nilai`, `predikat`, `ket`) VALUES
-(1, 3, 4, '90', 'A', 'baik'),
-(3, 3, 1, '89', 'A', 'Bagus'),
-(4, 1, 6, '80', 'A', 'Baik Sekali'),
-(5, 4, 1, '89', 'A', 'Melakukan dengan Benar'),
-(6, 1, 1, '78', 'B', 'Melakukan dengan benar sekali');
+(12, 6, 30, '78', 'A', 'Bagus '),
+(13, 5, 30, '90', 'A', 'Bagus Sekali'),
+(14, 6, 34, '89', 'A', 'dgfhdghkrg');
 
 -- --------------------------------------------------------
 
@@ -331,10 +331,9 @@ CREATE TABLE `tb_nilai_sikap` (
 --
 
 INSERT INTO `tb_nilai_sikap` (`id_nilai_sikap`, `id_siswa`, `nilai_akhir`, `id_deskripsi_sikap`) VALUES
-(6, 1, 'B', 4),
-(8, 1, 'A', 8),
-(9, 6, 'A', 8),
-(13, 6, 'A', 4);
+(1, 30, 'A', 4),
+(2, 30, 'A', 4),
+(3, 34, '', 4);
 
 -- --------------------------------------------------------
 
@@ -361,7 +360,8 @@ CREATE TABLE `tb_ortu` (
 INSERT INTO `tb_ortu` (`id_ortu`, `id_siswa`, `status`, `nama_ortu`, `tahun_lahir`, `jenjang_pendidikan`, `pekerjaan`, `penghasilan`, `nik`) VALUES
 (2, 1, 'Ayah', 'hakim', 1984, 'SMA', 'guru', 'Rp. 1,000,000 - Rp. 1,999,999', '65466758758'),
 (3, 4, 'Ayah', 'Januar', 1970, 'D3', 'Guru', 'Rp. 1,000,000 - Rp. 1,999,999', '456789897657'),
-(4, 10, NULL, 'Hasyim Afandi', 1970, 'S1', 'wiraswasta', 'Rp. 2,000,000 - Rp. 4,999,999', '56787978654678');
+(4, 10, 'Wali', 'Hasyim Afandi', 1970, 'S1', 'wiraswasta', 'Rp. 2,000,000 - Rp. 4,999,999', '56787978654678'),
+(5, 10, 'Ibu', 'Irwani Rahmawati', 1970, 'D3', 'Ibu Rumah Tangga', 'Kurang dari Rp. 500,000', '3456789765456');
 
 -- --------------------------------------------------------
 
@@ -371,6 +371,7 @@ INSERT INTO `tb_ortu` (`id_ortu`, `id_siswa`, `status`, `nama_ortu`, `tahun_lahi
 
 CREATE TABLE `tb_presensi` (
   `id_presensi` int(11) NOT NULL,
+  `id_wali_kelas` int(11) NOT NULL,
   `id_siswa` int(11) DEFAULT NULL,
   `id_kelas` int(11) NOT NULL,
   `sakit` int(3) DEFAULT NULL,
@@ -382,9 +383,16 @@ CREATE TABLE `tb_presensi` (
 -- Dumping data untuk tabel `tb_presensi`
 --
 
-INSERT INTO `tb_presensi` (`id_presensi`, `id_siswa`, `id_kelas`, `sakit`, `ijin`, `tanpa_ket`) VALUES
-(3, 6, 2, 1, 1, 0),
-(6, 1, 0, 1, 5, 1);
+INSERT INTO `tb_presensi` (`id_presensi`, `id_wali_kelas`, `id_siswa`, `id_kelas`, `sakit`, `ijin`, `tanpa_ket`) VALUES
+(3, 0, 6, 2, 1, 1, 0),
+(6, 0, 1, 0, 1, 5, 1),
+(7, 0, 10, 0, 9, 0, 0),
+(8, 1, 34, 12, 3, 0, 0),
+(9, 14, 35, 12, 0, 2, 3),
+(10, 14, 35, 12, 0, 0, 0),
+(11, 14, 34, 12, 0, 0, 0),
+(12, 14, 34, 12, 0, 0, 0),
+(13, 14, 34, 12, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -404,13 +412,6 @@ CREATE TABLE `tb_rapor` (
   `catatan` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data untuk tabel `tb_rapor`
---
-
-INSERT INTO `tb_rapor` (`id_rapor`, `id_nilai_sikap`, `id_detail_pengetahuan`, `id_detail_ketrampilan`, `id_nilai_ekskul`, `id_presensi`, `id_siswa`, `id_guru`, `catatan`) VALUES
-(1, 6, 3, 1, 3, 3, 1, 3, '');
-
 -- --------------------------------------------------------
 
 --
@@ -419,13 +420,11 @@ INSERT INTO `tb_rapor` (`id_rapor`, `id_nilai_sikap`, `id_detail_pengetahuan`, `
 
 CREATE TABLE `tb_siswa` (
   `id_siswa` int(11) NOT NULL,
-  `id_kelas` int(11) DEFAULT NULL,
   `nisn` int(11) DEFAULT NULL,
   `nama_siswa` varchar(50) DEFAULT NULL,
   `jenis_kelamin` enum('perempuan','laki-laki') DEFAULT NULL,
   `tempat_lahir` varchar(30) DEFAULT NULL,
   `tanggal_lahir` date DEFAULT NULL,
-  `umur` int(3) DEFAULT NULL,
   `agama` enum('islam','kristen','katolik','hindu','budha') DEFAULT NULL,
   `alamat` varchar(30) DEFAULT NULL,
   `rt` varchar(5) DEFAULT NULL,
@@ -435,27 +434,82 @@ CREATE TABLE `tb_siswa` (
   `kode_pos` int(11) DEFAULT NULL,
   `jenis_tinggal` varchar(30) DEFAULT NULL,
   `telepon` varchar(12) DEFAULT NULL,
-  `email` varchar(30) DEFAULT NULL,
-  `foto` text NOT NULL
+  `email` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `tb_siswa`
 --
 
-INSERT INTO `tb_siswa` (`id_siswa`, `id_kelas`, `nisn`, `nama_siswa`, `jenis_kelamin`, `tempat_lahir`, `tanggal_lahir`, `umur`, `agama`, `alamat`, `rt`, `rw`, `dusun`, `kelurahan`, `kode_pos`, `jenis_tinggal`, `telepon`, `email`, `foto`) VALUES
-(1, 12, 28115865, 'RISKA ELISAPUTRI', 'perempuan', 'Sleman', '2002-11-04', 6264, 'kristen', 'Jl. Magelang', '08', '10', 'Kutu wates', 'Sinduadi', 55213, 'Bersama orang tua', '-', '-', ''),
-(2, 1, 123456789, 'agra laksmi', 'perempuan', 'temanggung', '1996-09-14', 21, 'islam', 'Parakan', '01', '07', 'hahaha', 'hahahaha', 56456, 'rumah orang tua', '057839638', 'gshdjsdkhsk', ''),
-(4, 12, 2147483647, 'Rivaldo Bima Pratama', 'laki-laki', 'Kuningan', '2001-12-21', 6265, 'hindu', 'jakarta', '05', '09', 'Sinduadi', 'Sleman', 52345, 'Bersama orang tua', '-', '-', ''),
-(5, 1, 2147483647, 'mufid bodo cupu bego nilainya E', 'laki-laki', 'selokan mataram', '1989-10-17', 11, 'islam', 'trini', '09', '07', 'rere', 'wewe', 234566, 'sendiri', '24354657567', 'mufid_bego@gmail.comagr', ''),
-(6, 12, 46044182, 'Adetio Gilang Pamungkas', 'laki-laki', 'sleman', '2004-12-20', 6269, 'islam', 'JOGOYUDAN JT 3/601 GOWONGAN YO', '33', '08', 'SOSRODIPURAN ', 'SOSROMENDURAN', 55271, 'Bersama orang tua', '081802657295', '-', ''),
-(10, 12, 21195245, 'Mochmad Raka Rangga Trengginas', 'laki-laki', 'Yogyakarta', '2001-04-24', 6263, 'islam', 'Jl. Layur No. 105 Perum Nogoti', '05', '35', 'Mlangi', 'Nogptirto', 55292, 'Bersama orang tua', '081328813957', '-', ''),
-(11, 2, 2345676, 'Rahina Birana', 'perempuan', 'Tangerang', '2004-12-03', 6260, 'hindu', 'Sleman', '01', '09', 'Sleman', 'Sleman', 56488, 'Bersama orang tua', '0853456789', '-', ''),
-(12, 12, 2147483647, 'agra laksmi maitri', 'perempuan', 'hahahaha', '2013-12-09', 5667, 'islam', 'gagagaga', '01', '08', 'gagaga', 'jahajja', 56767, 'Bersama orang tua', '085453453', 'sfgdhjhghsdj', ''),
-(13, 12, 2147483647, 'agra laksmi maitri', 'perempuan', 'hahahaha', '2013-12-09', 5667, 'islam', 'gagagaga', '01', '08', 'gagaga', 'jahajja', 56767, 'Bersama orang tua', '085453453', 'sfgdhjhghsdj', ''),
-(14, 12, 2147483647, 'agra laksmi maitri', 'perempuan', 'hahahaha', '2013-12-09', 5667, 'islam', 'gagagaga', '01', '08', 'gagaga', 'jahajja', 56767, 'Bersama orang tua', '085453453', 'sfgdhjhghsdj', ''),
-(15, 12, 2147483647, 'agra laksmi maitri', 'perempuan', 'hahahaha', '2013-12-09', 5667, 'islam', 'gagagaga', '01', '08', 'gagaga', 'jahajja', 56767, 'Bersama orang tua', '085453453', 'sfgdhjhghsdj', ''),
-(16, 12, 2147483647, 'agra laksmi maitri', 'perempuan', 'hahahaha', '2013-12-09', 5667, 'islam', 'gagagaga', '01', '08', 'gagaga', 'jahajja', 56767, 'Bersama orang tua', '085453453', 'sfgdhjhghsdj', '');
+INSERT INTO `tb_siswa` (`id_siswa`, `nisn`, `nama_siswa`, `jenis_kelamin`, `tempat_lahir`, `tanggal_lahir`, `agama`, `alamat`, `rt`, `rw`, `dusun`, `kelurahan`, `kode_pos`, `jenis_tinggal`, `telepon`, `email`) VALUES
+(34, 46752836, 'Abdullah Zuhdi Firmansyah', 'laki-laki', 'Malang', '2002-11-12', 'islam', 'Jetis', '01', '09', 'Sleman', 'Sleman', 5454, 'Sleman', '0856789876', 'abdul99@gmail.com'),
+(35, 44457907, 'Abigail Sufa', 'perempuan', 'Jakarta', '2003-02-12', 'kristen', 'Jl. Layur No. 105 Perum Nogoti', '09', '06', 'Sleman\\', 'Sleman', 5676, 'Bersama orang tua', '081802657295', 'abigail90@gmail.com');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_siswa_pertahun`
+--
+
+CREATE TABLE `tb_siswa_pertahun` (
+  `id_siswa_pertahun` int(11) NOT NULL,
+  `id_siswa` int(11) NOT NULL,
+  `id_kelas` int(11) NOT NULL,
+  `id_tahun_ajaran` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `tb_siswa_pertahun`
+--
+
+INSERT INTO `tb_siswa_pertahun` (`id_siswa_pertahun`, `id_siswa`, `id_kelas`, `id_tahun_ajaran`) VALUES
+(2, 31, 20, 1),
+(4, 31, 17, 1),
+(6, 35, 12, 1),
+(9, 34, 12, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_tahun_ajaran`
+--
+
+CREATE TABLE `tb_tahun_ajaran` (
+  `id_tahun_ajaran` int(11) NOT NULL,
+  `tahun_ajaran` varchar(10) NOT NULL,
+  `status` enum('aktif','nonaktif','','') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `tb_tahun_ajaran`
+--
+
+INSERT INTO `tb_tahun_ajaran` (`id_tahun_ajaran`, `tahun_ajaran`, `status`) VALUES
+(1, '2017/2018', 'aktif'),
+(3, '2018/2019', 'nonaktif'),
+(5, '2017/2018', 'nonaktif');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `tb_wali_kelas`
+--
+
+CREATE TABLE `tb_wali_kelas` (
+  `id_wali_kelas` int(11) NOT NULL,
+  `id_guru` int(11) NOT NULL,
+  `id_kelas` int(11) NOT NULL,
+  `id_tahun_ajaran` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `tb_wali_kelas`
+--
+
+INSERT INTO `tb_wali_kelas` (`id_wali_kelas`, `id_guru`, `id_kelas`, `id_tahun_ajaran`) VALUES
+(1, 14, 12, 1),
+(2, 6, 15, 1),
+(3, 12, 19, 1);
 
 --
 -- Indexes for dumped tables
@@ -564,8 +618,25 @@ ALTER TABLE `tb_rapor`
 -- Indexes for table `tb_siswa`
 --
 ALTER TABLE `tb_siswa`
-  ADD PRIMARY KEY (`id_siswa`),
-  ADD KEY `id_kelas` (`id_kelas`);
+  ADD PRIMARY KEY (`id_siswa`);
+
+--
+-- Indexes for table `tb_siswa_pertahun`
+--
+ALTER TABLE `tb_siswa_pertahun`
+  ADD PRIMARY KEY (`id_siswa_pertahun`);
+
+--
+-- Indexes for table `tb_tahun_ajaran`
+--
+ALTER TABLE `tb_tahun_ajaran`
+  ADD PRIMARY KEY (`id_tahun_ajaran`);
+
+--
+-- Indexes for table `tb_wali_kelas`
+--
+ALTER TABLE `tb_wali_kelas`
+  ADD PRIMARY KEY (`id_wali_kelas`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -575,7 +646,7 @@ ALTER TABLE `tb_siswa`
 -- AUTO_INCREMENT for table `tb_deskripsi_mapel`
 --
 ALTER TABLE `tb_deskripsi_mapel`
-  MODIFY `id_deskripsi_mapel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id_deskripsi_mapel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 --
 -- AUTO_INCREMENT for table `tb_deskripsi_sikap`
 --
@@ -585,67 +656,82 @@ ALTER TABLE `tb_deskripsi_sikap`
 -- AUTO_INCREMENT for table `tb_detail_ketrampilan`
 --
 ALTER TABLE `tb_detail_ketrampilan`
-  MODIFY `id_detail_ketrampilan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_detail_ketrampilan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT for table `tb_detail_pengetahuan`
 --
 ALTER TABLE `tb_detail_pengetahuan`
-  MODIFY `id_detail_pengetahuan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_detail_pengetahuan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 --
 -- AUTO_INCREMENT for table `tb_ekskul`
 --
 ALTER TABLE `tb_ekskul`
-  MODIFY `id_ekskul` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_ekskul` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `tb_guru`
 --
 ALTER TABLE `tb_guru`
-  MODIFY `id_guru` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_guru` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 --
 -- AUTO_INCREMENT for table `tb_guru_ampu`
 --
 ALTER TABLE `tb_guru_ampu`
-  MODIFY `id_guru_ampu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_guru_ampu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
 -- AUTO_INCREMENT for table `tb_kelas`
 --
 ALTER TABLE `tb_kelas`
-  MODIFY `id_kelas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_kelas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 --
 -- AUTO_INCREMENT for table `tb_mapel`
 --
 ALTER TABLE `tb_mapel`
-  MODIFY `id_mapel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_mapel` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 --
 -- AUTO_INCREMENT for table `tb_nilai_ekskul`
 --
 ALTER TABLE `tb_nilai_ekskul`
-  MODIFY `id_nilai_ekskul` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_nilai_ekskul` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `tb_nilai_sikap`
 --
 ALTER TABLE `tb_nilai_sikap`
-  MODIFY `id_nilai_sikap` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_nilai_sikap` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `tb_ortu`
 --
 ALTER TABLE `tb_ortu`
-  MODIFY `id_ortu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_ortu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `tb_presensi`
 --
 ALTER TABLE `tb_presensi`
-  MODIFY `id_presensi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_presensi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `tb_rapor`
 --
 ALTER TABLE `tb_rapor`
-  MODIFY `id_rapor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_rapor` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `tb_siswa`
 --
 ALTER TABLE `tb_siswa`
-  MODIFY `id_siswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_siswa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+--
+-- AUTO_INCREMENT for table `tb_siswa_pertahun`
+--
+ALTER TABLE `tb_siswa_pertahun`
+  MODIFY `id_siswa_pertahun` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+--
+-- AUTO_INCREMENT for table `tb_tahun_ajaran`
+--
+ALTER TABLE `tb_tahun_ajaran`
+  MODIFY `id_tahun_ajaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT for table `tb_wali_kelas`
+--
+ALTER TABLE `tb_wali_kelas`
+  MODIFY `id_wali_kelas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

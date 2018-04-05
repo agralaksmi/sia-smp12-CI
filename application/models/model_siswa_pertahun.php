@@ -13,6 +13,7 @@ class model_siswa_pertahun extends CI_Model
     $this->db->join('tb_siswa','tb_siswa_pertahun.id_siswa=tb_siswa.id_siswa');
     $this->db->join('tb_kelas','tb_siswa_pertahun.id_kelas=tb_kelas.id_kelas');
     $this->db->join('tb_tahun_ajaran','tb_siswa_pertahun.id_tahun_ajaran=tb_tahun_ajaran.id_tahun_ajaran');
+    $this->db->where(array('status'=>"aktif"));
     $query = $this->db->get('tb_siswa_pertahun');
     return $query->result();
   }
