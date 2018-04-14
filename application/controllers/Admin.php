@@ -272,8 +272,18 @@ class Admin extends CI_Controller {
     echo json_encode($data);
   }
 
+  public function create_cek(){
+    $id_mapel=$this->input->post('id_mapel');
+    $id_kelas=$this->input->post('id_kelas');
+
+    $detail_pengetahuan=$this->model_detail_pengetahuan->input_detail_pengetahuan($id_siswa,$id_mapel,$tugas1,$tugas2,$tugas3,$tugas4,$uts,$uas);
+    $this->session->set_flashdata('sukses', 'Berhasil Tambah Data');
+    redirect(base_url('kurikulum/detail_pengetahuan'));
+  }
   public function create_detail_pengetahuan(){
+    $id_wali_kelas=$this->input->post('id_wali_kelas');
     $id_siswa=$this->input->post('id_siswa');
+    $id_kelas=$this->input->post('id_kelas');
     $id_mapel=$this->input->post('id_mapel');
     $tugas1=$this->input->post('tugas1');
     $tugas2=$this->input->post('tugas2');
@@ -282,7 +292,7 @@ class Admin extends CI_Controller {
     $uts=$this->input->post('uts');
     $uas=$this->input->post('uas');
 
-    $detail_pengetahuan=$this->model_detail_pengetahuan->input_detail_pengetahuan($id_siswa,$id_mapel,$tugas1,$tugas2,$tugas3,$tugas4,$uts,$uas);
+    $detail_pengetahuan=$this->model_detail_pengetahuan->input_detail_pengetahuan($id_wali_kelas,$id_kelas,$id_siswa,$id_mapel,$tugas1,$tugas2,$tugas3,$tugas4,$uts,$uas);
     $this->session->set_flashdata('sukses', 'Berhasil Tambah Data');
     redirect(base_url('kurikulum/detail_pengetahuan'));
   }
@@ -737,7 +747,7 @@ class Admin extends CI_Controller {
     $id_kelas=$this->input->post('id_kelas');
     $id_tahun_ajaran=$this->input->post('id_tahun_ajaran');
 
-    $cek=$this->db->where('id_guru',$id_guru)->get('tb_wali_kelas')->result_array();
+    $cek=$this->db->where('id_guru',$id_guru)->where('id_kelas',$id_kelas)->get('tb_wali_kelas')->result_array();
     if ($cek) {
       $this->session->set_flashdata('exist', 'DATA GURU SUDAH ADA');
       redirect(base_url('kurikulum/wali_kelas'));
@@ -768,7 +778,7 @@ class Admin extends CI_Controller {
     $id_kelas=$this->input->post('id_kelas');
     $id_tahun_ajaran=$this->input->post('id_tahun_ajaran');
 
-    $cek=$this->db->where('id_siswa',$id_siswa)->get('tb_siswa_pertahun')->result_array();
+    $cek=$this->db->where('id_siswa',$id_siswa)->where('id_kelas',$id_kelas)->get('tb_siswa_pertahun')->result_array();
     if ($cek) {
       $this->session->set_flashdata('exist', 'DATA SISWA SUDAH ADA');
       redirect(base_url('kurikulum/siswa_pertahun'));
@@ -785,6 +795,8 @@ class Admin extends CI_Controller {
     $detail_pengetahuan = $this->model_detail_pengetahuan->ubah_detail_pengetahuan($id_detail_pengetahuan);
     foreach ($detail_pengetahuan as $data_detail_pengetahuan) {
       echo '<div id="id_detail_pengetahuan">'.$id_detail_pengetahuan.'</div>';
+      echo '<div id="id_wali_kelas">'.$data_detail_pengetahuan->id_wali_kelas.'</div>';
+      echo '<div id="id_kelas">'.$data_detail_pengetahuan->id_kelas.'</div>';
       echo '<div id="id_siswa">'.$data_detail_pengetahuan->id_siswa.'</div>';
       echo '<div id="id_mapel">'.$data_detail_pengetahuan->id_mapel.'</div>';
       echo '<div id="ulangan_harian">'.$data_detail_pengetahuan->ulangan_harian.'</div>';
@@ -802,19 +814,23 @@ class Admin extends CI_Controller {
   public function update_detail_pengetahuan(){
     $id_detail_pengetahuan = $this->input->post('id_detail_pengetahuan');
     $id_siswa = $this->input->post('id_siswa');
+    $id_wali_kelas = $this->input->post('id_wali_kelas');
+    $id_kelas = $this->input->post('id_kelas');
     $id_mapel=$this->input->post('id_mapel');
-    // $ulangan_harian=$this->input->post('ulangan_harian');
+    $ulangan_harian=$this->input->post('ulangan_harian');
     $tugas1= $this->input->post('tugas1');
     $tugas2= $this->input->post('tugas2');
     $tugas3= $this->input->post('tugas3');
     $tugas4= $this->input->post('tugas4');
     $uts= $this->input->post('uts');
     $uas= $this->input->post('uas');
-    // $id_deskripsi_mapel=$this->input->post('id_deskripsi_mapel');
+    $id_deskripsi_mapel=$this->input->post('id_deskripsi_mapel');
 
-    $detail_pengetahuan= $this->model_detail_pengetahuan->update_detail_pengetahuan($id_detail_pengetahuan,$id_siswa,$id_mapel,$ulangan_harian,$tugas1,$tugas2,$tugas3,$tugas4,$uts,$uas);
-    $this->session->set_flashdata('edit', 'Sukses edit data');
-    redirect(base_url('kurikulum/detail_pengetahuan'));
+    $detail_pengetahuan= $this->model_detail_pengetahuan->update_detail_pengetahuan($id_detail_pengetahuan,$id_siswa,$id_wali_kelas,$id_kelas,$id_mapel,$ulangan_harian,$tugas1,$tugas2,$tugas3,$tugas4,$uts,$uas);
+    if ($detail_pengetahuan) {
+      // $this->session->set_flashdata('edit', 'Sukses edit data');
+      // redirect(base_url('kurikulum/detail_pengetahuan'));
+    }
   }
 
   // Kedua Edit detail_pengetahuan

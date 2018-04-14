@@ -61,64 +61,6 @@
 </div>
 <!--  MULAI MODAL-->
 <body class="hold-transition skin-black sidebar-mini">
-  <div class="modal fade" id="modal_detail_ketrampilan" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title" id="modal_detail_ketrampilan">Tambah Data Nilai Ketrampilan</h4>
-        </div>
-        <form class="" action="<?php echo base_url ('Admin/create_detail_ketrampilan')?>" method="post">
-          <div class="modal-body">
-
-            <!-- MULAI MEMBUAT FORM MENU -->
-            <div class="form-group">
-              <label for="">Mata Pelajaran</label>
-              <select class="form-control" id="id_mapel" name="id_mapel" required>
-                <option value="">:Pilih:.</option>
-                <?php foreach ($tb_mapel as $data_tb_mapel): ?>
-                  <option value="<?php echo $data_tb_mapel->id_mapel ?>"><?php echo $data_tb_mapel->nama_mapel ?></option>
-                <?php endforeach; ?>
-              </select>
-              <p class="help-block"></p>
-            </div>
-            <div class="form-group">
-              <label for="">Nama Siswa</label>
-              <select class="form-control" id="id_siswa" name="id_siswa" required>
-                <option value="">:Pilih:.</option>
-                <?php foreach ($tb_siswa as $data_tb_siswa): ?>
-                  <option value="<?php echo $data_tb_siswa->id_siswa ?>"><?php echo $data_tb_siswa->nama_siswa ?></option>
-                <?php endforeach; ?>
-              </select>
-              <p class="help-block"></p>
-            </div>
-            <div class="form-group">
-              <label for="">Nilai Praktek</label>
-              <input type="text" class="form-control" id="" placeholder="0" name="nilai_praktek" required>
-              <p class="help-block"></p>
-            </div>
-            <div class="form-group">
-              <label for="">Nilai Folio</label>
-              <input type="text" class="form-control" id="" placeholder="0" name="nilai_folio" required>
-              <p class="help-block"></p>
-            </div>
-            <div class="form-group">
-              <label for="">Nilai Proyek</label>
-              <input type="text" class="form-control" id="" placeholder="0" name="nilai_proyek" required>
-              <p class="help-block"></p>
-            </div>
-            <!--  AKHIR MODAL MENU -->
-
-            <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Batal</button>
-              <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Simpan</button>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-  <!-- end of modal -->
 
   <div class="wrapper">
 
@@ -212,11 +154,6 @@
               <div class="box-tools" style="padding:10px;">
                 <div class="form-group">
 
-                  <!--  MENAMBAH NAMA DI BUTTON-->
-                  <button class="btn btn-success" data-toggle="modal"
-                  data-target="#modal_detail_ketrampilan"><i class="fa fa-plus"></i>
-                  Tambah Data
-                </button>
               </div>
               <?php if ($this->session->flashdata('sukses')) { ?>
                 <div class="">
@@ -235,12 +172,53 @@
               <?php } ?>
             </div>
             <!-- menampilkan Tabel -->
+            <div class="box-body">
+              <div class="row ">
+                <div class="col-md-4" style="margin-left:5px;">
+                  <form class=""  action="" method="post">
+
+
+                    <div class="form-group">
+                      <label>Kelas</label>
+                      <select class="form-control" name="">
+                        <option value="" name="">Pilih</option>
+                        <?php foreach ($tb_kelas as $data_tb_kelas): ?>
+                          <option value="<?php echo $data_tb_kelas->id_kelas ?>"><?php echo $data_tb_kelas->tingkat ?><?php echo $data_tb_kelas->nama_kelas ?></option>
+                        <?php endforeach; ?>
+                      </select>
+                    </div>
+
+
+                    <div class="form-group">
+                      <label>Mapel</label>
+                      <select class="form-control" name="">
+                        <option value="" name=""></option>
+                        <?php foreach ($tb_mapel as $data_tb_mapel): ?>
+                          <option value="<?php echo $data_tb_mapel->id_mapel ?>"><?php echo $data_tb_mapel->nama_mapel ?></option>
+                        <?php endforeach; ?>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label>Semester</label>
+                      <input class="form-control" type="text" name="semester" value="<?php echo $semester_sekarang?>" readonly>
+                    </div>
+                    <div class="text-center form-group">
+                      <button type="submit" name="submit" class="btn btn-success">Cek</button>
+
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <br>
+            <!-- menampilkan Tabel -->
             <div class="box-body table-responsive">
               <table class="table table-hover table-bordered table-responsive">
                 <thead>
                   <tr class="bg-blue" align="center">
                     <th align="center">No</th>
+                    <th>Wali Kelas</th>
                     <th>Mata Pelajaran</th>
+                    <th>Kelas</th>
                     <th>Nama Siswa</th>
                     <th>Nilai Praktek</th>
                     <th>Nilai Folio</th>
