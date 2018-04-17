@@ -61,7 +61,48 @@
 </div>
 <!--  MULAI MODAL-->
 <body class="hold-transition skin-black sidebar-mini">
+  <div class="modal fade" id="modal_detailketrampilan" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="modal_detailketrampilan">Tambah Nilai Ketrampilan</h4>
+        </div>
+        <form class="" action="<?php echo base_url('admin/create_detail_ketrampilan') ?>" method="post" name="autoSumForm">
+          <div class="modal-body">
+            <!-- MULAI MEMBUAT FORM MENU -->
+            <input type="hidden" class="form-control" id="id_wali_kelas_tambah" placeholder="" name="id_wali_kelas">
+            <input type="hidden" class="form-control" id="id_mapel_tambah" placeholder="" name="id_mapel">
+            <input type="hidden" class="form-control" id="id_kelas_tambah" placeholder="" name="id_kelas">
+            <input type="hidden" class="form-control" id="id_siswa_tambah" placeholder="" name="id_siswa">
+            <input type="text" class="form-control" id="id_siswa_pertahun_tambah" placeholder="" name="id_siswa_pertahun">
 
+            <div class="form-group">
+              <label for="">Nilai Praktek</label>
+              <input type="text" class="form-control" id="nilai_praktek" placeholder="0" name="nilai_praktek" required>
+              <p class="help-block"></p>
+            </div>
+            <div class="form-group">
+              <label for="">Nilai Folio</label>
+              <input type="text" class="form-control" id="nilai_folio" placeholder="0" name="nilai_folio" required>
+              <p class="help-block"></p>
+            </div>
+            <div class="form-group">
+              <label for="">Nilai Proyek</label>
+              <input type="text" class="form-control" id="nilai_proyek" placeholder="0" name="nilai_proyek" required>
+              <p class="help-block"></p>
+            </div>
+            <!--  AKHIR MODAL MENU -->
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Batal</button>
+              <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Simpan</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
   <div class="wrapper">
 
     <!-- Main Header -->
@@ -154,160 +195,175 @@
               <div class="box-tools" style="padding:10px;">
                 <div class="form-group">
 
+                </div>
+                <?php if ($this->session->flashdata('sukses')) { ?>
+                  <div class="">
+                    <div class="alert alert-success"><?php echo $this->session->flashdata('sukses'); ?></div>
+                  </div>
+                <?php } ?>
+                <?php if ($this->session->flashdata('edit')) { ?>
+                  <div class="">
+                    <div class="alert alert-warning"><?php echo $this->session->flashdata('edit'); ?></div>
+                  </div>
+                <?php } ?>
+                <?php if ($this->session->flashdata('delete')) { ?>
+                  <div class="">
+                    <div class="alert alert-danger"><?php echo $this->session->flashdata('delete'); ?></div>
+                  </div>
+                <?php } ?>
               </div>
-              <?php if ($this->session->flashdata('sukses')) { ?>
-                <div class="">
-                  <div class="alert alert-success"><?php echo $this->session->flashdata('sukses'); ?></div>
+              <!-- menampilkan Tabel -->
+              <div class="box-body">
+                <div class="row ">
+                  <div class="col-md-4" style="margin-left:5px;">
+                    <form class=""  action="" method="post">
+
+
+                      <div class="form-group">
+                        <label>Kelas</label>
+                        <select class="form-control" name="id_kelas">
+                          <option value="">Pilih</option>
+                          <?php foreach ($tb_kelas as $data_tb_kelas): ?>
+                            <option value="<?php echo $data_tb_kelas->id_kelas ?>"><?php echo $data_tb_kelas->tingkat ?><?php echo $data_tb_kelas->nama_kelas ?></option>
+                          <?php endforeach; ?>
+                        </select>
+                      </div>
+
+
+                      <div class="form-group">
+                        <label>Mapel</label>
+                        <select class="form-control" name="id_mapel">
+                          <option value="">Pilih</option>
+                          <?php foreach ($tb_mapel as $data_tb_mapel): ?>
+                            <option value="<?php echo $data_tb_mapel->id_mapel ?>"><?php echo $data_tb_mapel->nama_mapel ?></option>
+                          <?php endforeach; ?>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label>Semester</label>
+                        <input class="form-control" type="text" name="semester" value="<?php echo $semester_sekarang?>" readonly>
+                      </div>
+                      <div class="text-center form-group">
+                        <button type="submit" name="cek" class="btn btn-success">Cek</button>
+                      </div>
+                    </form>
+                  </div>
                 </div>
-              <?php } ?>
-              <?php if ($this->session->flashdata('edit')) { ?>
-                <div class="">
-                  <div class="alert alert-warning"><?php echo $this->session->flashdata('edit'); ?></div>
-                </div>
-              <?php } ?>
-              <?php if ($this->session->flashdata('delete')) { ?>
-                <div class="">
-                  <div class="alert alert-danger"><?php echo $this->session->flashdata('delete'); ?></div>
-                </div>
-              <?php } ?>
+                <br>
+                <!-- menampilkan Tabel -->
+                <div class="box-body table-responsive">
+                  <table class="table table-hover table-bordered table-responsive">
+                    <thead>
+                      <tr class="bg-blue" align="center">
+                        <th>No</th>
+                        <th>Wali Kelas</th>
+                        <th>Mata Pelajaran</th>
+                        <th>Kelas</th>
+                        <th>Nama Siswa</th>
+                        <th>Nilai Praktek</th>
+                        <th>Nilai Folio</th>
+                        <th>Nilai Proyek</th>
+                        <th>Nilai Akhir</th>
+                        <th>Predikat</th>
+                        <th>Deskripsi Mata Pelajaran</th>
+                        <th>Aksi</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php $no =1; foreach ($tb_detail_ketrampilan as $input_detail_ketrampilan):?>
+                        <tr>
+                          <td><?php echo @$no++ ?></td>
+                          <td><?php echo @$input_detail_ketrampilan->nama_guru?></td>
+                          <td><?php echo @$input_detail_ketrampilan->nama_mapel?></td>
+                          <td><?php echo @$input_detail_ketrampilan->tingkat?><?php echo @$input_detail_ketrampilan->nama_kelas?></td>
+                          <td><?php echo @$input_detail_ketrampilan->nama_siswa?></td>
+                          <td><?php echo @$input_detail_ketrampilan->nilai_praktek?></td>
+                          <td><?php echo @$input_detail_ketrampilan->nilai_folio?></td>
+                          <td><?php echo @$input_detail_ketrampilan->nilai_proyek?></td>
+                          <td><?php echo @$input_detail_ketrampilan->nilai_akhir?></td>
+                          <td><?php echo @$input_detail_ketrampilan->nilai?></td>
+                          <td><?php echo @$input_detail_ketrampilan->deskripsi?></td>
+                          <td>
+                            <form class="" action="<?php echo base_url('admin/delete_detail_ketrampilan') ?>" method="post">
+                              <input type="hidden" name="id_detail_ketrampilan" value="<?php echo @$input_detail_ketrampilan->id_detail_ketrampilan; ?>">
+                              <?php if (!isset($input_detail_ketrampilan->praktek)): ?>
+                                <button type="button" name="button" class="btn btn-primary" onclick="tambah_detail_ketrampilan(<?php echo @$input_detail_ketrampilan->id_wali_kelas ?>,<?php echo @$input_detail_ketrampilan->id_kelas ?>,<?php echo @$input_detail_ketrampilan->id_siswa ?>,<?php echo @$input_detail_ketrampilan->id_mapel ?>,<?php echo @$input_detail_ketrampilan->id_siswa_pertahun ?>)"><i class="fa fa-plus"></i></button>
+                              <?php else: ?>
+                                <!-- Kelima-->
+                                <button type="button" class="btn btn-warning" onclick="edit_detail_ketrampilan('<?php echo $input_detail_ketrampilan->id_detail_ketrampilan; ?>')">
+                                  <i class="fa fa-edit"></i>
+                                </button>
+                                <input type="hidden" name="id_detail_ketrampilan" value="<?php echo $input_detail_ketrampilan->id_detail_ketrampilan; ?>">
+                                <button type="submit" class="btn btn-danger" name="delete_detail_ketrampilan" onclick="return confirm('Apakah ANda Yakin Ingin Menghapus Data ini ? ?')">
+                                  <i class="fa fa-trash-o"></i>
+                                </button>
+                              <?php endif; ?>
+                            </form>
+                          </td>
+                        </tr>
+                      <?php endforeach; ?>
+                    </tbody>
+                  </table>
+                </div> <!-- /.box-body -->
+              </div> <!-- /.box -->
             </div>
-            <!-- menampilkan Tabel -->
-            <div class="box-body">
-              <div class="row ">
-                <div class="col-md-4" style="margin-left:5px;">
-                  <form class=""  action="" method="post">
+          </div>
 
-
-                    <div class="form-group">
-                      <label>Kelas</label>
-                      <select class="form-control" name="">
-                        <option value="" name="">Pilih</option>
-                        <?php foreach ($tb_kelas as $data_tb_kelas): ?>
-                          <option value="<?php echo $data_tb_kelas->id_kelas ?>"><?php echo $data_tb_kelas->tingkat ?><?php echo $data_tb_kelas->nama_kelas ?></option>
-                        <?php endforeach; ?>
-                      </select>
-                    </div>
-
-
-                    <div class="form-group">
-                      <label>Mapel</label>
-                      <select class="form-control" name="">
-                        <option value="" name=""></option>
-                        <?php foreach ($tb_mapel as $data_tb_mapel): ?>
-                          <option value="<?php echo $data_tb_mapel->id_mapel ?>"><?php echo $data_tb_mapel->nama_mapel ?></option>
-                        <?php endforeach; ?>
-                      </select>
-                    </div>
-                    <div class="form-group">
-                      <label>Semester</label>
-                      <input class="form-control" type="text" name="semester" value="<?php echo $semester_sekarang?>" readonly>
-                    </div>
-                    <div class="text-center form-group">
-                      <button type="submit" name="submit" class="btn btn-success">Cek</button>
-
-                    </div>
-                  </form>
-                </div>
-              </div>
-              <br>
-            <!-- menampilkan Tabel -->
-            <div class="box-body table-responsive">
-              <table class="table table-hover table-bordered table-responsive">
-                <thead>
-                  <tr class="bg-blue" align="center">
-                    <th align="center">No</th>
-                    <th>Wali Kelas</th>
-                    <th>Mata Pelajaran</th>
-                    <th>Kelas</th>
-                    <th>Nama Siswa</th>
-                    <th>Nilai Praktek</th>
-                    <th>Nilai Folio</th>
-                    <th>Nilai Proyek</th>
-                    <th>Nilai Akhir</th>
-                    <th>Predikat</th>
-                    <th>Deskripsi Mata Pelajaran</th>
-                    <th>Aksi</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php $no =1; foreach ($tb_detail_ketrampilan as $input_detail_ketrampilan):?>
-                    <tr>
-                      <td><?php echo $no++ ?></td>
-                      <td><?php echo $input_detail_ketrampilan->nama_mapel?></td>
-                      <td><?php echo $input_detail_ketrampilan->nama_siswa?></td>
-                      <td><?php echo $input_detail_ketrampilan->nilai_praktek?></td>
-                      <td><?php echo $input_detail_ketrampilan->nilai_folio?></td>
-                      <td><?php echo $input_detail_ketrampilan->nilai_proyek?></td>
-                      <td><?php echo $input_detail_ketrampilan->nilai_akhir?></td>
-                      <td><?php echo $input_detail_ketrampilan->nilai?></td>
-                      <td><?php echo $input_detail_ketrampilan->deskripsi?></td>
-                      <td>
-                        <form class="" action="<?php echo base_url('admin/delete_detail_ketrampilan') ?>" method="post">
-                          <!-- Kelima-->
-                          <button type="button" class="btn btn-warning" onclick="edit_detail_ketrampilan('<?php echo $input_detail_ketrampilan->id_detail_ketrampilan; ?>')">
-                            <i class="fa fa-edit"></i>
-                          </button>
-                          <input type="hidden" name="id_detail_ketrampilan" value="<?php echo $input_detail_ketrampilan->id_detail_ketrampilan; ?>">
-                          <button type="submit" class="btn btn-danger" name="delete_detail_ketrampilan" onclick="return confirm('Apakah ANda Yakin Ingin Menghapus Data ini ? ?')">
-                            <i class="fa fa-trash-o"></i>
-                          </button>
-                        </form>
-                      </td>
-                    </tr>
-                  <?php endforeach; ?>
-                </tbody>
-              </table>
-            </div> <!-- /.box-body -->
-          </div> <!-- /.box -->
-        </div>
+        </section>
+        <!-- /.content -->
       </div>
+      <!-- /.content-wrapper -->
 
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
+      <!-- Main Footer -->
+      <footer class="main-footer">
+        <!-- Default to the left -->
+        <strong>Copyright &copy;<a href="./"> SMP N 12 Yogyakarta 2018 </a>.</strong> All rights reserved.
+      </footer>
+    </div>
+    <!-- ./wrapper -->
 
-  <!-- Main Footer -->
-  <footer class="main-footer">
-    <!-- Default to the left -->
-    <strong>Copyright &copy;<a href="./"> SMP N 12 Yogyakarta 2018 </a>.</strong> All rights reserved.
-  </footer>
-</div>
-<!-- ./wrapper -->
+    <!-- REQUIRED JS SCRIPTS -->
 
-<!-- REQUIRED JS SCRIPTS -->
+    <!-- jQuery 2.2.3 -->
+    <?php $this->load->view('template/javascript') ?>
+    <script type="text/javascript">
 
-<!-- jQuery 2.2.3 -->
-<?php $this->load->view('template/javascript') ?>
-<script type="text/javascript">
-
-function edit_detail_ketrampilan(id_detail_ketrampilan){
-  $.ajax({
-    type: 'get',
-    url: '<?php echo base_url('admin/edit_detail_ketrampilan?id_detail_ketrampilan=') ?>'+id_detail_ketrampilan,
-    success: function(data){
-      $response = $(data);
-      var id_detail_ketrampilan = $response.filter('#id_detail_ketrampilan').text();
-      var id_siswa = $response.filter('#id_siswa').text();
-      var id_mapel = $response.filter('#id_mapel').text();
-      var nilai_praktek = $response.filter('#nilai_praktek').text();
-      var nilai_folio = $response.filter('#nilai_folio').text();
-      var nilai_proyek = $response.filter('#nilai_proyek').text();
-      // var nilai_akhir = $response.filter('#nilai_akhir').text();
-      // var id_deskripsi_mapel = $response.filter('#id_deskripsi_mapel').text();
-      //menampilkan ke Modal
-      $('#id_detail_ketrampilan').val(id_detail_ketrampilan);
-      $('#id_siswa').val(id_siswa);
-      $('#id_mapel').val(id_mapel);
-      $('#nilai_praktek').val(nilai_praktek);
-      $('#nilai_folio').val(nilai_folio);
-      $('#nilai_proyek').val(nilai_proyek);
-      // $('#nilai_akhir').val(nilai_akhir);
-      // $('#id_deskripsi_mapel').val(id_deskripsi_mapel);
-      $('#modal_ubahdetailketrampilan').modal('show');
+    function tambah_detail_ketrampilan(id_wali_kelas,id_kelas,id_siswa,id_mapel,id_siswa_pertahun){
+      $('#id_wali_kelas_tambah').val(id_wali_kelas);
+      $('#id_kelas_tambah').val(id_kelas);
+      $('#id_siswa_tambah').val(id_siswa);
+      $('#id_siswa_pertahun_tambah').val(id_siswa_pertahun);
+      $('#id_mapel_tambah').val(id_mapel);
+      $('#modal_detailpengetahuan').modal('show');
     }
-  });
-}
-</script>
+
+    function edit_detail_ketrampilan(id_detail_ketrampilan){
+      $.ajax({
+        type: 'get',
+        url: '<?php echo base_url('admin/edit_detail_ketrampilan?id_detail_ketrampilan=') ?>'+id_detail_ketrampilan,
+        success: function(data){
+          $response = $(data);
+          var id_detail_ketrampilan = $response.filter('#id_detail_ketrampilan').text();
+          var id_siswa = $response.filter('#id_siswa').text();
+          var id_mapel = $response.filter('#id_mapel').text();
+          var nilai_praktek = $response.filter('#nilai_praktek').text();
+          var nilai_folio = $response.filter('#nilai_folio').text();
+          var nilai_proyek = $response.filter('#nilai_proyek').text();
+          // var nilai_akhir = $response.filter('#nilai_akhir').text();
+          // var id_deskripsi_mapel = $response.filter('#id_deskripsi_mapel').text();
+          //menampilkan ke Modal
+          $('#id_detail_ketrampilan').val(id_detail_ketrampilan);
+          $('#id_siswa').val(id_siswa);
+          $('#id_mapel').val(id_mapel);
+          $('#nilai_praktek').val(nilai_praktek);
+          $('#nilai_folio').val(nilai_folio);
+          $('#nilai_proyek').val(nilai_proyek);
+          // $('#nilai_akhir').val(nilai_akhir);
+          // $('#id_deskripsi_mapel').val(id_deskripsi_mapel);
+          $('#modal_ubahdetailketrampilan').modal('show');
+        }
+      });
+    }
+  </script>
 </body>
 </html>

@@ -117,7 +117,7 @@ class Admin extends CI_Controller {
     $nama_kelas=$this->input->post('nama_kelas');
     $tingkat=$this->input->post('tingkat');
 
-    $cek=$this->db->where('tingkat',$tingkat)->or_where('nama_kelas',$nama_kelas)->get('tb_kelas')->result_array();
+    $cek=$this->db->where('tingkat',$tingkat)->where('nama_kelas',$nama_kelas)->get('tb_kelas')->result_array();
     if ($cek) {
       $this->session->set_flashdata('exist', 'DATA KELAS SUDAH ADA');
       redirect(base_url('kurikulum/kelas'));
@@ -283,6 +283,7 @@ class Admin extends CI_Controller {
   public function create_detail_pengetahuan(){
     $id_wali_kelas=$this->input->post('id_wali_kelas');
     $id_siswa=$this->input->post('id_siswa');
+    $id_siswa_pertahun=$this->input->post('id_siswa_pertahun');
     $id_kelas=$this->input->post('id_kelas');
     $id_mapel=$this->input->post('id_mapel');
     $tugas1=$this->input->post('tugas1');
@@ -292,19 +293,22 @@ class Admin extends CI_Controller {
     $uts=$this->input->post('uts');
     $uas=$this->input->post('uas');
 
-    $detail_pengetahuan=$this->model_detail_pengetahuan->input_detail_pengetahuan($id_wali_kelas,$id_kelas,$id_siswa,$id_mapel,$tugas1,$tugas2,$tugas3,$tugas4,$uts,$uas);
+    $detail_pengetahuan=$this->model_detail_pengetahuan->input_detail_pengetahuan($id_wali_kelas,$id_kelas,$id_siswa,$id_siswa_pertahun,$id_mapel,$tugas1,$tugas2,$tugas3,$tugas4,$uts,$uas);
     $this->session->set_flashdata('sukses', 'Berhasil Tambah Data');
     redirect(base_url('kurikulum/detail_pengetahuan'));
   }
 
   public function create_detail_ketrampilan(){
+    $id_wali_kelas=$this->input->post('id_wali_kelas');
     $id_siswa=$this->input->post('id_siswa');
+    $id_siswa_pertahun=$this->input->post('id_siswa_pertahun');
+    $id_kelas=$this->input->post('id_kelas');
     $id_mapel=$this->input->post('id_mapel');
     $nilai_praktek= $this->input->post('nilai_praktek');
     $nilai_folio=$this->input->post('nilai_folio');
     $nilai_proyek=$this->input->post('nilai_proyek');
 
-    $detail_ketrampilan=$this->model_detail_ketrampilan->input_detail_ketrampilan($id_siswa,$id_mapel,$nilai_praktek,$nilai_folio,$nilai_proyek);
+    $detail_ketrampilan=$this->model_detail_ketrampilan->input_detail_ketrampilan($id_wali_kelas,$id_kelas,$id_siswa,$id_siswa_pertahun,$id_mapel,$nilai_praktek,$nilai_folio,$nilai_proyek);
     $this->session->set_flashdata('sukses', 'Berhasil Tambah Data');
     redirect(base_url('kurikulum/detail_ketrampilan'));
   }

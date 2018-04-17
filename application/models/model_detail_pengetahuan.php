@@ -10,28 +10,34 @@ class model_detail_pengetahuan extends CI_Model
     $this->load->database();
   }
   public function get_inputdetailpengetahuan(){
-    $this->db->join('tb_siswa','tb_detail_pengetahuan.id_siswa=tb_siswa.id_siswa');
-    $this->db->join('tb_mapel','tb_detail_pengetahuan.id_mapel=tb_mapel.id_mapel');
-    $this->db->join('tb_wali_kelas','tb_detail_pengetahuan.id_wali_kelas=tb_wali_kelas.id_wali_kelas');
-    $this->db->join('tb_kelas','tb_detail_pengetahuan.id_kelas=tb_kelas.id_kelas');
-    $this->db->join('tb_siswa_pertahun','tb_detail_pengetahuan.id_kelas=tb_kelas.id_kelas');
-    $this->db->join('tb_deskripsi_mapel','tb_detail_pengetahuan.id_deskripsi_mapel=tb_deskripsi_mapel.id_deskripsi_mapel');
-    $query = $this->db->get('tb_detail_pengetahuan');
-    return $query->result();
+    $this->db->from('tb_kelas');
+        $this->db->join('tb_siswa_pertahun','tb_siswa_pertahun.id_kelas = tb_kelas.id_kelas');
+        $this->db->join('tb_detail_pengetahuan','tb_siswa_pertahun.id_siswa_pertahun=tb_detail_pengetahuan.id_siswa_pertahun','right');
+        $this->db->join('tb_deskripsi_mapel','tb_detail_pengetahuan.id_deskripsi_mapel=tb_deskripsi_mapel.id_deskripsi_mapel');
+        $this->db->join('tb_siswa','tb_siswa.id_siswa = tb_siswa_pertahun.id_siswa');
+        $this->db->join('tb_wali_kelas','tb_wali_kelas.id_kelas = tb_kelas.id_kelas');
+        $this->db->join('tb_guru','tb_guru.id_guru = tb_wali_kelas.id_guru');
+        $this->db->join('tb_mapel','tb_mapel.id_kelas = tb_kelas.id_kelas');
+        $query = $this->db->get();
+        return $query->result();
   }
   public function input_cek_pengetahuan($id_kelas,$id_mapel){
     $this->db->from('tb_kelas');
     $this->db->join('tb_siswa_pertahun','tb_siswa_pertahun.id_kelas = tb_kelas.id_kelas');
+    //$this->db->join('tb_detail_pengetahuan','tb_siswa_pertahun.id_siswa_pertahun=tb_detail_pengetahuan.id_siswa_pertahun');
+    //$this->db->join('tb_deskripsi_mapel','tb_detail_pengetahuan.id_deskripsi_mapel=tb_deskripsi_mapel.id_deskripsi_mapel');
     $this->db->join('tb_siswa','tb_siswa.id_siswa = tb_siswa_pertahun.id_siswa');
     $this->db->join('tb_wali_kelas','tb_wali_kelas.id_kelas = tb_kelas.id_kelas');
     $this->db->join('tb_guru','tb_guru.id_guru = tb_wali_kelas.id_guru');
     $this->db->join('tb_mapel','tb_mapel.id_kelas = tb_kelas.id_kelas');
+
     $this->db->where('tb_kelas.id_kelas',$id_kelas);
     $this->db->where('tb_mapel.id_mapel',$id_mapel);
     $query = $this->db->get();
+    //print_r($query->result());die();
     return $query->result();
   }
-  public function input_detail_pengetahuan($id_wali_kelas,$id_kelas,$id_siswa,$id_mapel,$tugas1,$tugas2,$tugas3,$tugas4,$uts,$uas)
+  public function input_detail_pengetahuan($id_wali_kelas,$id_kelas,$id_siswa,$id_siswa_pertahun,$id_mapel,$tugas1,$tugas2,$tugas3,$tugas4,$uts,$uas)
   {
     // hitung nilai
     $nilai_tugas = $tugas1+$tugas2+$tugas3+$tugas4;
@@ -61,6 +67,7 @@ class model_detail_pengetahuan extends CI_Model
       // 'id_detail_pengetahuan'=>$id_detail_pengetahuan,
       'id_wali_kelas'=>$id_wali_kelas,
       'id_siswa'=>$id_siswa,
+      'id_siswa_pertahun'=>$id_siswa_pertahun,
       'id_mapel'=>$id_mapel,
       'id_kelas'=>$id_kelas,
       'tugas1'=>$tugas1,
@@ -72,6 +79,8 @@ class model_detail_pengetahuan extends CI_Model
       'ulangan_harian'=>$nilai,
       'id_deskripsi_mapel'=>$id_deskripsi
     );
+    $query=$this->db->insert('tb_detail_pengetahuan',$data);
+    return $query;
   }
 
   // Awal Model edit

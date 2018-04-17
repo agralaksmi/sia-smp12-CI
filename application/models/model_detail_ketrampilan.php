@@ -12,11 +12,26 @@ class model_detail_ketrampilan extends CI_Model
   public function get_inputdetailketrampilan(){
     $this->db->join('tb_siswa','tb_detail_ketrampilan.id_siswa=tb_siswa.id_siswa');
     $this->db->join('tb_mapel','tb_detail_ketrampilan.id_mapel=tb_mapel.id_mapel');
+    $this->db->join('tb_wali_kelas','tb_detail_ketrampilan.id_wali_kelas=tb_wali_kelas.id_wali_kelas');
+    $this->db->join('tb_kelas','tb_detail_ketrampilan.id_kelas=tb_kelas.id_kelas');
+    $this->db->join('tb_siswa_pertahun','tb_detail_ketrampilan.id_kelas=tb_kelas.id_kelas');
     $this->db->join('tb_deskripsi_mapel','tb_detail_ketrampilan.id_deskripsi_mapel=tb_deskripsi_mapel.id_deskripsi_mapel');
     $query = $this->db->get('tb_detail_ketrampilan');
     return $query->result();
   }
-  public function input_detail_ketrampilan($id_siswa,$id_mapel,$nilai_praktek,$nilai_folio,$nilai_proyek)
+  public function input_cek_ketrampilan($id_kelas,$id_mapel){
+    $this->db->from('tb_kelas');
+    $this->db->join('tb_siswa_pertahun','tb_siswa_pertahun.id_kelas = tb_kelas.id_kelas');
+    $this->db->join('tb_siswa','tb_siswa.id_siswa = tb_siswa_pertahun.id_siswa');
+    $this->db->join('tb_wali_kelas','tb_wali_kelas.id_kelas = tb_kelas.id_kelas');
+    $this->db->join('tb_guru','tb_guru.id_guru = tb_wali_kelas.id_guru');
+    $this->db->join('tb_mapel','tb_mapel.id_kelas = tb_kelas.id_kelas');
+    $this->db->where('tb_kelas.id_kelas',$id_kelas);
+    $this->db->where('tb_mapel.id_mapel',$id_mapel);
+    $query = $this->db->get();
+    return $query->result();
+  }
+  public function input_detail_ketrampilan($id_wali_kelas,$id_kelas,$id_siswa,$id_siswa_pertahun,$id_mapel,$nilai_praktek,$nilai_folio,$nilai_proyek)
   {
     // hitung nilai
     $nilai_tugas = $nilai_praktek+$nilai_folio+$nilai_proyek;
@@ -41,8 +56,11 @@ class model_detail_ketrampilan extends CI_Model
     $id_deskripsi = $query_deskripsi->row()->id_deskripsi_mapel;
 
     $data=array(
+    'id_wali_kelas'=>$id_wali_kelas,
     'id_siswa'=>$id_siswa,
+    'id_siswa_pertahun'=>$id_siswa_pertahun,
     'id_mapel'=>$id_mapel,
+    'id_kelas'=>$id_kelas,
     'nilai_praktek'=>$nilai_praktek,
     'nilai_folio'=>$nilai_folio,
     'nilai_proyek'=>$nilai_proyek,

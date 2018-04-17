@@ -232,9 +232,11 @@ class Kurikulum extends CI_Controller {
 	{
 		cek_auth();
 		$this->load->model('model_detail_ketrampilan');
+		$this->load->model('model_wali_kelas');
 		$this->load->model('model_mapel');
 		$this->load->model('model_siswa');
 		$this->load->model('model_deskripsi_mapel');
+		$this->load->model('model_kelas');
 		$bulan = (integer) date('m');
 
 		if ($bulan >= 1 && $bulan <= 6) {
@@ -242,10 +244,24 @@ class Kurikulum extends CI_Controller {
 		} else {
 			$data['semester_sekarang'] = 'ganjil';
 		}
-		$data['tb_mapel'] = $this->model_mapel->get_inputmapel();
+		if ($this->session->userdata('hak_akses')=="guru") {
+			$data['tb_mapel'] = $this->model_mapel->get_inputmapel2($this->session->userdata('id_guru'));
+		}
+		else {
+			$data['tb_mapel'] = $this->model_mapel->get_inputmapel('nama_mapel');
+		}
+		$data['tb_kelas'] = $this->model_kelas->get_inputkelas();
+		$data['tb_wali_kelas'] = $this->model_wali_kelas->get_inputwali_kelas();
 		$data['tb_siswa'] = $this->model_siswa->get_inputsiswa();
 		$data['tb_deskripsi_mapel'] = $this->model_deskripsi_mapel->get_inputdeskripsimapel();
-		$data['tb_detail_ketrampilan'] =$this->model_detail_ketrampilan->get_inputdetailketrampilan();
+		if (isset($_POST['cek'])) {
+			$id_kelas = $_POST['id_kelas'];
+			$id_mapel = $_POST['id_mapel'];
+			$data['tb_detail_ketrampilan'] = $this->model_detail_ketrampilan->input_cek_ketrampilan($id_kelas,$id_mapel);
+		} else {
+			$data['tb_detail_ketrampilan'] =$this->model_detail_ketrampilan->get_inputdetailketrampilan();
+		}
+
 		$this->load->view('kurikulum/detail_ketrampilan',$data);
 	}
 	public function nilai_sikap()

@@ -21,17 +21,17 @@
               <input type="hidden" class="form-control" id="id_detail_pengetahuan" placeholder="" name="id_detail_pengetahuan">
               <div class="form-group">
                 <label for="">Tugas 1</label>
-                <input type="text" class="form-control" id="tugas1" name="tugas1" required onkeyup="sum();" />
+                <input type="number" class="form-control" id="tugas1" name="tugas1" required onkeyup="sum();" />
                 <p class="help-block"></p>
               </div>
               <div class="form-group">
                 <label for="">Tugas 2</label>
-                <input type="text" class="form-control" id="tugas2" name="tugas2" required onkeyup="sum();" />
+                <input type="number" class="form-control" id="tugas2" name="tugas2" required onkeyup="sum();" />
                 <p class="help-block"></p>
               </div>
               <div class="form-group">
                 <label for="">Tugas 3</label>
-                <input type="text" class="form-control" id="tugas3" placeholder="0" name="tugas3" onkeyup="sum();" />
+                <input type="number" class="form-control" id="tugas3" placeholder="0" name="tugas3" onkeyup="sum();" />
                 <p class="help-block"></p>
               </div>
             </div>
@@ -39,17 +39,17 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="">Tugas 4</label>
-                <input type="text" class="form-control" id="tugas4" placeholder="0" name="tugas4" onkeyup="sum();" />
+                <input type="number" class="form-control" id="tugas4" placeholder="0" name="tugas4" onkeyup="sum();" />
                 <p class="help-block"></p>
               </div>
               <div class="form-group">
                 <label for="">UTS</label>
-                <input type="text" class="form-control" id="uts" placeholder="0" name="uts" required>
+                <input type="number" class="form-control" id="uts" placeholder="0" name="uts" required>
                 <p class="help-block"></p>
               </div>
               <div class="form-group">
                 <label for="">UAS</label>
-                <input type="text" class="form-control" id="uas" placeholder="0" name="uas" required>
+                <input type="number" class="form-control" id="uas" placeholder="0" name="uas" required>
                 <p class="help-block"></p>
               </div>
             </div>
@@ -85,19 +85,21 @@
                 <input type="hidden" class="form-control" id="id_mapel_tambah" placeholder="" name="id_mapel">
                 <input type="hidden" class="form-control" id="id_kelas_tambah" placeholder="" name="id_kelas">
                 <input type="hidden" class="form-control" id="id_siswa_tambah" placeholder="" name="id_siswa">
+                <input type="text" class="form-control" id="id_siswa_pertahun_tambah" placeholder="" name="id_siswa_pertahun">
+                
                 <div class="form-group">
                   <label for="">Tugas 1</label>
-                  <input type="text" class="form-control" id="" name="tugas1" required onkeyup="sum();" />
+                  <input type="number" class="form-control" id="" name="tugas1" required onkeyup="sum();" />
                   <p class="help-block"></p>
                 </div>
                 <div class="form-group">
                   <label for="">Tugas 2</label>
-                  <input type="text" class="form-control" id="" name="tugas2" required onkeyup="sum();" />
+                  <input type="number" class="form-control" id="" name="tugas2" required onkeyup="sum();" />
                   <p class="help-block"></p>
                 </div>
                 <div class="form-group">
                   <label for="">Tugas 3</label>
-                  <input type="text" class="form-control" id="" placeholder="0" name="tugas3" onkeyup="sum();" />
+                  <input type="number" class="form-control" id="" placeholder="0" name="tugas3" onkeyup="sum();" />
                   <p class="help-block"></p>
                 </div>
               </div>
@@ -105,12 +107,12 @@
               <div class="col-md-6">
                 <div class="form-group">
                   <label for="">Tugas 4</label>
-                  <input type="text" class="form-control" id="" placeholder="0" name="tugas4" onkeyup="sum();" />
+                  <input type="number" class="form-control" id="" placeholder="0" name="tugas4" onkeyup="sum();" />
                   <p class="help-block"></p>
                 </div>
                 <div class="form-group">
                   <label for="">UTS</label>
-                  <input type="text" class="form-control" id="" placeholder="0" name="uts" required>
+                  <input type="number" class="form-control" id="" placeholder="0" name="uts" required>
                   <p class="help-block"></p>
                 </div>
                 <div class="form-group">
@@ -366,10 +368,11 @@
 <?php $this->load->view('template/javascript') ?>
 <script type="text/javascript">
 
-function tambah_detail_pengetahuan(id_wali_kelas,id_kelas,id_siswa,id_mapel){
+function tambah_detail_pengetahuan(id_wali_kelas,id_kelas,id_siswa,id_mapel,id_siswa_pertahun){
   $('#id_wali_kelas_tambah').val(id_wali_kelas);
   $('#id_kelas_tambah').val(id_kelas);
   $('#id_siswa_tambah').val(id_siswa);
+  $('#id_siswa_pertahun_tambah').val(id_siswa_pertahun);
   $('#id_mapel_tambah').val(id_mapel);
   $('#modal_detailpengetahuan').modal('show');
 }
