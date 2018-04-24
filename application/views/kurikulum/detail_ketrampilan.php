@@ -16,36 +16,18 @@
           <!-- MULAI MEMBUAT FORM MENU -->
           <input type="hidden" class="form-control" id="id_detail_ketrampilan" placeholder="" name="id_detail_ketrampilan">
           <div class="form-group">
-            <label for="">Mata Pelajaran</label>
-            <select class="form-control" id="id_mapel" name="id_mapel" required>
-              <?php foreach ($tb_mapel as $data_tb_mapel): ?>
-                <option value="<?php echo $data_tb_mapel->id_mapel ?>"><?php echo $data_tb_mapel->nama_mapel ?></option>
-              <?php endforeach; ?>
-            </select>
-            <p class="help-block"></p>
-          </div>
-          <div class="form-group">
-            <label for="">Nama Siswa</label>
-            <select class="form-control" id="id_siswa" name="id_siswa" required>
-              <?php foreach ($tb_siswa as $data_tb_siswa): ?>
-                <option value="<?php echo $data_tb_siswa->id_siswa ?>"><?php echo $data_tb_siswa->nama_siswa ?></option>
-              <?php endforeach; ?>
-            </select>
-            <p class="help-block"></p>
-          </div>
-          <div class="form-group">
             <label for="">Nilai Praktek</label>
-            <input type="text" class="form-control" id="nilai_praktek" placeholder="0" name="nilai_praktek" required>
+            <input type="text" class="form-control" id="nilai_praktek" placeholder="0" name="nilai_praktek" required onkeyup="sum();" />
             <p class="help-block"></p>
           </div>
           <div class="form-group">
             <label for="">Nilai Folio</label>
-            <input type="text" class="form-control" id="nilai_folio" placeholder="0" name="nilai_folio" required>
+            <input type="text" class="form-control" id="nilai_folio" placeholder="0" name="nilai_folio" required onkeyup="sum();" />
             <p class="help-block"></p>
           </div>
           <div class="form-group">
             <label for="">Nilai Proyek</label>
-            <input type="text" class="form-control" id="nilai_proyek" placeholder="0" name="nilai_proyek" required>
+            <input type="text" class="form-control" id="nilai_proyek" placeholder="0" name="nilai_proyek" required onkeyup="sum();" />
             <p class="help-block"></p>
           </div>
           <!--  AKHIR MODAL MENU -->
@@ -61,48 +43,7 @@
 </div>
 <!--  MULAI MODAL-->
 <body class="hold-transition skin-black sidebar-mini">
-  <div class="modal fade" id="modal_detailketrampilan" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title" id="modal_detailketrampilan">Tambah Nilai Ketrampilan</h4>
-        </div>
-        <form class="" action="<?php echo base_url('admin/create_detail_ketrampilan') ?>" method="post" name="autoSumForm">
-          <div class="modal-body">
-            <!-- MULAI MEMBUAT FORM MENU -->
-            <input type="hidden" class="form-control" id="id_wali_kelas_tambah" placeholder="" name="id_wali_kelas">
-            <input type="hidden" class="form-control" id="id_mapel_tambah" placeholder="" name="id_mapel">
-            <input type="hidden" class="form-control" id="id_kelas_tambah" placeholder="" name="id_kelas">
-            <input type="hidden" class="form-control" id="id_siswa_tambah" placeholder="" name="id_siswa">
-            <input type="text" class="form-control" id="id_siswa_pertahun_tambah" placeholder="" name="id_siswa_pertahun">
 
-            <div class="form-group">
-              <label for="">Nilai Praktek</label>
-              <input type="text" class="form-control" id="nilai_praktek" placeholder="0" name="nilai_praktek" required>
-              <p class="help-block"></p>
-            </div>
-            <div class="form-group">
-              <label for="">Nilai Folio</label>
-              <input type="text" class="form-control" id="nilai_folio" placeholder="0" name="nilai_folio" required>
-              <p class="help-block"></p>
-            </div>
-            <div class="form-group">
-              <label for="">Nilai Proyek</label>
-              <input type="text" class="form-control" id="nilai_proyek" placeholder="0" name="nilai_proyek" required>
-              <p class="help-block"></p>
-            </div>
-            <!--  AKHIR MODAL MENU -->
-
-            <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Batal</button>
-              <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Simpan</button>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
   <div class="wrapper">
 
     <!-- Main Header -->
@@ -293,7 +234,6 @@
                                 <button type="button" class="btn btn-warning" onclick="edit_detail_ketrampilan('<?php echo $input_detail_ketrampilan->id_detail_ketrampilan; ?>')">
                                   <i class="fa fa-edit"></i>
                                 </button>
-                                <input type="hidden" name="id_detail_ketrampilan" value="<?php echo $input_detail_ketrampilan->id_detail_ketrampilan; ?>">
                                 <button type="submit" class="btn btn-danger" name="delete_detail_ketrampilan" onclick="return confirm('Apakah ANda Yakin Ingin Menghapus Data ini ? ?')">
                                   <i class="fa fa-trash-o"></i>
                                 </button>
@@ -343,23 +283,27 @@
         url: '<?php echo base_url('admin/edit_detail_ketrampilan?id_detail_ketrampilan=') ?>'+id_detail_ketrampilan,
         success: function(data){
           $response = $(data);
-          var id_detail_ketrampilan = $response.filter('#id_detail_ketrampilan').text();
+          var id_wali_kelas = $response.filter('#id_wali_kelas').text();
+          var id_kelas = $response.filter('#id_kelas').text();
           var id_siswa = $response.filter('#id_siswa').text();
           var id_mapel = $response.filter('#id_mapel').text();
           var nilai_praktek = $response.filter('#nilai_praktek').text();
           var nilai_folio = $response.filter('#nilai_folio').text();
           var nilai_proyek = $response.filter('#nilai_proyek').text();
-          // var nilai_akhir = $response.filter('#nilai_akhir').text();
-          // var id_deskripsi_mapel = $response.filter('#id_deskripsi_mapel').text();
+          var id_deskripsi_mapel = $response.filter('#id_deskripsi_mapel').text();
+          var nilai_akhir = $response.filter('#nilai_akhir').text();
+          var id_deskripsi_mapel = $response.filter('#id_deskripsi_mapel').text();
           //menampilkan ke Modal
           $('#id_detail_ketrampilan').val(id_detail_ketrampilan);
+          $('#id_wali_kelas').val(id_wali_kelas);
+          $('#id_kelas').val(id_kelas);
           $('#id_siswa').val(id_siswa);
           $('#id_mapel').val(id_mapel);
           $('#nilai_praktek').val(nilai_praktek);
           $('#nilai_folio').val(nilai_folio);
           $('#nilai_proyek').val(nilai_proyek);
-          // $('#nilai_akhir').val(nilai_akhir);
-          // $('#id_deskripsi_mapel').val(id_deskripsi_mapel);
+          $('#nilai_akhir').val(nilai_akhir);
+          $('#id_deskripsi_mapel').val(id_deskripsi_mapel);
           $('#modal_ubahdetailketrampilan').modal('show');
         }
       });

@@ -247,6 +247,7 @@ class Kurikulum extends CI_Controller {
 		} else {
 			$data['semester_sekarang'] = 'ganjil';
 		}
+
 		if ($this->session->userdata('hak_akses')=="guru") {
 			$data['tb_mapel'] = $this->model_mapel->get_inputmapel2($this->session->userdata('id_guru'));
 		}
@@ -260,7 +261,12 @@ class Kurikulum extends CI_Controller {
 		if (isset($_POST['cek'])) {
 			$id_kelas = $_POST['id_kelas'];
 			$id_mapel = $_POST['id_mapel'];
-			$data['tb_detail_ketrampilan'] = $this->model_detail_ketrampilan->input_cek_ketrampilan($id_kelas,$id_mapel);
+			// TODO: ini diubah
+			// echo "<pre>";
+			// var_dump();
+			// die();
+			//$data['tb_detail_pengetahuan'] = $this->model_detail_pengetahuan->input_cek_pengetahuan($id_kelas,$id_mapel);
+			$data['tb_detail_ketrampilan'] =$this->model_detail_ketrampilan->get_inputdetailketrampilansearch($id_kelas,$id_mapel);
 		} else {
 			$data['tb_detail_ketrampilan'] =$this->model_detail_ketrampilan->get_inputdetailketrampilan();
 		}

@@ -10,14 +10,29 @@ class model_detail_ketrampilan extends CI_Model
     $this->load->database();
   }
   public function get_inputdetailketrampilan(){
-    $this->db->join('tb_siswa','tb_detail_ketrampilan.id_siswa=tb_siswa.id_siswa');
-    $this->db->join('tb_mapel','tb_detail_ketrampilan.id_mapel=tb_mapel.id_mapel');
-    $this->db->join('tb_wali_kelas','tb_detail_ketrampilan.id_wali_kelas=tb_wali_kelas.id_wali_kelas');
-    $this->db->join('tb_kelas','tb_detail_ketrampilan.id_kelas=tb_kelas.id_kelas');
-    $this->db->join('tb_siswa_pertahun','tb_detail_ketrampilan.id_kelas=tb_kelas.id_kelas');
-    $this->db->join('tb_deskripsi_mapel','tb_detail_ketrampilan.id_deskripsi_mapel=tb_deskripsi_mapel.id_deskripsi_mapel');
-    $query = $this->db->get('tb_detail_ketrampilan');
-    return $query->result();
+    $this->db->from('tb_detail_ketrampilan');
+        $this->db->join('tb_mapel','tb_mapel.id_mapel = tb_detail_ketrampilan.id_mapel');
+        $this->db->join('tb_siswa','tb_siswa.id_siswa = tb_detail_ketrampilan.id_siswa');
+        $this->db->join('tb_wali_kelas','tb_wali_kelas.id_wali_kelas = tb_detail_ketrampilan.id_wali_kelas');
+        $this->db->join('tb_guru','tb_guru.id_guru = tb_wali_kelas.id_guru');
+        $this->db->join('tb_kelas','tb_kelas.id_kelas = tb_wali_kelas.id_kelas');
+        $this->db->join('tb_deskripsi_mapel','tb_deskripsi_mapel.id_deskripsi_mapel = tb_detail_ketrampilan.id_deskripsi_mapel','left');
+        $query = $this->db->get();
+        return $query->result();
+  }
+  public function get_inputdetailketrampilansearch($id_kelas,$id_mapel){
+    $this->db->from('tb_detail_ketrampilan');
+        $this->db->join('tb_mapel','tb_mapel.id_mapel = tb_detail_ketrampilan.id_mapel');
+        $this->db->join('tb_siswa','tb_siswa.id_siswa = tb_detail_ketrampilan.id_siswa');
+        $this->db->join('tb_wali_kelas','tb_wali_kelas.id_wali_kelas = tb_detail_ketrampilan.id_wali_kelas');
+        $this->db->join('tb_guru','tb_guru.id_guru = tb_wali_kelas.id_guru');
+        $this->db->join('tb_kelas','tb_kelas.id_kelas = tb_wali_kelas.id_kelas');
+        //$this->db->join('tb_mapel','tb_mapel.id_kelas = tb_kelas.id_kelas');
+        $this->db->join('tb_deskripsi_mapel','tb_deskripsi_mapel.id_deskripsi_mapel = tb_detail_ketrampilan.id_deskripsi_mapel','left');
+        $this->db->where('tb_kelas.id_kelas',$id_kelas);
+        $this->db->where('tb_mapel.id_mapel',$id_mapel);
+        $query = $this->db->get();
+        return $query->result();
   }
   public function input_cek_ketrampilan($id_kelas,$id_mapel){
     $this->db->from('tb_kelas');
@@ -26,50 +41,31 @@ class model_detail_ketrampilan extends CI_Model
     $this->db->join('tb_wali_kelas','tb_wali_kelas.id_kelas = tb_kelas.id_kelas');
     $this->db->join('tb_guru','tb_guru.id_guru = tb_wali_kelas.id_guru');
     $this->db->join('tb_mapel','tb_mapel.id_kelas = tb_kelas.id_kelas');
+
     $this->db->where('tb_kelas.id_kelas',$id_kelas);
     $this->db->where('tb_mapel.id_mapel',$id_mapel);
     $query = $this->db->get();
+    //print_r($query->result());die();
     return $query->result();
   }
-  public function input_detail_ketrampilan($id_wali_kelas,$id_kelas,$id_siswa,$id_siswa_pertahun,$id_mapel,$nilai_praktek,$nilai_folio,$nilai_proyek)
+  public function insert_siswa_pertahun_detail_ketrampilan($id_wali_kelas,$id_kelas,$id_siswa,$id_siswa_pertahun,$id_mapel)
   {
-    // hitung nilai
-    $nilai_tugas = $nilai_praktek+$nilai_folio+$nilai_proyek;
-    $nilai_tugas = ($nilai_tugas)/3;
-
-    // bikin deskripsi
-    if ($nilai_tugas >= 86 && $nilai_tugas <=100) {
-      $nilai_huruf = 'A';
-    } elseif ($nilai_tugas >= 78 && $nilai_tugas <=85) {
-      $nilai_huruf = 'B';
-    }elseif ($nilai_tugas >= 69 && $nilai_tugas <=77) {
-      $nilai_huruf = 'C';
-    }
-    else {
-      $nilai_huruf = 'D';
-    }
-
-    $this->db->from('tb_deskripsi_mapel');
-    $this->db->where('jenis_deskripsi','Ketrampilan');
-    $this->db->where('nilai',$nilai_huruf);
-    $query_deskripsi = $this->db->get();
-    $id_deskripsi = $query_deskripsi->row()->id_deskripsi_mapel;
-
     $data=array(
-    'id_wali_kelas'=>$id_wali_kelas,
-    'id_siswa'=>$id_siswa,
-    'id_siswa_pertahun'=>$id_siswa_pertahun,
-    'id_mapel'=>$id_mapel,
-    'id_kelas'=>$id_kelas,
-    'nilai_praktek'=>$nilai_praktek,
-    'nilai_folio'=>$nilai_folio,
-    'nilai_proyek'=>$nilai_proyek,
-    'nilai_akhir'=>$nilai_tugas,
-    'id_deskripsi_mapel'=>$id_deskripsi
+      'id_wali_kelas'=>$id_wali_kelas,
+      'id_siswa'=>$id_siswa,
+      'id_siswa_pertahun'=>$id_siswa_pertahun,
+      'id_mapel'=>$id_mapel,
+      'id_kelas'=>$id_kelas,
+      'nilai_praktek'=>'0',
+      'nilai_folio'=>'0',
+      'nilai_proyek'=>'0',
+      'nilai_akhir'=>'0',
+      'id_deskripsi_mapel'=>'0'
     );
-    $this->db->insert('tb_detail_ketrampilan',$data);
-
+    $query=$this->db->insert('tb_detail_ketrampilan',$data);
+    return $query;
   }
+
   // Awal Model edit
   //pertama
   public function ubah_detail_ketrampilan($id_detail_ketrampilan){
@@ -79,33 +75,32 @@ class model_detail_ketrampilan extends CI_Model
     return $query->result();
   }
   //ketujuh
-  public function update_detail_ketrampilan($id_detail_ketrampilan,$id_siswa,$id_mapel,$nilai_praktek,$nilai_folio,$nilai_proyek){
+  public function update_detail_ketrampilan($id_detail_ketrampilan,$nilai_praktek,$nilai_folio,$nilai_proyek){
 
     // hitung nilai
-    $nilai_tugas = $nilai_praktek+$nilai_folio+$nilai_proyek;
-    $nilai = ($nilai_tugas)/3;
+    $nilai_tugas = $tugas1+$tugas2+$tugas3+$tugas4;
+    $nilai_tugas = ($nilai_tugas)/4;
+    $nilai = $nilai_tugas+$uts+$uas;
+    $nilai = ($nilai/3);
+    $nilai_baru = round($nilai,0);
 
-    // bikin deskripsi
-    if ($nilai >= 86 && $nilai <=100) {
+    if ($nilai_baru >= 86 && $nilai_baru <=100) {
       $nilai_huruf = 'A';
-    } elseif ($nilai >= 78 && $nilai <=85) {
+    } elseif ($nilai_baru >= 78 && $nilai_baru <=85) {
       $nilai_huruf = 'B';
-    }
-    else {
+    }elseif ($nilai_baru >= 69 && $nilai_baru <=77) {
       $nilai_huruf = 'C';
+    }else {
+      $nilai_huruf = 'D';
     }
     $this->db->from('tb_deskripsi_mapel');
-    $this->db->where('jenis_deskripsi','Ketrampilan');
+    $this->db->where('jenis_deskripsi','Pengetahuan');
     $this->db->where('nilai',$nilai_huruf);
     $query_deskripsi = $this->db->get();
     $id_deskripsi = $query_deskripsi->row()->id_deskripsi_mapel;
 
-
     $this->db->where('id_detail_ketrampilan',$id_detail_ketrampilan);
     $data=array(
-      'id_detail_ketrampilan'=>$id_detail_ketrampilan,
-      'id_siswa'=>$id_siswa,
-      'id_mapel'=>$id_mapel,
       'nilai_praktek'=>$nilai_praktek,
       'nilai_folio'=>$nilai_folio,
       'nilai_proyek'=>$nilai_proyek,

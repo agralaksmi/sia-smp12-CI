@@ -298,24 +298,6 @@ class Admin extends CI_Controller {
     $this->session->set_flashdata('sukses', 'Berhasil Tambah Data');
     redirect(base_url('kurikulum/detail_pengetahuan'));
   }
-  public function create_detail_pengetahuan(){
-    $id_wali_kelas=$this->input->post('id_wali_kelas');
-    $id_siswa=$this->input->post('id_siswa');
-    $id_siswa_pertahun=$this->input->post('id_siswa_pertahun');
-    $id_kelas=$this->input->post('id_kelas');
-    $id_mapel=$this->input->post('id_mapel');
-    $tugas1=$this->input->post('tugas1');
-    $tugas2=$this->input->post('tugas2');
-    $tugas3=$this->input->post('tugas3');
-    $tugas4=$this->input->post('tugas4');
-    $uts=$this->input->post('uts');
-    $uas=$this->input->post('uas');
-
-    $detail_pengetahuan=$this->model_detail_pengetahuan->input_detail_pengetahuan($id_wali_kelas,$id_kelas,$id_siswa,$id_siswa_pertahun,$id_mapel,$tugas1,$tugas2,$tugas3,$tugas4,$uts,$uas);
-    $this->session->set_flashdata('sukses', 'Berhasil Tambah Data');
-    redirect(base_url('kurikulum/detail_pengetahuan'));
-  }
-
   public function create_detail_ketrampilan(){
     $id_wali_kelas=$this->input->post('id_wali_kelas');
     $id_siswa=$this->input->post('id_siswa');
@@ -835,18 +817,12 @@ class Admin extends CI_Controller {
   //keempat edit detail_pengetahuan
   public function update_detail_pengetahuan(){
     $id_detail_pengetahuan = $this->input->post('id_detail_pengetahuan');
-    //$id_siswa = $this->input->post('id_siswa');
-    //$id_wali_kelas = $this->input->post('id_wali_kelas');
-    //$id_kelas = $this->input->post('id_kelas');
-    //$id_mapel=$this->input->post('id_mapel');
-    //$ulangan_harian=$this->input->post('ulangan_harian');
     $tugas1= $this->input->post('tugas1');
     $tugas2= $this->input->post('tugas2');
     $tugas3= $this->input->post('tugas3');
     $tugas4= $this->input->post('tugas4');
     $uts= $this->input->post('uts');
     $uas= $this->input->post('uas');
-    //$id_deskripsi_mapel=$this->input->post('id_deskripsi_mapel');
 
     $detail_pengetahuan= $this->model_detail_pengetahuan->update_detail_pengetahuan($id_detail_pengetahuan,$tugas1,$tugas2,$tugas3,$tugas4,$uts,$uas);
     if ($detail_pengetahuan) {
@@ -855,7 +831,7 @@ class Admin extends CI_Controller {
     }
   }
 
-  // Kedua Edit detail_pengetahuan
+  // Kedua Edit detail_ketrampilan
   public function edit_detail_ketrampilan(){
     $id_detail_ketrampilan = $this->input->get('id_detail_ketrampilan');
     $detail_ketrampilan = $this->model_detail_ketrampilan->ubah_detail_ketrampilan($id_detail_ketrampilan);
@@ -871,20 +847,18 @@ class Admin extends CI_Controller {
     }
   }
 
-  //keempat edit detail_pengetahuan
+  //keempat edit detail_ketrampilan
   public function update_detail_ketrampilan(){
     $id_detail_ketrampilan = $this->input->post('id_detail_ketrampilan');
-    $id_siswa = $this->input->post('id_siswa');
-    $id_mapel=$this->input->post('id_mapel');
-    $nilai_praktek=$this->input->post('nilai_praktek');
+    $nilai_praktek= $this->input->post('nilai_praktek');
     $nilai_folio= $this->input->post('nilai_folio');
     $nilai_proyek= $this->input->post('nilai_proyek');
-    // $nilai_akhir= $this->input->post('nilai_akhir');
-    // $id_deskripsi_mapel=$this->input->post('id_deskripsi_mapel');
 
-    $detail_ketrampilan= $this->model_detail_ketrampilan->update_detail_ketrampilan($id_detail_ketrampilan,$id_siswa,$id_mapel,$nilai_praktek,$nilai_folio,$nilai_proyek);
-    $this->session->set_flashdata('edit', 'Sukses edit data');
-    redirect(base_url('kurikulum/detail_ketrampilan'));
+    $detail_ketrampilan= $this->model_detail_ketrampilan->update_detail_ketrampilan($id_detail_ketrampilan,$nilai_praktek,$nilai_folio,$nilai_proyek);
+    if ($detail_ketrampilan) {
+      $this->session->set_flashdata('edit', 'Sukses edit data');
+      redirect(base_url('kurikulum/detail_ketrampilan'));
+    }
   }
 
   // Kedua Edit nilai_ekskul
