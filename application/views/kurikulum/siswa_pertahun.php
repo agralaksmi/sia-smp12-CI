@@ -77,12 +77,13 @@
             </div>
             <div class="form-group">
               <label for="">Kelas</label>
-              <select class="form-control" id="" name="id_kelas" required>
+              <select class="form-control" id="id_kelas_get" name="id_kelas" onchange="getWaliKelasFromKelas()"required>
                 <option value="">.:Pilih:.</option>
                 <?php foreach ($tb_kelas as $data_tb_kelas): ?>
                   <option value="<?php echo $data_tb_kelas->id_kelas ?>"><?php echo $data_tb_kelas->tingkat ?><?php echo $data_tb_kelas->nama_kelas ?></option>
                 <?php endforeach; ?>
               </select>
+              <input type="hidden" id="id_wali_kelas" name="id_wali_kelas" value="">
               <p class="help-block"></p>
             </div>
             <div class="form-group">
@@ -92,6 +93,10 @@
               <p class="help-block"></p>
             </div>
 
+           <?php $no=0; foreach ($tb_mapel as $data_tb_mapel):?>
+           <input type="hidden" name="mapel<?php echo $no++?>" value="<?php echo $data_tb_mapel->id_mapel;?>">
+          <?php endforeach; ?>
+           <input type="hidden" name="jumlah" value="<?php echo $no ?>">
             <!--  AKHIR MODAL MENU -->
 
             <div class="modal-footer">
@@ -287,6 +292,18 @@
 <!-- jQuery 2.2.3 -->
 <?php $this->load->view('template/javascript') ?>
 <script type="text/javascript">
+
+function getWaliKelasFromKelas(){
+  id_kelas = $('#id_kelas_get').val();
+  $.ajax({
+    url : '<?php echo base_url('kurikulum/get_wali_kelas_from_kelas/')?>'+id_kelas,
+    type : 'get',
+    success : function(data) {
+      console.log(data.id_wali_kelas);
+      $('#id_wali_kelas').val(data.id_wali_kelas);
+    }
+  });
+}
 
 function edit_siswa_pertahun(id_siswa_pertahun){
   $.ajax({

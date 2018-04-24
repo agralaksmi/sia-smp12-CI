@@ -24,6 +24,10 @@ class model_mapel extends CI_Model
     $query = $this->db->get('tb_mapel');
     return $query->result();
   }
+  public function get_mapel(){
+  $this->db->from('tb_mapel');
+  return $this->db->get()->result();
+  }
   public function input_mapel($id_kelas,$nama_mapel,$kelompok,$kkm)
   {
     $data=array(

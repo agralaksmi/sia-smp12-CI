@@ -113,10 +113,12 @@ class Kurikulum extends CI_Controller {
 		$this->load->model('model_siswa');
 		$this->load->model('model_tahun_ajaran');
 		$this->load->model('model_kelas');
+		$this->load->model('model_mapel');
 		$data['tb_siswa_pertahun'] = $this->model_siswa_pertahun->get_inputsiswapertahun();
 		$data['tb_siswa'] = $this->model_siswa->get_inputsiswa();
 		$data['tb_kelas'] = $this->model_kelas->get_inputkelas();
 		$data['tb_tahun_ajaran'] = $this->model_tahun_ajaran->get_tahun_ajaran_aktif();
+		$data['tb_mapel'] = $this->model_mapel->get_mapel();
 		$this->load->view('kurikulum/siswa_pertahun',$data);
 	}
 	public function hak_akses()
@@ -221,7 +223,8 @@ class Kurikulum extends CI_Controller {
 			// echo "<pre>";
 			// var_dump();
 			// die();
-			$data['tb_detail_pengetahuan'] = $this->model_detail_pengetahuan->input_cek_pengetahuan($id_kelas,$id_mapel);
+			//$data['tb_detail_pengetahuan'] = $this->model_detail_pengetahuan->input_cek_pengetahuan($id_kelas,$id_mapel);
+			$data['tb_detail_pengetahuan'] =$this->model_detail_pengetahuan->get_inputdetailpengetahuansearch($id_kelas,$id_mapel);
 		} else {
 			$data['tb_detail_pengetahuan'] =$this->model_detail_pengetahuan->get_inputdetailpengetahuan();
 		}
@@ -335,6 +338,13 @@ class Kurikulum extends CI_Controller {
 			$data['tanpa_ket']=$data['tanpa_ket']+$value->tanpa_ket;
 		}
 		$this->load->view('kurikulum/rapor_hal3',$data);
+	}
+	public function get_wali_kelas_from_kelas($id_kelas){
+		$this->load->model('model_siswa_pertahun');
+		$guru = $this->model_siswa_pertahun->select_walikelas_siswa($id_kelas);
+		$this->output
+					->set_content_type('application/json')
+					->set_output(json_encode($guru));
 	}
 	public function get_guru_from_siswa($id_siswa='')
 	{

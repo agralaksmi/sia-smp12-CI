@@ -4,7 +4,6 @@
  */
 class model_siswa_pertahun extends CI_Model
 {
-
   function __construct()
   {
     $this->load->database();
@@ -24,8 +23,18 @@ class model_siswa_pertahun extends CI_Model
       'id_kelas'=>$id_kelas,
       'id_tahun_ajaran'=>$id_tahun_ajaran
     );
-    $this->db->insert('tb_siswa_pertahun',$data);
-
+    $this->db->trans_start();
+    $query['result'] = $this->db->insert('tb_siswa_pertahun',$data);
+    $query['last_id'] = $this->db->insert_id();
+    $this->db->trans_complete();
+    return $query;
+  }
+  public function select_walikelas_siswa($id_kelas=null){
+    $this->db->from('tb_wali_kelas');
+    if($id_kelas!=null){
+      $this->db->where('id_kelas',$id_kelas);
+    }
+    return $this->db->get()->row();
   }
   // Awal Model edit
   //pertama
