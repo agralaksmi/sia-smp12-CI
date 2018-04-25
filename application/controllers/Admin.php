@@ -245,6 +245,7 @@ class Admin extends CI_Controller {
       $detail_pengetahuan=$this->model_detail_pengetahuan->insert_siswa_pertahun_detail_pengetahuan($id_wali_kelas,$id_siswa,$id_kelas,$id_siswa_pertahun,$id_mapel);
       $detail_ketrampilan=$this->model_detail_ketrampilan->insert_siswa_pertahun_detail_ketrampilan($id_wali_kelas,$id_siswa,$id_kelas,$id_siswa_pertahun,$id_mapel);
       }
+      insert_nilai_ekskul($id_siswa,$id_ekskul,$id_siswa_pertahun,$id_kelas)
       $this->session->set_flashdata('sukses', 'Berhasil Tambah Data');
       redirect(base_url('kurikulum/siswa_pertahun'));
     }
