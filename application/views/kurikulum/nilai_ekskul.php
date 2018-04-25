@@ -16,31 +16,8 @@
           <!-- MULAI MEMBUAT FORM MENU -->
           <input type="hidden" class="form-control" id="id_nilai_ekskul" placeholder="" name="id_nilai_ekskul">
           <div class="form-group">
-            <label for="">Nama Siswa</label>
-            <select class="form-control" id="id_siswa" name="id_siswa" required>
-              <?php foreach ($tb_siswa as $data_tb_siswa): ?>
-                <option value="<?php echo $data_tb_siswa->id_siswa ?>"><?php echo $data_tb_siswa->nama_siswa ?></option>
-              <?php endforeach; ?>
-            </select>
-            <p class="help-block"></p>
-          </div>
-          <div class="form-group">
-            <label for="">Ekstrakulikuler</label>
-            <select class="form-control" id="id_ekskul" name="id_ekskul" required>
-              <?php foreach ($tb_ekskul as $data_tb_ekskul): ?>
-                <option value="<?php echo $data_tb_ekskul->id_ekskul ?>"><?php echo $data_tb_ekskul->nama_ekskul ?></option>
-              <?php endforeach; ?>
-            </select>
-            <p class="help-block"></p>
-          </div>
-          <div class="form-group">
             <label for="">Nilai</label>
             <input type="text" class="form-control" id="nilai" placeholder="Masukkan Nilai" name="nilai" required>
-            <p class="help-block"></p>
-          </div>
-          <div class="form-group">
-            <label for="">Predikat</label>
-            <input type="text" class="form-control" id="predikat" placeholder="" name="predikat" required>
             <p class="help-block"></p>
           </div>
           <div class="form-group">
@@ -239,6 +216,8 @@
                 <thead>
                   <tr class="bg-blue" align="center">
                     <th>No</th>
+                    <th>Nama Guru</th>
+                    <th>Kelas</th>
                     <th>Nama Siswa</th>
                     <th>Ekstrakulikuler</th>
                     <th>Nilai</th>

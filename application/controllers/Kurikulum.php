@@ -178,17 +178,7 @@ class Kurikulum extends CI_Controller {
 		$data['tb_kelas'] = $this->model_kelas->get_inputkelas();
 		$this->load->view('kurikulum/mapel',$data);
 	}
-	public function nilai_ekskul()
-	{
-		cek_auth();
-		$this->load->model('model_nilai_ekskul');
-		$this->load->model('model_siswa');
-		$this->load->model('model_ekskul');
-		$data['tb_ekskul'] = $this->model_ekskul->get_inputekskul();
-		$data['tb_siswa'] = $this->model_siswa->get_inputsiswa();
-		$data['tb_nilai_ekskul'] = $this->model_nilai_ekskul->get_inputnilaiekskul();
-		$this->load->view('kurikulum/nilai_ekskul',$data);
-	}
+
 	public function detail_pengetahuan()
 	{
 		cek_auth();
@@ -272,6 +262,32 @@ class Kurikulum extends CI_Controller {
 		}
 
 		$this->load->view('kurikulum/detail_ketrampilan',$data);
+	}
+	public function nilai_ekskul()
+	{
+		cek_auth();
+		$this->load->model('model_nilai_ekskul');
+		$this->load->model('model_siswa');
+		$this->load->model('model_kelas');
+		$this->load->model('model_ekskul');
+		$bulan = (integer) date('m');
+
+		if ($bulan >= 1 && $bulan <= 6) {
+			$data['semester_sekarang'] = 'genap';
+		} else {
+			$data['semester_sekarang'] = 'ganjil';
+		}
+		$data['tb_ekskul'] = $this->model_ekskul->get_inputekskul();
+		$data['tb_siswa'] = $this->model_siswa->get_inputsiswa();
+		$data['tb_kelas'] = $this->model_kelas->get_inputkelas();
+		if (isset($_POST['cek'])) {
+					$id_kelas = $_POST['id_kelas'];
+					$data['tb_nilai_ekskul'] =$this->model_nilai_ekskul->get_inputnilaiekskulsearch($id_kelas);
+				} else {
+					$data['tb_nilai_ekskul'] =$this->model_nilai_ekskul->get_inputnilaiekskul();
+				}
+
+		$this->load->view('kurikulum/nilai_ekskul',$data);
 	}
 	public function nilai_sikap()
 	{

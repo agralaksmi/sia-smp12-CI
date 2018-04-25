@@ -258,9 +258,6 @@
                         <td>
                           <form class="" action="<?php echo base_url('admin/delete_detail_pengetahuan') ?>" method="post">
                             <input type="hidden" name="id_detail_pengetahuan" value="<?php echo @$input_detail_pengetahuan->id_detail_pengetahuan; ?>">
-                            <?php if (!isset($input_detail_pengetahuan->tugas1)): ?>
-                              <button type="button" name="button" class="btn btn-primary" onclick="tambah_detail_pengetahuan(<?php echo @$input_detail_pengetahuan->id_wali_kelas ?>,<?php echo @$input_detail_pengetahuan->id_kelas ?>,<?php echo @$input_detail_pengetahuan->id_siswa ?>,<?php echo @$input_detail_pengetahuan->id_mapel ?>,<?php echo @$input_detail_pengetahuan->id_siswa_pertahun ?>)"><i class="fa fa-plus"></i></button>
-                            <?php else: ?>
                               <!-- Kelima-->
                               <button type="button" class="btn btn-warning" onclick="edit_detail_pengetahuan('<?php echo @$input_detail_pengetahuan->id_detail_pengetahuan; ?>')">
                                 <i class="fa fa-edit"></i>
@@ -268,7 +265,6 @@
                               <button type="submit" class="btn btn-danger" name="delete_detail_pengetahuan" onclick="return confirm('Apakah ANda Yakin Ingin Menghapus Data ini ? ?')">
                                 <i class="fa fa-trash-o"></i>
                               </button>
-                            <?php endif; ?>
                           </form>
                         </td>
                       </tr>

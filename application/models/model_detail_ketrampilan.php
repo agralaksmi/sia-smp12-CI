@@ -13,6 +13,7 @@ class model_detail_ketrampilan extends CI_Model
     $this->db->from('tb_detail_ketrampilan');
         $this->db->join('tb_mapel','tb_mapel.id_mapel = tb_detail_ketrampilan.id_mapel');
         $this->db->join('tb_siswa','tb_siswa.id_siswa = tb_detail_ketrampilan.id_siswa');
+        $this->db->join('tb_siswa_pertahun','tb_siswa_pertahun.id_siswa_pertahun = tb_detail_ketrampilan.id_siswa_pertahun');
         $this->db->join('tb_wali_kelas','tb_wali_kelas.id_wali_kelas = tb_detail_ketrampilan.id_wali_kelas');
         $this->db->join('tb_guru','tb_guru.id_guru = tb_wali_kelas.id_guru');
         $this->db->join('tb_kelas','tb_kelas.id_kelas = tb_wali_kelas.id_kelas');
@@ -24,6 +25,7 @@ class model_detail_ketrampilan extends CI_Model
     $this->db->from('tb_detail_ketrampilan');
         $this->db->join('tb_mapel','tb_mapel.id_mapel = tb_detail_ketrampilan.id_mapel');
         $this->db->join('tb_siswa','tb_siswa.id_siswa = tb_detail_ketrampilan.id_siswa');
+        $this->db->join('tb_siswa_pertahun','tb_siswa_pertahun.id_siswa_pertahun = tb_detail_ketrampilan.id_siswa_pertahun');
         $this->db->join('tb_wali_kelas','tb_wali_kelas.id_wali_kelas = tb_detail_ketrampilan.id_wali_kelas');
         $this->db->join('tb_guru','tb_guru.id_guru = tb_wali_kelas.id_guru');
         $this->db->join('tb_kelas','tb_kelas.id_kelas = tb_wali_kelas.id_kelas');
@@ -48,7 +50,7 @@ class model_detail_ketrampilan extends CI_Model
     //print_r($query->result());die();
     return $query->result();
   }
-  public function insert_siswa_pertahun_detail_ketrampilan($id_wali_kelas,$id_kelas,$id_siswa,$id_siswa_pertahun,$id_mapel)
+  public function insert_siswa_pertahun_detail_ketrampilan($id_wali_kelas,$id_siswa,$id_kelas,$id_siswa_pertahun,$id_mapel)
   {
     $data=array(
       'id_wali_kelas'=>$id_wali_kelas,
@@ -78,9 +80,7 @@ class model_detail_ketrampilan extends CI_Model
   public function update_detail_ketrampilan($id_detail_ketrampilan,$nilai_praktek,$nilai_folio,$nilai_proyek){
 
     // hitung nilai
-    $nilai_tugas = $tugas1+$tugas2+$tugas3+$tugas4;
-    $nilai_tugas = ($nilai_tugas)/4;
-    $nilai = $nilai_tugas+$uts+$uas;
+    $nilai= $nilai_praktek+$nilai_folio+$nilai_proyek;
     $nilai = ($nilai/3);
     $nilai_baru = round($nilai,0);
 

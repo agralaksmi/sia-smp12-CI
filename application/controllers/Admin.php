@@ -243,6 +243,7 @@ class Admin extends CI_Controller {
         $id_mapel = $this->input->post($data_mapel);
 
       $detail_pengetahuan=$this->model_detail_pengetahuan->insert_siswa_pertahun_detail_pengetahuan($id_wali_kelas,$id_siswa,$id_kelas,$id_siswa_pertahun,$id_mapel);
+      $detail_ketrampilan=$this->model_detail_ketrampilan->insert_siswa_pertahun_detail_ketrampilan($id_wali_kelas,$id_siswa,$id_kelas,$id_siswa_pertahun,$id_mapel);
       }
       $this->session->set_flashdata('sukses', 'Berhasil Tambah Data');
       redirect(base_url('kurikulum/siswa_pertahun'));
@@ -298,20 +299,19 @@ class Admin extends CI_Controller {
     $this->session->set_flashdata('sukses', 'Berhasil Tambah Data');
     redirect(base_url('kurikulum/detail_pengetahuan'));
   }
-  public function create_detail_ketrampilan(){
-    $id_wali_kelas=$this->input->post('id_wali_kelas');
-    $id_siswa=$this->input->post('id_siswa');
-    $id_siswa_pertahun=$this->input->post('id_siswa_pertahun');
-    $id_kelas=$this->input->post('id_kelas');
-    $id_mapel=$this->input->post('id_mapel');
-    $nilai_praktek= $this->input->post('nilai_praktek');
-    $nilai_folio=$this->input->post('nilai_folio');
-    $nilai_proyek=$this->input->post('nilai_proyek');
-
-    $detail_ketrampilan=$this->model_detail_ketrampilan->input_detail_ketrampilan($id_wali_kelas,$id_kelas,$id_siswa,$id_siswa_pertahun,$id_mapel,$nilai_praktek,$nilai_folio,$nilai_proyek);
-    $this->session->set_flashdata('sukses', 'Berhasil Tambah Data');
-    redirect(base_url('kurikulum/detail_ketrampilan'));
-  }
+  // public function create_detail_ketrampilan(){
+  //   $id_wali_kelas=$this->input->post('id_wali_kelas');
+  //   $id_siswa=$this->input->post('id_siswa');
+  //   $id_siswa_pertahun=$this->input->post('id_siswa_pertahun');
+  //   $id_kelas=$this->input->post('id_kelas');
+  //   $id_mapel=$this->input->post('id_mapel');
+  //   $nilai_praktek= $this->input->post('nilai_praktek');
+  //   $nilai_folio=$this->input->post('nilai_folio');
+  //   $nilai_proyek=$this->input->post('nilai_proyek');
+  //   $detail_ketrampilan=$this->model_detail_ketrampilan->input_detail_ketrampilan($id_wali_kelas,$id_kelas,$id_siswa,$id_siswa_pertahun,$id_mapel,$nilai_praktek,$nilai_folio,$nilai_proyek);
+  //   $this->session->set_flashdata('sukses', 'Berhasil Tambah Data');
+  //   redirect(base_url('kurikulum/detail_ketrampilan'));
+  // }
 
   public function create_nilai_ekskul(){
     $id_siswa= $this->input->post('id_siswa');
@@ -837,6 +837,8 @@ class Admin extends CI_Controller {
     $detail_ketrampilan = $this->model_detail_ketrampilan->ubah_detail_ketrampilan($id_detail_ketrampilan);
     foreach ($detail_ketrampilan as $data_detail_ketrampilan) {
       echo '<div id="id_detail_ketrampilan">'.$id_detail_ketrampilan.'</div>';
+      echo '<div id="id_wali_kelas">'.$data_detail_ketrampilan->id_wali_kelas.'</div>';
+      echo '<div id="id_kelas">'.$data_detail_ketrampilan->id_kelas.'</div>';
       echo '<div id="id_siswa">'.$data_detail_ketrampilan->id_siswa.'</div>';
       echo '<div id="id_mapel">'.$data_detail_ketrampilan->id_mapel.'</div>';
       echo '<div id="nilai_praktek">'.$data_detail_ketrampilan->nilai_praktek.'</div>';
@@ -868,6 +870,7 @@ class Admin extends CI_Controller {
     foreach ($nilai_ekskul as $data_nilai_ekskul) {
       echo '<div id="id_nilai_ekskul">'.$id_nilai_ekskul.'</div>';
       echo '<div id="id_siswa">'.$data_nilai_ekskul->id_siswa.'</div>';
+      echo '<div id="id_kelas">'.$data_nilai_ekskul->id_kelas.'</div>';
       echo '<div id="id_ekskul">'.$data_nilai_ekskul->id_ekskul.'</div>';
       echo '<div id="nilai">'.$data_nilai_ekskul->nilai.'</div>';
       echo '<div id="predikat">'.$data_nilai_ekskul->predikat.'</div>';
@@ -878,15 +881,14 @@ class Admin extends CI_Controller {
   //keempat edit nilai_ekskul
   public function update_nilai_ekskul(){
     $id_nilai_ekskul = $this->input->post('id_nilai_ekskul');
-    $id_siswa = $this->input->post('id_siswa');
-    $id_ekskul=$this->input->post('id_ekskul');
     $nilai=$this->input->post('nilai');
-    $predikat= $this->input->post('predikat');
     $ket= $this->input->post('ket');
 
-    $nilai_ekskul= $this->model_nilai_ekskul->update_nilai_ekskul($id_nilai_ekskul,$id_siswa,$id_ekskul,$nilai,$predikat,$ket);
-    $this->session->set_flashdata('edit', 'Sukses edit data');
-    redirect(base_url('kurikulum/nilai_ekskul'));
+    $nilai_ekskul= $this->model_nilai_ekskul->update_nilai_ekskul($id_nilai_ekskul,$nilai,$ket);
+      if ($nilai_ekskul) {
+        $this->session->set_flashdata('edit', 'Sukses edit data');
+        redirect(base_url('kurikulum/nilai_ekskul'));
+      }
   }
 
   // Kedua Edit nilai_sikap

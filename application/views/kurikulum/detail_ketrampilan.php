@@ -227,9 +227,6 @@
                           <td>
                             <form class="" action="<?php echo base_url('admin/delete_detail_ketrampilan') ?>" method="post">
                               <input type="hidden" name="id_detail_ketrampilan" value="<?php echo @$input_detail_ketrampilan->id_detail_ketrampilan; ?>">
-                              <?php if (!isset($input_detail_ketrampilan->praktek)): ?>
-                                <button type="button" name="button" class="btn btn-primary" onclick="tambah_detail_ketrampilan(<?php echo @$input_detail_ketrampilan->id_wali_kelas ?>,<?php echo @$input_detail_ketrampilan->id_kelas ?>,<?php echo @$input_detail_ketrampilan->id_siswa ?>,<?php echo @$input_detail_ketrampilan->id_mapel ?>,<?php echo @$input_detail_ketrampilan->id_siswa_pertahun ?>)"><i class="fa fa-plus"></i></button>
-                              <?php else: ?>
                                 <!-- Kelima-->
                                 <button type="button" class="btn btn-warning" onclick="edit_detail_ketrampilan('<?php echo $input_detail_ketrampilan->id_detail_ketrampilan; ?>')">
                                   <i class="fa fa-edit"></i>
@@ -237,7 +234,6 @@
                                 <button type="submit" class="btn btn-danger" name="delete_detail_ketrampilan" onclick="return confirm('Apakah ANda Yakin Ingin Menghapus Data ini ? ?')">
                                   <i class="fa fa-trash-o"></i>
                                 </button>
-                              <?php endif; ?>
                             </form>
                           </td>
                         </tr>
