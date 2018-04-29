@@ -16,8 +16,31 @@
           <!-- MULAI MEMBUAT FORM MENU -->
           <input type="hidden" class="form-control" id="id_nilai_ekskul" placeholder="" name="id_nilai_ekskul">
           <div class="form-group">
+            <label for="">Nama Siswa</label>
+            <select class="form-control" id="id_siswa" name="id_siswa" required>
+              <?php foreach ($tb_siswa as $data_tb_siswa): ?>
+                <option value="<?php echo $data_tb_siswa->id_siswa ?>"><?php echo $data_tb_siswa->nama_siswa ?></option>
+              <?php endforeach; ?>
+            </select>
+            <p class="help-block"></p>
+          </div>
+          <div class="form-group">
+            <label for="">Ekstrakulikuler</label>
+            <select class="form-control" id="id_ekskul" name="id_ekskul" required>
+              <?php foreach ($tb_ekskul as $data_tb_ekskul): ?>
+                <option value="<?php echo $data_tb_ekskul->id_ekskul ?>"><?php echo $data_tb_ekskul->nama_ekskul ?></option>
+              <?php endforeach; ?>
+            </select>
+            <p class="help-block"></p>
+          </div>
+          <div class="form-group">
             <label for="">Nilai</label>
             <input type="text" class="form-control" id="nilai" placeholder="Masukkan Nilai" name="nilai" required>
+            <p class="help-block"></p>
+          </div>
+          <div class="form-group">
+            <label for="">Predikat</label>
+            <input type="text" class="form-control" id="predikat" placeholder="" name="predikat" required>
             <p class="help-block"></p>
           </div>
           <div class="form-group">
@@ -50,13 +73,20 @@
 
             <!-- MULAI MEMBUAT FORM MENU -->
             <div class="form-group">
-              <label for="">Nama Siswa</label>
-              <select class="form-control" id="id_siswa" name="id_siswa" required>
-                <option value="">:Pilih:.</option>
-                <?php foreach ($tb_siswa as $data_tb_siswa): ?>
-                  <option value="<?php echo $data_tb_siswa->id_siswa ?>"><?php echo $data_tb_siswa->nama_siswa ?></option>
+              <label for="">Kelas</label>
+              <select class="form-control" id="id_kelas_tambah" name="id_kelas" required>
+                <option value="">.:Pilih:.</option>
+                <?php foreach ($tb_kelas as $data_tb_kelas): ?>
+                  <option value="<?php echo $data_tb_kelas->id_kelas ?>"><?php echo $data_tb_kelas->tingkat ?><?php echo $data_tb_kelas->nama_kelas ?></option>
                 <?php endforeach; ?>
               </select>
+            </div>
+            <div class="form-group">
+              <label for="">Nama Siswa</label>
+              <select class="form-control" id="nama_siswa_tambah" name="nama_siswa" onchange="getIdSiswa()" required>
+                <option>:Pilih:</option>
+              </select>
+                <input type="text" id="id_siswa_tambah" name="id_siswa" value="">
               <p class="help-block"></p>
             </div>
             <div class="form-group">
@@ -72,16 +102,6 @@
             <div class="form-group">
               <label for="">Nilai</label>
               <input type="text" class="form-control" id="" placeholder="Masukkan Nilai" name="nilai" required>
-              <p class="help-block"></p>
-            </div>
-            <div class="form-group">
-              <label for="">Predikat</label>
-              <input type="text" class="form-control" id="" placeholder="" name="predikat" required>
-              <p class="help-block"></p>
-            </div>
-            <div class="form-group">
-              <label for="">Keterangan</label>
-              <input type="text" class="form-control" id="" placeholder="Masukkan Keterangan" name="ket" required>
               <p class="help-block"></p>
             </div>
 
@@ -185,6 +205,14 @@
                 <h3 class="box-title"><b>TABEL DATA NILAI EKSTRAKULIKULER</b></h3>
               </div>
               <div class="box-tools" style="padding:10px;">
+                <div class="form-group">
+
+                  <!--  MENAMBAH NAMA DI BUTTON-->
+                  <button class="btn btn-success" data-toggle="modal"
+                  data-target="#modal_nilai_ekskul">
+                  <i class="fa fa-plus-circle"></i> Tambah Data
+                </button>
+              </div>
               <?php if ($this->session->flashdata('sukses')) { ?>
                 <div class="">
                   <div class="alert alert-success"><?php echo $this->session->flashdata('sukses'); ?></div>
@@ -201,30 +229,6 @@
                 </div>
               <?php } ?>
             </div>
-            <div class="box-body">
-              <div class="row ">
-                <div class="col-md-4" style="margin-left:5px;">
-                  <form class=""  action="" method="post">
-                    <div class="form-group">
-                      <label>Kelas</label>
-                      <select class="form-control" name="id_kelas">
-                        <option value="">Pilih</option>
-                        <?php foreach ($tb_kelas as $data_tb_kelas): ?>
-                          <option value="<?php echo $data_tb_kelas->id_kelas ?>"><?php echo $data_tb_kelas->tingkat ?><?php echo $data_tb_kelas->nama_kelas ?></option>
-                        <?php endforeach; ?>
-                      </select>
-                    </div>
-                    <div class="form-group">
-                      <label>Semester</label>
-                      <input class="form-control" type="text" name="semester" value="<?php echo $semester_sekarang?>" readonly>
-                    </div>
-                    <div class="text-center form-group">
-                      <button type="submit" name="cek" class="btn btn-success">Cek</button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-              <br>
 
             <!-- menampilkan Tabel -->
             <div class="box-body table-responsive">
@@ -233,9 +237,9 @@
                   <tr class="bg-blue" align="center">
                     <th>No</th>
                     <th>Nama Guru</th>
+                    <th>Ekstrakulikuler</th>
                     <th>Kelas</th>
                     <th>Nama Siswa</th>
-                    <th>Ekstrakulikuler</th>
                     <th>Nilai</th>
                     <th>Predikat</th>
                     <th>Keterangan</th>
@@ -245,18 +249,14 @@
                 <tbody>
                   <?php $no =1; foreach ($tb_nilai_ekskul as $input_nilai_ekskul):?>
                     <tr>
-                      <td><?php echo@ $no++ ?></td>
-                      <td><?php echo @$input_nilai_ekskul->nama_guru?></td>
-                      <td><?php echo @$input_nilai_ekskul->tingkat?><?php echo @$input_nilai_ekskul->nama_kelas?></td>
-                      <td><?php echo @$input_nilai_ekskul->nama_siswa?></td>
+                      <td><?php echo $no++ ?></td>
+                      <td><?php echo $input_nilai_ekskul->nama_siswa?></td>
                       <td><?php echo $input_nilai_ekskul->nama_ekskul?></td>
-                      <td><?php echo @$input_nilai_ekskul->nilai?></td>
-                      <td><?php echo @$input_nilai_ekskul->predikat?></td>
-                      <td><?php echo @$input_nilai_ekskul->ket?></td>
+                      <td><?php echo $input_nilai_ekskul->nilai?></td>
+                      <td><?php echo $input_nilai_ekskul->predikat?></td>
+                      <td><?php echo $input_nilai_ekskul->ket?></td>
                       <td>
                         <form class="" action="<?php echo base_url('admin/delete_nilai_ekskul') ?>" method="post">
-                        <input type="hidden" name="id_nilai_ekskul" value="<?php echo @$input_nilai_ekskul->id_nilai_ekskul; ?>">
-
                           <!-- Kelima-->
                           <button type="button" class="btn btn-warning" onclick="edit_nilai_ekskul('<?php echo $input_nilai_ekskul->id_nilai_ekskul; ?>')">
                             <i class="fa fa-edit"></i>
@@ -295,12 +295,34 @@
 <?php $this->load->view('template/javascript') ?>
 <script type="text/javascript">
 
-function tambah_nilai_ekskul(id_ekskul,id_kelas,id_siswa,id_siswa_pertahun){
-  $('#id_ekskul_tambah').val(id_ekskul);
-  $('#id_kelas_tambah').val(id_kelas);
-  $('#id_siswa_tambah').val(id_siswa);
-  $('#id_siswa_pertahun_tambah').val(id_siswa_pertahun);
-  $('#modal_nilai_ekskul').modal('show');
+$(document).ready(function(){
+  $('#id_kelas_tambah').on('change',function(){
+    var id_kelas=$(this).val();
+    $.ajax({
+      url      :"<?php echo base_url('kurikulum/data_siswa'); ?>",
+      type     : "POST",
+      data     : {'id_kelas':id_kelas},
+      dataType :"json",
+      success  :function(data){
+        $('#nama_siswa_tambah').html(data);
+      },
+      error:function(){
+        alert('error occur');
+      }
+    });
+  });
+});
+
+function getIdSiswa(){
+  id_siswa_pertahun =$('#nama_siswa_tambah').val();
+  $.ajax({
+    url     : '<?php echo base_url('kurikulum/get_id_siswa/'); ?>'+id_siswa_pertahun,
+    type    : 'get',
+    success : function(data){
+      console.log(data.id_siswa);
+      $('#id_siswa_tambah').val(data.id_siswa);
+    }
+  });
 }
 
 function edit_nilai_ekskul(id_nilai_ekskul){
@@ -309,16 +331,15 @@ function edit_nilai_ekskul(id_nilai_ekskul){
     url: '<?php echo base_url('admin/edit_nilai_ekskul?id_nilai_ekskul=') ?>'+id_nilai_ekskul,
     success: function(data){
       $response = $(data);
-      var id_ekskul = $response.filter('#id_ekskul').text();
-      var id_kelas = $response.filter('#id_kelas').text();
+      var id_nilai_ekskul = $response.filter('#id_nilai_ekskul').text();
       var id_siswa = $response.filter('#id_siswa').text();
+      var id_ekskul = $response.filter('#id_ekskul').text();
       var nilai = $response.filter('#nilai').text();
       var predikat = $response.filter('#predikat').text();
       var ket = $response.filter('#ket').text();
       //menampilkan ke Modal
       $('#id_nilai_ekskul').val(id_nilai_ekskul);
       $('#id_siswa').val(id_siswa);
-      $('#id_kelas').val(id_kelas);
       $('#id_ekskul').val(id_ekskul);
       $('#nilai').val(nilai);
       $('#predikat').val(predikat);

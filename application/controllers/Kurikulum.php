@@ -270,23 +270,11 @@ class Kurikulum extends CI_Controller {
 		$this->load->model('model_siswa');
 		$this->load->model('model_kelas');
 		$this->load->model('model_ekskul');
-		$bulan = (integer) date('m');
 
-		if ($bulan >= 1 && $bulan <= 6) {
-			$data['semester_sekarang'] = 'genap';
-		} else {
-			$data['semester_sekarang'] = 'ganjil';
-		}
 		$data['tb_ekskul'] = $this->model_ekskul->get_inputekskul();
 		$data['tb_siswa'] = $this->model_siswa->get_inputsiswa();
 		$data['tb_kelas'] = $this->model_kelas->get_inputkelas();
-		if (isset($_POST['cek'])) {
-					$id_kelas = $_POST['id_kelas'];
-					$data['tb_nilai_ekskul'] =$this->model_nilai_ekskul->get_inputnilaiekskulsearch($id_kelas);
-				} else {
-					$data['tb_nilai_ekskul'] =$this->model_nilai_ekskul->get_inputnilaiekskul();
-				}
-
+		$data['tb_nilai_ekskul'] = $this->model_nilai_ekskul->get_inputnilaiekskul();
 		$this->load->view('kurikulum/nilai_ekskul',$data);
 	}
 	public function nilai_sikap()
@@ -360,6 +348,27 @@ class Kurikulum extends CI_Controller {
 			$data['tanpa_ket']=$data['tanpa_ket']+$value->tanpa_ket;
 		}
 		$this->load->view('kurikulum/rapor_hal3',$data);
+	}
+	public function data_siswa(){
+		$this->load->model('model_nilai_ekskul');
+		$id_kelas=$this->input->post('id_kelas');
+		$siswa=$this->model_nilai_ekskul->cari_siswa($id_kelas);
+		if(count($siswa>0)){
+			$pro_select_box = '';
+			$pro_select_box .= '<option value="">.:Pilih:.</option>';
+			foreach ($siswa as $data_siswa) {
+				$pro_select_box .= 'option value="'.$data_siswa->id_siswa_pertahun.'">'.$data_siswa->nama_siswa.'</option>';
+			}
+			echo json_encode($pro_select_box);
+		}
+	}
+	public function get_id_siswa($id_siswa_pertahun='')
+	{
+		$this->load->model('model_siswa_pertahun');
+		$siswa = $this->model_siswa_pertahun->select_id_siswa($id_siswa_pertahun);
+		$this->output
+					->set_content_type('application/json')
+					->set_output(json_encode($siswa));
 	}
 	public function get_wali_kelas_from_kelas($id_kelas){
 		$this->load->model('model_siswa_pertahun');

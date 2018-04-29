@@ -245,7 +245,6 @@ class Admin extends CI_Controller {
       $detail_pengetahuan=$this->model_detail_pengetahuan->insert_siswa_pertahun_detail_pengetahuan($id_wali_kelas,$id_siswa,$id_kelas,$id_siswa_pertahun,$id_mapel);
       $detail_ketrampilan=$this->model_detail_ketrampilan->insert_siswa_pertahun_detail_ketrampilan($id_wali_kelas,$id_siswa,$id_kelas,$id_siswa_pertahun,$id_mapel);
       }
-      insert_nilai_ekskul($id_siswa,$id_ekskul,$id_siswa_pertahun,$id_kelas)
       $this->session->set_flashdata('sukses', 'Berhasil Tambah Data');
       redirect(base_url('kurikulum/siswa_pertahun'));
     }
@@ -317,11 +316,13 @@ class Admin extends CI_Controller {
   public function create_nilai_ekskul(){
     $id_siswa= $this->input->post('id_siswa');
     $id_ekskul=$this->input->post('id_ekskul');
+    $id_kelas=$this->input->post('id_kelas');
+    $id_siswa_pertahun=$this->input->post('id_siswa_pertahun');
     $nilai=$this->input->post('nilai');
     $predikat=$this->input->post('predikat');
     $ket=$this->input->post('ket');
 
-    $nilai_ekskul= $this->model_nilai_ekskul->input_nilai_ekskul($id_siswa,$id_ekskul,$nilai,$predikat,$ket);
+    $nilai_ekskul= $this->model_nilai_ekskul->input_nilai_ekskul($id_siswa,$id_ekskul,$id_kelas,$id_siswa_pertahun,$nilai,$predikat,$ket);
     $this->session->set_flashdata('sukses', 'Berhasil Tambah Data');
     redirect(base_url('kurikulum/nilai_ekskul'));
   }

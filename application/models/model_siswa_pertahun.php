@@ -16,6 +16,14 @@ class model_siswa_pertahun extends CI_Model
     $query = $this->db->get('tb_siswa_pertahun');
     return $query->result();
   }
+  public function select_id_siswa($id_siswa_pertahun=null)
+  {
+    $this->db->from('tb_siswa_pertahun');
+    if($id_siswa_pertahun=null){
+      $this->db->where('id_siswa_pertahun',$id_siswa_pertahun);
+    }
+    return $this->db->get()->row();
+  }
   public function input_siswa_pertahun($id_siswa,$id_kelas,$id_tahun_ajaran)
   {
     $data=array(
