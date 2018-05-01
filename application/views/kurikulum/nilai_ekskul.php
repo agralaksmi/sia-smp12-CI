@@ -15,14 +15,14 @@
         <div class="modal-body">
           <!-- MULAI MEMBUAT FORM MENU -->
           <input type="hidden" class="form-control" id="id_nilai_ekskul" placeholder="" name="id_nilai_ekskul">
+
+          <input type="hidden" class="form-control" id="id_siswa" placeholder="" name="id_siswa">
+
+          <input type="hidden" class="form-control" id="id_siswa_pertahun" placeholder="" name="id_siswa_pertahun">
+
           <div class="form-group">
             <label for="">Nama Siswa</label>
-            <select class="form-control" id="id_siswa" name="id_siswa" required>
-              <?php foreach ($tb_siswa as $data_tb_siswa): ?>
-                <option value="<?php echo $data_tb_siswa->id_siswa ?>"><?php echo $data_tb_siswa->nama_siswa ?></option>
-              <?php endforeach; ?>
-            </select>
-            <p class="help-block"></p>
+            <input type="text" class="form-control" id="nama_siswa" placeholder="" name="nama_siswa" readonly>
           </div>
           <div class="form-group">
             <label for="">Ekstrakulikuler</label>
@@ -36,11 +36,6 @@
           <div class="form-group">
             <label for="">Nilai</label>
             <input type="text" class="form-control" id="nilai" placeholder="Masukkan Nilai" name="nilai" required>
-            <p class="help-block"></p>
-          </div>
-          <div class="form-group">
-            <label for="">Predikat</label>
-            <input type="text" class="form-control" id="predikat" placeholder="" name="predikat" required>
             <p class="help-block"></p>
           </div>
           <div class="form-group">
@@ -86,7 +81,7 @@
               <select class="form-control" id="nama_siswa_tambah" name="nama_siswa" onchange="getIdSiswa()" required>
                 <option>:Pilih:</option>
               </select>
-                <input type="text" id="id_siswa_tambah" name="id_siswa" value="">
+                <input type="hidden" id="id_siswa_tambah" name="id_siswa" value="">
               <p class="help-block"></p>
             </div>
             <div class="form-group">
@@ -102,6 +97,11 @@
             <div class="form-group">
               <label for="">Nilai</label>
               <input type="text" class="form-control" id="" placeholder="Masukkan Nilai" name="nilai" required>
+              <p class="help-block"></p>
+            </div>
+            <div class="form-group">
+              <label for="">Keterangan</label>
+              <input type="text" class="form-control" id="" placeholder="Masukkan Keterangan" name="ket" required>
               <p class="help-block"></p>
             </div>
 
@@ -236,7 +236,7 @@
                 <thead>
                   <tr class="bg-blue" align="center">
                     <th>No</th>
-                    <th>Nama Guru</th>
+                    <th>Nama Guru Ekskul</th>
                     <th>Ekstrakulikuler</th>
                     <th>Kelas</th>
                     <th>Nama Siswa</th>
@@ -250,8 +250,10 @@
                   <?php $no =1; foreach ($tb_nilai_ekskul as $input_nilai_ekskul):?>
                     <tr>
                       <td><?php echo $no++ ?></td>
-                      <td><?php echo $input_nilai_ekskul->nama_siswa?></td>
+                      <td><?php echo $input_nilai_ekskul->nama_guru?></td>
                       <td><?php echo $input_nilai_ekskul->nama_ekskul?></td>
+                      <td><?php echo $input_nilai_ekskul->tingkat?><?php echo $input_nilai_ekskul->nama_kelas?></td>
+                      <td><?php echo $input_nilai_ekskul->nama_siswa?></td>
                       <td><?php echo $input_nilai_ekskul->nilai?></td>
                       <td><?php echo $input_nilai_ekskul->predikat?></td>
                       <td><?php echo $input_nilai_ekskul->ket?></td>
@@ -332,14 +334,18 @@ function edit_nilai_ekskul(id_nilai_ekskul){
     success: function(data){
       $response = $(data);
       var id_nilai_ekskul = $response.filter('#id_nilai_ekskul').text();
+      var id_siswa_pertahun = $response.filter('#id_siswa_pertahun').text();
       var id_siswa = $response.filter('#id_siswa').text();
+      var nama_siswa = $response.filter('#nama_siswa').text();
       var id_ekskul = $response.filter('#id_ekskul').text();
       var nilai = $response.filter('#nilai').text();
       var predikat = $response.filter('#predikat').text();
       var ket = $response.filter('#ket').text();
       //menampilkan ke Modal
       $('#id_nilai_ekskul').val(id_nilai_ekskul);
+      $('#id_siswa_pertahun').val(id_siswa_pertahun);
       $('#id_siswa').val(id_siswa);
+      $('#nama_siswa').val(nama_siswa);
       $('#id_ekskul').val(id_ekskul);
       $('#nilai').val(nilai);
       $('#predikat').val(predikat);

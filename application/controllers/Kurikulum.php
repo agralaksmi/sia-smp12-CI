@@ -209,11 +209,6 @@ class Kurikulum extends CI_Controller {
 		if (isset($_POST['cek'])) {
 			$id_kelas = $_POST['id_kelas'];
 			$id_mapel = $_POST['id_mapel'];
-			// TODO: ini diubah
-			// echo "<pre>";
-			// var_dump();
-			// die();
-			//$data['tb_detail_pengetahuan'] = $this->model_detail_pengetahuan->input_cek_pengetahuan($id_kelas,$id_mapel);
 			$data['tb_detail_pengetahuan'] =$this->model_detail_pengetahuan->get_inputdetailpengetahuansearch($id_kelas,$id_mapel);
 		} else {
 			$data['tb_detail_pengetahuan'] =$this->model_detail_pengetahuan->get_inputdetailpengetahuan();
@@ -251,11 +246,6 @@ class Kurikulum extends CI_Controller {
 		if (isset($_POST['cek'])) {
 			$id_kelas = $_POST['id_kelas'];
 			$id_mapel = $_POST['id_mapel'];
-			// TODO: ini diubah
-			// echo "<pre>";
-			// var_dump();
-			// die();
-			//$data['tb_detail_pengetahuan'] = $this->model_detail_pengetahuan->input_cek_pengetahuan($id_kelas,$id_mapel);
 			$data['tb_detail_ketrampilan'] =$this->model_detail_ketrampilan->get_inputdetailketrampilansearch($id_kelas,$id_mapel);
 		} else {
 			$data['tb_detail_ketrampilan'] =$this->model_detail_ketrampilan->get_inputdetailketrampilan();
@@ -281,14 +271,26 @@ class Kurikulum extends CI_Controller {
 	{
 		cek_auth();
 		$this->load->model('model_nilai_sikap');
+		$this->load->model('model_wali_kelas');
 		$this->load->model('model_siswa');
 		$this->load->model('model_deskripsi_sikap');
-		$data['tb_siswa'] = $this->model_siswa->get_inputsiswa();
-		$data['tb_deskripsi_sikap'] = $this->model_deskripsi_sikap->get_inputdeskripsisikap();
-		$data['tb_nilai_sikap'] =$this->model_nilai_sikap->get_inputnilaisikap();
-		// echo "<pre>";
-		// var_dump($data['tb_nilai_sikap']);
-		// die();
+		$this->load->model('model_kelas');
+		$bulan = (integer) date('m');
+
+		if ($bulan >= 1 && $bulan <= 6) {
+			$data['semester_sekarang'] = 'genap';
+		} else {
+			$data['semester_sekarang'] = 'ganjil';
+		}
+		$data['tb_kelas'] = $this->model_kelas->get_inputkelas();
+		$data['tb_wali_kelas'] = $this->model_wali_kelas->get_inputwali_kelas();
+		$data['tb_siswa'] = $this->model_siswa->get_inputsiswa(); $data['tb_deskripsi_sikap'] = $this->model_deskripsi_sikap->get_inputdeskripsisikap();
+		if (isset($_POST['cek'])) {
+			$id_kelas = $_POST['id_kelas'];
+			$data['tb_nilai_sikap'] =$this->model_nilai_sikap->get_inputnilaisikapsearch($id_kelas);
+		} else {
+			$data['tb_nilai_sikap'] =$this->model_nilai_sikap->get_inputnilaisikap();
+		}
 		$this->load->view('kurikulum/nilai_sikap',$data);
 	}
 	public function rapor()
@@ -357,7 +359,7 @@ class Kurikulum extends CI_Controller {
 			$pro_select_box = '';
 			$pro_select_box .= '<option value="">.:Pilih:.</option>';
 			foreach ($siswa as $data_siswa) {
-				$pro_select_box .= 'option value="'.$data_siswa->id_siswa_pertahun.'">'.$data_siswa->nama_siswa.'</option>';
+				$pro_select_box .= '<option value="'.$data_siswa->id_siswa_pertahun.'">'.$data_siswa->nama_siswa.'</option>';
 			}
 			echo json_encode($pro_select_box);
 		}

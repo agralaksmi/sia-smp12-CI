@@ -19,7 +19,7 @@ class model_siswa_pertahun extends CI_Model
   public function select_id_siswa($id_siswa_pertahun=null)
   {
     $this->db->from('tb_siswa_pertahun');
-    if($id_siswa_pertahun=null){
+    if($id_siswa_pertahun!=null){
       $this->db->where('id_siswa_pertahun',$id_siswa_pertahun);
     }
     return $this->db->get()->row();

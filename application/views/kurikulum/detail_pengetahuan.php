@@ -159,9 +159,6 @@
 
               </div>
               <div class="box-tools" style="padding:10px;">
-                <div class="form-group">
-
-              </div>
               <?php if ($this->session->flashdata('sukses')) { ?>
                 <div class="">
                   <div class="alert alert-success"><?php echo $this->session->flashdata('sukses'); ?></div>
