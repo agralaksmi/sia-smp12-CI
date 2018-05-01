@@ -203,11 +203,13 @@
               <tbody>
                 <?php $no =1; foreach ($tb_nilai_sikap as $input_nilai_sikap):?>
                   <tr>
-                    <td><?php echo $input_nilai_sikap->id_nilai_sikap ?></td>
-                    <td><?php echo $input_nilai_sikap->nama_siswa?></td>
-                    <td><?php echo $input_nilai_sikap->jenis_deskripsi?></td>
-                    <td><?php echo $input_nilai_sikap->nilai_akhir?></td>
-                    <td><?php echo $input_nilai_sikap->deskripsi?></td>
+                    <td><?php echo @$input_nilai_sikap->id_nilai_sikap ?></td>
+                    <td><?php echo @$input_nilai_sikap->nama_guru?></td>
+                    <td><?php echo @$input_nilai_sikap->tingkat?><?php echo @$input_nilai_sikap->nama_kelas?></td>
+                    <td><?php echo @$input_nilai_sikap->nama_siswa?></td>
+                    <td><?php echo @$input_nilai_sikap->jenis_deskripsi?></td>
+                    <td><?php echo @$input_nilai_sikap->nilai_akhir?></td>
+                    <td><?php echo @$input_nilai_sikap->deskripsi?></td>
                     <td>
                       <form class="" action="<?php echo base_url('admin/delete_nilai_sikap') ?>" method="post">
                         <!-- Kelima-->

@@ -245,7 +245,7 @@ class Admin extends CI_Controller {
       $detail_pengetahuan=$this->model_detail_pengetahuan->insert_siswa_pertahun_detail_pengetahuan($id_wali_kelas,$id_siswa,$id_kelas,$id_siswa_pertahun,$id_mapel);
       $detail_ketrampilan=$this->model_detail_ketrampilan->insert_siswa_pertahun_detail_ketrampilan($id_wali_kelas,$id_siswa,$id_kelas,$id_siswa_pertahun,$id_mapel);
       }
-      $nilai_sikap=$this->model_nilai_sikap>input_nilai_sikap($id_wali_kelas,$id_siswa,$id_siswa_pertahun,$id_kelas);
+      $nilai_sikap=$this->model_nilai_sikap->input_nilai_sikap($id_wali_kelas,$id_siswa,$id_kelas,$id_siswa_pertahun);
       $this->session->set_flashdata('sukses', 'Berhasil Tambah Data');
       redirect(base_url('kurikulum/siswa_pertahun'));
     }
@@ -923,7 +923,7 @@ class Admin extends CI_Controller {
     $id_nilai_sikap = $this->input->post('id_nilai_sikap');
     $nilai_akhir= $this->input->post('nilai_akhir');
 
-    $nilai_sikap= $this->model_nilai_sikap->update_nilai_sikap(($id_nilai_sikap,$nilai_akhir);
+    $nilai_sikap= $this->model_nilai_sikap->update_nilai_sikap($id_nilai_sikap,$nilai_akhir);
     redirect(base_url('kurikulum/nilai_sikap'));
   }
 

@@ -32,7 +32,7 @@ class model_nilai_sikap extends CI_Model
         $query = $this->db->get();
         return $query->result();
   }
-  public function input_nilai_sikap($id_wali_kelas,$id_siswa,$id_kelas,$id_siswa_pertahun,$id_kelas)
+  public function input_nilai_sikap($id_wali_kelas,$id_siswa,$id_kelas,$id_siswa_pertahun)
   {
     $data=array(
     'id_wali_kelas'=>$id_wali_kelas,
