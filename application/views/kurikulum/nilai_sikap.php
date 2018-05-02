@@ -15,6 +15,12 @@
         <div class="modal-body">
           <!-- MULAI MEMBUAT FORM MENU -->
           <input type="hidden" class="form-control" id="id_nilai_sikap" placeholder="" name="id_nilai_sikap">
+
+          <div class="form-group">
+            <label for="">Deskripsi Sikap</label>
+            <input type="text" class="form-control" name="jenis_deskripsi_sikap" id="jenis_deskripsi_sikap" value="" readonly>
+          </div>
+
           <div class="form-group">
             <label for="">Nilai</label>
             <input type="text" class="form-control" id="nilai_akhir" name="nilai_akhir" placeholder="Huruf">
@@ -207,7 +213,7 @@
                     <td><?php echo @$input_nilai_sikap->nama_guru?></td>
                     <td><?php echo @$input_nilai_sikap->tingkat?><?php echo @$input_nilai_sikap->nama_kelas?></td>
                     <td><?php echo @$input_nilai_sikap->nama_siswa?></td>
-                    <td><?php echo @$input_nilai_sikap->jenis_deskripsi?></td>
+                    <td><?php echo @$input_nilai_sikap->jenis_deskripsi_sikap?></td>
                     <td><?php echo @$input_nilai_sikap->nilai_akhir?></td>
                     <td><?php echo @$input_nilai_sikap->deskripsi?></td>
                     <td>
@@ -258,18 +264,13 @@ function edit_nilai_sikap(id_nilai_sikap){
       $response = $(data);
     //  var id_nilai_sikap = $response.filter('#id_nilai_sikap').text();
       var id_wali_kelas = $response.filter('#id_wali_kelas').text();
-      var id_kelas = $response.filter('#id_kelas').text();
-      var id_siswa = $response.filter('#id_siswa').text();
+      var jenis_deskripsi_sikap = $response.filter('#jenis_deskripsi_sikap').text();
       var nilai_akhir = $response.filter('#nilai_akhir').text();
-      var id_deskripsi_sikap = $response.filter('#id_deskripsi_sikap').text();
 
       //menampilkan ke Modal
       $('#id_nilai_sikap').val(id_nilai_sikap);
-      $('#id_wali_kelas').val(id_wali_kelas);
-      $('#id_kelas').val(id_kelas);
-      $('#id_siswa').val(id_siswa);
+      $('#jenis_deskripsi_sikap').val(jenis_deskripsi_sikap);
       $('#nilai_akhir').val(nilai_akhir);
-      $('#id_deskripsi_sikap').val(id_deskripsi_sikap);
       $('#modal_ubahnilaisikap').modal('show');
     }
   });

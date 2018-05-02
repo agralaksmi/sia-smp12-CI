@@ -287,7 +287,9 @@ class Kurikulum extends CI_Controller {
 		$data['tb_siswa'] = $this->model_siswa->get_inputsiswa(); $data['tb_deskripsi_sikap'] = $this->model_deskripsi_sikap->get_inputdeskripsisikap();
 		if (isset($_POST['cek'])) {
 			$id_kelas = $_POST['id_kelas'];
-			$data['tb_nilai_sikap'] =$this->model_nilai_sikap->get_inputnilaisikapsearch($id_kelas);
+			$jenis_deskripsi_sikap = $_POST['jenis_deskripsi_sikap'];
+
+			$data['tb_nilai_sikap'] =$this->model_nilai_sikap->get_inputnilaisikapsearch($id_kelas,$jenjenis_deskripsi_sikap);
 		} else {
 			$data['tb_nilai_sikap'] =$this->model_nilai_sikap->get_inputnilaisikap();
 		}

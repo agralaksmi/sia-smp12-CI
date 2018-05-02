@@ -910,11 +910,8 @@ class Admin extends CI_Controller {
     $nilai_sikap = $this->model_nilai_sikap->ubah_nilai_sikap($id_nilai_sikap);
     foreach ($nilai_sikap as $data_nilai_sikap) {
       echo '<div id="id_nilai_sikap">'.$id_nilai_sikap.'</div>';
-      echo '<div id="id_wali_kelas">'.$data_nilai_sikap->id_wali_kelas.'</div>';
-      echo '<div id="id_kelas">'.$data_nilai_sikap->id_kelas.'</div>';
-      echo '<div id="id_siswa">'.$data_nilai_sikap->id_siswa.'</div>';
       echo '<div id="nilai_akhir">'.$data_nilai_sikap->nilai_akhir.'</div>';
-      echo '<div id="id_deskripsi_sikap">'.$data_nilai_sikap->id_deskripsi_sikap.'</div>';
+      echo '<div id="jenis_deskripsi_sikap">'.$data_nilai_sikap->jenis_deskripsi_sikap.'</div>';
     }
   }
 
@@ -922,8 +919,9 @@ class Admin extends CI_Controller {
   public function update_nilai_sikap(){
     $id_nilai_sikap = $this->input->post('id_nilai_sikap');
     $nilai_akhir= $this->input->post('nilai_akhir');
+    $jenis_deskripsi_sikap=$this->input->post('jenis_deskripsi_sikap');
 
-    $nilai_sikap= $this->model_nilai_sikap->update_nilai_sikap($id_nilai_sikap,$nilai_akhir);
+    $nilai_sikap= $this->model_nilai_sikap->update_nilai_sikap($id_nilai_sikap,$nilai_akhir,$jenis_deskripsi_sikap);
     redirect(base_url('kurikulum/nilai_sikap'));
   }
 
