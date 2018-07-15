@@ -25,7 +25,7 @@
             <p class="help-block"></p>
           </div>
           <div class="form-group">
-            <label>Guru</label>
+            <label>Guru </label>
             <select class="form-control" id="id_guru" name="id_guru" required>
               <?php foreach ($tb_guru as $key => $value): ?>
                 <option value="<?php echo $value->id_guru ?>"><?php echo $value->nama_guru ?></option>
