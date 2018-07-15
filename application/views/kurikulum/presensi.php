@@ -15,21 +15,11 @@
         <div class="modal-body">
           <!-- MULAI MEMBUAT FORM MENU -->
           <input type="hidden" class="form-control" id="id_presensi" placeholder="" name="id_presensi">
+
           <div class="form-group">
             <label for="">Nama Siswa</label>
-            <select class="form-control" id="id_siswa" name="id_siswa">
-              <option value="">.:Pilih:.</option>
-              <?php foreach ($tb_siswa as $data_tb_siswa): ?>
-                <option value="<?php echo $data_tb_siswa->id_siswa ?>"><?php echo $data_tb_siswa->nama_siswa ?> //  <?php echo $data_tb_siswa->nisn ?></option>
-              <?php endforeach; ?>
-            </select>
-            <p class="help-block"></p>
+            <input type="text" class="form-control" id="nama_siswa" placeholder="" name="nama_siswa" readonly>
           </div>
-          <!-- <div class="form-group">
-          <label for="">Kelas</label>
-          <input type="hidden" name="id_kelas" id="id_kelas" class="form-control">
-          <div class="form-control" id="id_kelas_tampil_u"></div>
-        </div> -->
         <div class="form-group">
           <label for="">Sakit</label>
           <input type="number" class="form-control" id="sakit_u" placeholder="0" name="sakit">
@@ -58,76 +48,6 @@
 </div>
 <!--  MULAI MODAL-->
 <body class="hold-transition skin-black sidebar-mini">
-  <div class="modal fade" id="modal_presensi" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title" id="modal_presensi">Tambah Data Presensi</h4>
-        </div>
-        <form class="" action="<?php echo base_url ('Admin/create_presensi') ?>" method="post">
-          <div class="modal-body">
-
-            <!-- MULAI MEMBUAT FORM MENU -->
-            <!-- <div class="form-group">
-              <label for="id_wali_kelas">Nama Wali Kelas</label>
-              <select type="number" class="form-control" id="id_wali_kelas" name="id_wali_kelas">
-                <option value="">:Pilih:</option>
-                <?php foreach ($tb_wali_kelas as $data_tb_wali_kelas): ?>
-                  <option value="<?php echo $data_tb_wali_kelas->id_wali_kelas ?>"><?php echo $data_tb_wali_kelas->nama_guru ?></option>
-                <?php endforeach; ?>
-              </select>
-            </div> -->
-            <div class="form-group">
-              <label for="">Nama Siswa</label>
-              <select class="form-control" id="id_siswa" name="id_siswa" onchange="getGuruFromSiswa()">
-                <option value="">.:Pilih:.</option>
-                <?php foreach ($tb_siswa as $data_tb_siswa): ?>
-                  <option value="<?php echo $data_tb_siswa->id_siswa ?>"><?php echo $data_tb_siswa->nama_siswa ?> //  <?php echo $data_tb_siswa->nisn ?></option>
-                <?php endforeach; ?>
-              </select>
-              <input type="hidden" id="id_wali_kelas" name="id_wali_kelas" value="">
-              <input type="hidden" id="id_kelas" name="id_kelas" value="">
-              <p class="help-block"></p>
-            </div>
-            <!-- <div class="form-group">
-              <label for="">Kelas</label>
-              <select class="form-control" id="id_kelas" name="id_kelas" required>
-                <option value="">.:Pilih:.</option>
-                <?php foreach ($tb_kelas as $data_tb_kelas): ?>
-                  <option value="<?php echo $data_tb_kelas->id_kelas ?>"><?php echo $data_tb_kelas->tingkat ?><?php echo $data_tb_kelas->nama_kelas ?></option>
-                <?php endforeach; ?>
-              </select>
-              <p class="help-block"></p>
-            </div> -->
-            <div class="form-group">
-              <label for="">Sakit</label>
-              <input type="number" class="form-control" id="" placeholder="0" name="sakit">
-              <p class="help-block"></p>
-            </div>
-            <div class="form-group">
-              <label for="">Ijin</label>
-              <input type="number" class="form-control" id="" placeholder="0" name="ijin">
-              <p class="help-block"></p>
-            </div>
-            <div class="form-group">
-              <label for="">Tanpa Keterangan</label>
-              <input type="number" class="form-control" id="" placeholder="0" name="tanpa_ket">
-              <p class="help-block"></p>
-            </div>
-
-            <!--  AKHIR MODAL MENU -->
-
-            <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Batal</button>
-              <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Simpan</button>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-  <!-- end of modal -->
 
   <div class="wrapper">
 
@@ -216,18 +136,50 @@
               <div class="box-header">
                 <h3 class="box-title"><b>TABEL DATA PRESENSI</b></h3>
               </div>
-              <div class="box-tools"style="padding:10px;">
-                <div class="form-group">
-
-                  <!--  MENAMBAH NAMA DI BUTTON-->
-                  <button class="btn btn-success" data-toggle="modal"
-                  data-target="#modal_presensi">
-                  <i class="fa fa-plus-circle"></i> Tambah Data
-                </button>
+                <div class="box-tools" style="padding:10px;">
+                <?php if ($this->session->flashdata('sukses')) { ?>
+                  <div class="">
+                    <div class="alert alert-success"><?php echo $this->session->flashdata('sukses'); ?></div>
+                  </div>
+                <?php } ?>
+                <?php if ($this->session->flashdata('edit')) { ?>
+                  <div class="">
+                    <div class="alert alert-warning"><?php echo $this->session->flashdata('edit'); ?></div>
+                  </div>
+                <?php } ?>
+                <?php if ($this->session->flashdata('delete')) { ?>
+                  <div class="">
+                    <div class="alert alert-danger"><?php echo $this->session->flashdata('delete'); ?></div>
+                  </div>
+                <?php } ?>
               </div>
-            </div>
 
             <!-- menampilkan Tabel -->
+            <!-- menampilkan Tabel -->
+            <div class="box-body">
+              <div class="row ">
+                <div class="col-md-4" style="margin-left:5px;">
+                  <form class=""  action="" method="post">
+                    <div class="form-group">
+                      <label>Kelas</label>
+                      <select class="form-control" name="id_kelas">
+                        <option value="">Pilih</option>
+                        <?php foreach ($tb_kelas as $data_tb_kelas): ?>
+                          <option value="<?php echo $data_tb_kelas->id_kelas ?>"><?php echo $data_tb_kelas->tingkat ?><?php echo $data_tb_kelas->nama_kelas ?></option>
+                        <?php endforeach; ?>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label>Semester</label>
+                      <input class="form-control" type="text" name="semester" value="<?php echo $semester_sekarang?>" readonly>
+                    </div>
+                    <div class="text-center form-group">
+                      <button type="submit" name="cek" class="btn btn-success">Cek</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <br>
             <div class="box-body table-responsive">
               <table class="table table-hover table-bordered table-responsive">
                 <thead>
@@ -245,20 +197,20 @@
                 <tbody>
                   <?php $no =1; foreach ($tb_presensi as $input_presensi):?>
                     <tr>
-                      <td><?php echo $no++ ?></td>
-                      <td><?php echo $input_presensi->nama_guru?></td>
-                      <td><?php echo $input_presensi->nama_siswa?></td>
-                      <td><?php echo $input_presensi->nama_kelas?><?php echo $input_presensi->tingkat?></td>
-                      <td><?php echo $input_presensi->sakit?></td>
-                      <td><?php echo $input_presensi->ijin?></td>
-                      <td><?php echo $input_presensi->tanpa_ket?></td>
+                      <td><?php echo @$no++ ?></td>
+                      <td><?php echo @$input_presensi->nama_guru?></td>
+                      <td><?php echo @$input_presensi->nama_siswa?></td>
+                      <td><?php echo @$input_presensi->tingkat?><?php echo @$input_presensi->nama_kelas?></td>
+                      <td><?php echo @$input_presensi->sakit?></td>
+                      <td><?php echo @$input_presensi->ijin?></td>
+                      <td><?php echo @$input_presensi->tanpa_ket?></td>
                       <td>
                         <form class="" action="<?php echo base_url('admin/delete_presensi') ?>" method="post">
                           <!-- kelima -->
                           <button type="button" class="btn btn-warning" onclick="edit_presensi('<?php echo $input_presensi->id_presensi; ?>')">
                             <i class="fa fa-edit"></i>
                           </button>
-                          <input type="hidden" name="id_presensi" value="<?php echo $input_presensi->id_presensi; ?>">
+                          <input type="hidden" name="id_presensi" value="<?php echo @$input_presensi->id_presensi; ?>">
                           <button type="submit" class="btn btn-danger" name="delete_presensi" onclick="return confirm('Apakah ANda Yakin Ingin Menghapus Data ini ? ?')">
                             <i class="fa fa-trash-o"></i>
                           </button>
@@ -297,60 +249,30 @@ function edit_presensi(id_presensi){
     url: '<?php echo base_url('Admin/edit_presensi?id_presensi=') ?>'+id_presensi,
     success: function(data){
       $response = $(data);
+      // var id_wali_kelas = $response.filter('#id_wali_kelas').text();
       var id_presensi = $response.filter('#id_presensi').text();
-      var id_siswa = $response.filter('#id_siswa').text();
+      var nama_siswa = $response.filter('#nama_siswa').text();
       // var id_kelas = $response.filter('#id_kelas').text();
       var sakit = $response.filter('#sakit').text();
       var ijin = $response.filter('#ijin').text();
       var tanpa_ket = $response.filter('#tanpa_ket').text();
       //menampilkan ke Modal
       $('#id_presensi').val(id_presensi);
-      $('#id_siswa').val(id_siswa);
+      // $('#id_wali_kelas').val(id_wali_kelas);
+      $('#nama_siswa').val(nama_siswa);
       // $('#id_kelas').val(id_kelas);
-      $('#sakit').val(sakit);
-      $('#ijin').val(ijin);
-      $('#tanpa_ket').val(tanpa_ket);
+      $('#sakit_u').val(sakit);
+      $('#ijin_u').val(ijin);
+      $('#tanpa_ket_u').val(tanpa_ket);
       $('#modal_ubahpresensi').modal('show');
     }
   });
 }
 
-function ambilKelas(){
-  var id_siswa = $('#id_siswa').val();
-  console.log(id_siswa);
-  $.ajax({
-    type : "GET",
-    url : "<?php echo base_url('Admin/get_siswa')?>",
-    dataType : "JSON",
-    data : {id_siswa:id_siswa},
-    cache: false,
-    success : function(data){
-      $response = $(data);
-      $('#id_kelas').val($response[0].id_kelas);
-      $('#id_kelas_tampil').text($response[0].tingkat+$response[0].nama_kelas);
-      $('#sakit').val($response[0].nama_kelas);
-    }
-  });
-}
 
-$(document).ready(function(){
-  $('#id_siswa').on('change', ambilKelas());
-});
 
-function getGuruFromSiswa() {
-  id_siswa = $('#id_siswa').val();
-  $.ajax({
-    url     : '<?php echo base_url('kurikulum/get_guru_from_siswa/')?>'+id_siswa,
-    type    : 'get',
-    success : function (data) {
-      // $response = $(data);
-      console.log(data.id_kelas);
-      $('#id_kelas').val(data.id_kelas);
-      console.log(data.id_guru);
-      $('#id_wali_kelas').val(data.id_guru);
-    }
-  });
-}
+
+
 </script>
 
 </body>

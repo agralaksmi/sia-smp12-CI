@@ -19,7 +19,7 @@
             <label for="">Nama Mata Pelajaran</label>
             <select class="form-control" id="id_mapel" name="id_mapel" required>
               <?php foreach ($tb_mapel as $data_tb_mapel): ?>
-                <option value="<?php echo $data_tb_mapel->id_mapel ?>"><?php echo $data_tb_mapel->nama_mapel ?></option>
+                <option value="<?php echo $data_tb_mapel->id_mapel ?>"><?php echo $data_tb_mapel->nama_mapel ?> <?php echo $data_tb_mapel->tingkat ?><?php echo $data_tb_mapel->nama_kelas ?></option>
               <?php endforeach; ?>
             </select>
             <p class="help-block"></p>
@@ -70,7 +70,7 @@
               <select class="form-control"  name="id_mapel" required>
                 <option value="">:Pilih:.</option>
                 <?php foreach ($tb_mapel as $data_tb_mapel): ?>
-                  <option value="<?php echo $data_tb_mapel->id_mapel ?>"><?php echo $data_tb_mapel->nama_mapel ?></option>
+                  <option value="<?php echo $data_tb_mapel->id_mapel ?>"><?php echo $data_tb_mapel->nama_mapel ?> <?php echo $data_tb_mapel->tingkat ?><?php echo $data_tb_mapel->nama_kelas ?></option>
                 <?php endforeach; ?>
               </select>
               <p class="help-block"></p>

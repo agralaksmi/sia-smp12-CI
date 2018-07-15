@@ -67,8 +67,16 @@ class model_siswa_pertahun extends CI_Model
   // delete pertama
   public function delete_siswa_pertahun($id_siswa_pertahun)
   {
+
+
+    $id_siswa=$this->db->where('id_siswa_pertahun',$id_siswa_pertahun)->get('tb_siswa_pertahun')->result();
+
     $this->db->where('id_siswa_pertahun',$id_siswa_pertahun);
     $query = $this->db->delete('tb_siswa_pertahun');
+    $this->db->where('id_siswa',$id_siswa[0]->id_siswa)->delete('tb_detail_pengetahuan');
+    $this->db->where('id_siswa',$id_siswa[0]->id_siswa)->delete('tb_detail_ketrampilan');
+    $this->db->where('id_siswa',$id_siswa[0]->id_siswa)->delete('tb_nilai_sikap');
+    $this->db->where('id_siswa',$id_siswa[0]->id_siswa)->delete('tb_nilai_ekskul');
     return $query;
   }
 }

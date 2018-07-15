@@ -42,7 +42,7 @@
 </div>
 <!--  MULAI MODAL-->
 <body class="hold-transition skin-black sidebar-mini">
-  <div class="modal fade" id="modal_ubahekskul" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+  <div class="modal fade" id="modal_rapor" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -52,29 +52,25 @@
         <form class="" action="<?php echo base_url('Admin/create_rapor') ?>" method="post">
           <div class="modal-body">
             <!-- MULAI MEMBUAT FORM MENU -->
-            <input type="hidden" class="form-control" id="id_ekskul" placeholder="" name="id_ekskul">
+            <div class="form-group">
+              <label for="">Kelas</label>
+              <select class="form-control" id="id_kelas_tambah" name="id_kelas" required>
+                <option value="">.:Pilih:.</option>
+                <?php foreach ($tb_kelas as $data_tb_kelas): ?>
+                  <option value="<?php echo $data_tb_kelas->id_kelas ?>"><?php echo $data_tb_kelas->tingkat ?><?php echo $data_tb_kelas->nama_kelas ?></option>
+                <?php endforeach; ?>
+              </select>
+            </div>
             <div class="form-group">
               <label for="">Nama Siswa</label>
-              <select class="form-control" id="id_siswa" name="id_siswa" required>
-                <option value="">:Pilih:.</option>
-                <?php foreach ($tb_siswa as $data_tb_siswa): ?>
-                  <option value="<?php echo $data_tb_siswa->id_siswa ?>"><?php echo $data_tb_siswa->nama_siswa ?></option>
-                <?php endforeach; ?>
+              <select class="form-control" id="id_siswa_pertahun_tambah" name="id_siswa_pertahun" onchange="getRapor()" required>
+                <option>:Pilih:</option>
               </select>
               <p class="help-block"></p>
             </div>
             <div class="form-group">
-              <label for="">Nama Guru</label>
-              <select class="form-control" id="id_guru" name="id_guru">
-                <?php foreach ($tb_guru as $data_tb_guru): ?>
-                  <option value="<?php echo $data_tb_guru->id_guru ?>"><?php echo $data_tb_guru->nama_guru ?></option>
-                <?php endforeach; ?>
-              </select>
-              <p class="help-block"></p>
-            </div>
-            <div class="form-group">
-              <label for="">Nama Ekstrakulikuler</label>
-              <input type="text" class="form-control" id="nama_ekskul" placeholder="Masukkan Nama Ekstrakulikuler" name="nama_ekskul">
+              <label for="">Catatan</label>
+              <input type="text" class="form-control" id="catatan" placeholder="Catatan" name="catatan">
               <p class="help-block"></p>
             </div>
 
@@ -207,16 +203,18 @@
                         <td><?php echo $input_rapor->nama_guru?></td>
                         <td><?php echo $input_rapor->nama_siswa?></td>
                         <td><?php echo $input_rapor->tingkat?><?php echo $input_rapor->nama_kelas?></td>
-                        <td><?php //echo $input_rapor->catatan?></td>
+                        <td><?php echo $input_rapor->catatan?></td>
                         <td>
                           <!-- ketiga delete -->
                           <form class="" action="<?php echo base_url('admin/delete_rapor') ?>" method="post">
-                          <button type="submit" class="btn btn-danger" name="delete_rapor">
-                            <i class="fa fa-trash-o"></i>
-                          </button>
+
                           <a class="btn btn-warning" href="<?php echo base_url('Kurikulum/rapor_hal1?id_rapor=').$input_rapor->id_rapor ?>">Cetak Hal 1</a>
                           <a class="btn btn-info" href="<?php echo base_url('Kurikulum/rapor_hal2?id_rapor=').$input_rapor->id_rapor ?>">Cetak Hal 2</a>
                           <a class="btn btn-success" href="<?php echo base_url('Kurikulum/rapor_hal3?id_rapor=').$input_rapor->id_rapor ?>">Cetak Hal 3</a>
+                          <input type="hidden" name="id_rapor" value="<?php echo $input_rapor->id_rapor; ?>">
+                            <button type="submit" class="btn btn-danger" name="delete_rapor" onclick="return confirm('Apakah ANda Yakin Ingin Menghapus Data ini ? ?')">
+                              <i class="fa fa-trash-o"></i>
+                            </button>
                         </form>
                       </td>
                     </tr>
@@ -246,6 +244,51 @@
 <!-- jQuery 2.2.3 -->
 <?php $this->load->view('template/javascript') ?>
 <script type="text/javascript">
+
+$(document).ready(function(){
+  $('#id_kelas_tambah').on('change',function(){
+    var id_kelas=$(this).val();
+    $.ajax({
+      url      :"<?php echo base_url('kurikulum/data_siswa'); ?>",
+      type     : "POST",
+      data     : {'id_kelas':id_kelas},
+      dataType :"json",
+      success  :function(data){
+        $('#id_siswa_pertahun_tambah').html(data);
+      },
+      error:function(){
+        alert('error occur');
+      }
+    });
+  });
+});
+
+
+function getRapor(){
+  id_siswa_pertahun =$('#id_siswa_pertahun_tambah').val();
+  // alert(id_siswa_pertahun);
+  $.ajax({
+    url     : '<?php echo base_url('kurikulum/get_rapor/'); ?>'+id_siswa_pertahun,
+    type    : 'get',
+    success : function(data){
+      console.log(data.id_siswa);
+      $('#id_siswa_tambah').val(data.id_siswa);
+      console.log(data.id_presensi);
+      $('#id_presensi_tambah').val(data.id_presensi);
+      console.log(data.id_wali_kelas);
+      $('#id_wali_kelas_tambah').val(data.id_wali_kelas);
+      // console.log(data.id_nilai_sikap);
+      // $('#id_nilai_sikap_tambah').val(data.id_nilai_sikap);
+      // console.log(data.id_detail_pengetahuan);
+      // $('#id_detail_pengetahuan_tambah').val(data.id_detail_pengetahuan);
+      // console.log(data.id_detail_ketrampilan);
+      // $('#id_detail_ketrampilan_tambah').val(data.id_detail_ketrampilan);
+      // console.log(data.id_ekskul);
+      // $('#id_ekskul_tambah').val(data.id_ekskul);
+    }
+  });
+}
+
 function edit_ekskul(id_ekskul){
   $.ajax({
     type: 'get',

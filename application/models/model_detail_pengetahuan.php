@@ -9,14 +9,18 @@ class model_detail_pengetahuan extends CI_Model
   {
     $this->load->database();
   }
+  public function update_detail_pengetahuan_new($id,$value,$modul){
+		$this->db->where(array("id_detail_pengetahuan"=>$id));
+		$this->db->update("tb_detail_pengetahuan",array($modul=>$value));
+	}
   public function get_inputdetailpengetahuan(){
     $this->db->from('tb_detail_pengetahuan');
         $this->db->join('tb_mapel','tb_mapel.id_mapel = tb_detail_pengetahuan.id_mapel');
-        $this->db->join('tb_siswa','tb_siswa.id_siswa = tb_detail_pengetahuan.id_siswa');
         $this->db->join('tb_siswa_pertahun','tb_siswa_pertahun.id_siswa_pertahun = tb_detail_pengetahuan.id_siswa_pertahun');
+        $this->db->join('tb_siswa','tb_siswa.id_siswa = tb_siswa_pertahun.id_siswa');
         $this->db->join('tb_wali_kelas','tb_wali_kelas.id_wali_kelas = tb_detail_pengetahuan.id_wali_kelas');
         $this->db->join('tb_guru','tb_guru.id_guru = tb_wali_kelas.id_guru');
-        $this->db->join('tb_kelas','tb_kelas.id_kelas = tb_wali_kelas.id_kelas');
+        $this->db->join('tb_kelas','tb_kelas.id_kelas = tb_siswa_pertahun.id_kelas');
         $this->db->join('tb_deskripsi_mapel','tb_deskripsi_mapel.id_deskripsi_mapel = tb_detail_pengetahuan.id_deskripsi_mapel','left');
         $query = $this->db->get();
         return $query->result();
@@ -28,16 +32,15 @@ class model_detail_pengetahuan extends CI_Model
         $this->db->join('tb_siswa_pertahun','tb_siswa_pertahun.id_siswa_pertahun = tb_detail_pengetahuan.id_siswa_pertahun');
         $this->db->join('tb_wali_kelas','tb_wali_kelas.id_wali_kelas = tb_detail_pengetahuan.id_wali_kelas');
         $this->db->join('tb_guru','tb_guru.id_guru = tb_wali_kelas.id_guru');
-        $this->db->join('tb_kelas','tb_kelas.id_kelas = tb_wali_kelas.id_kelas');
-        //$this->db->join('tb_mapel','tb_mapel.id_kelas = tb_kelas.id_kelas');
+        $this->db->join('tb_kelas','tb_kelas.id_kelas = tb_siswa_pertahun.id_kelas');
         $this->db->join('tb_deskripsi_mapel','tb_deskripsi_mapel.id_deskripsi_mapel = tb_detail_pengetahuan.id_deskripsi_mapel','left');
         $this->db->where('tb_kelas.id_kelas',$id_kelas);
-        $this->db->where('tb_mapel.id_mapel',$id_mapel);
+        $this->db->like('tb_mapel.nama_mapel',$id_mapel);
         $query = $this->db->get();
         return $query->result();
   }
-  
-  public function insert_siswa_pertahun_detail_pengetahuan($id_wali_kelas,$id_kelas,$id_siswa,$id_siswa_pertahun,$id_mapel)
+
+  public function insert_siswa_pertahun_detail_pengetahuan($id_wali_kelas,$id_siswa,$id_kelas,$id_siswa_pertahun,$id_mapel)
   {
     $data=array(
       'id_wali_kelas'=>$id_wali_kelas,
@@ -92,7 +95,6 @@ class model_detail_pengetahuan extends CI_Model
 
     $this->db->where('id_detail_pengetahuan',$id_detail_pengetahuan);
     $data=array(
-      // 'id_detail_pengetahuan'=>$id_detail_pengetahuan,
       'tugas1'=>$tugas1,
       'tugas2'=>$tugas2,
       'tugas3'=>$tugas3,
@@ -103,7 +105,6 @@ class model_detail_pengetahuan extends CI_Model
       'id_deskripsi_mapel'=>$id_deskripsi
     );
     $query = $this->db->update('tb_detail_pengetahuan',$data);
-    //die($this->db->last_query());
     return $query;
   }
   // delete pertama

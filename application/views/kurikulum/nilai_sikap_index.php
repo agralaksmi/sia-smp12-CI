@@ -209,27 +209,12 @@ td {
               </div>
             </div>
             <br>
-            <div class="panel panel-primary">
-              <div class="panel-heading">
-                <h3 class="panel-title">Keterangan</h3>
-              </div>
-              <div class="panel-body">
-                <?php for ($i=0; $i <1 ; $i++) { ?>
-                  <h3>Nama Guru : <?php echo $tb_nilai_sikap[0]->nama_guru; ?></h3>
-                  <h3>Kelas : <?php echo $tb_nilai_sikap[0]->tingkat;echo $tb_nilai_sikap[0]->nama_kelas ?></h3>
-                  <input type="hidden" name="id_kelas" id="id_kelas" value="<?php echo $id_kelas; ?>">
-                  <input type="hidden" name="jenis_deskripsi_sikap" id="jenis_deskripsi_sikap" value="<?php echo $jenis_deskripsi_sikap; ?>">
-                <?php } ?>
-              </div>
-            </div>
           <!-- menampilkan Tabel -->
-          <div class="box-body table-responsive" id="datanya">
+          <div class="box-body table-responsive">
             <table class="table table-hover table-bordered table-responsive">
               <thead>
                 <tr class="bg-blue" align="center">
                   <th>No</th>
-                  <th>Wali Kelas</th>
-                  <th>Kelas</th>
                   <th>Nama Siswa</th>
                   <th>Jenis Sikap</th>
                   <th>Nilai</th>
@@ -237,34 +222,7 @@ td {
                   <th>Aksi</th>
                 </tr>
               </thead>
-              <tbody>
-                <?php $no =1; foreach ($tb_nilai_sikap as $input_nilai_sikap):?>
-                  <tr>
-                    <td><?php echo @$input_nilai_sikap->id_nilai_sikap ?></td>
-                    <td><?php echo @$input_nilai_sikap->nama_guru?></td>
-                    <td><?php echo @$input_nilai_sikap->tingkat?><?php echo @$input_nilai_sikap->nama_kelas?></td>
-                    <td><?php echo @$input_nilai_sikap->nama_siswa?></td>
-                    <td><?php echo @$input_nilai_sikap->jenis_deskripsi_sikap?></td>
-                    <!-- <td><?php echo $input_nilai_sikap->nilai_akhir?></td> -->
-                    <td><span class='span-nilai caption' data-id='<?php echo $input_nilai_sikap->id_nilai_sikap; ?>'>
-                      <?php echo $input_nilai_sikap->nilai_akhir?></span>
-                      <input style="display:none;width:50px" type='text' class='field-nilai form-control editor' value='<?php echo $input_nilai_sikap->nilai_akhir?>' data-id='<?php echo $input_nilai_sikap->id_nilai_sikap; ?>' /></td>
-                    <td><?php echo @$input_nilai_sikap->deskripsi?></td>
-                    <td>
-                      <form class="" action="<?php echo base_url('admin/delete_nilai_sikap') ?>" method="post">
-                        <!-- Kelima-->
-                        <!-- <button type="button" class="btn btn-warning" onclick="edit_nilai_sikap('<?php echo $input_nilai_sikap->id_nilai_sikap; ?>')">
-                          <i class="fa fa-edit"></i>
-                        </button> -->
-                        <input type="hidden" name="id_nilai_sikap" value="<?php echo $input_nilai_sikap->id_nilai_sikap; ?>">
-                        <button type="submit" class="btn btn-danger" name="delete_nilai_sikap" onclick="return confirm('Apakah ANda Yakin Ingin Menghapus Data ini ? ?')">
-                          <i class="fa fa-trash-o"></i>
-                        </button>
-                      </form>
-                    </td>
-                  </tr>
-                <?php endforeach; ?>
-              </tbody>
+
             </table>
           </div> <!-- /.box-body -->
         </div> <!-- /.box -->
@@ -311,8 +269,6 @@ function edit_nilai_sikap(id_nilai_sikap){
 }
 </script>
 <script type="text/javascript">
-var id_kelas = document.getElementById('id_kelas').value;
-var jenis_deskripsi_sikap = document.getElementById('jenis_deskripsi_sikap').value;
 $(function(){
 $.ajaxSetup({
 	type:"post",
@@ -352,26 +308,8 @@ $.ajax({
     success: function(msg) {
     	 target.hide();
     	 target.siblings("span[class~='caption']").html(value).fadeIn();
-       //console.log(msg);
-       //window.location.reload();
-       $.ajax({
-         url:"<?php echo base_url('kurikulum/data_nilai_sikap'); ?>",
-         type:"POST",
-         data: {
-           id_kelas : '<?php echo $id_kelas; ?>',
-           jenis_deskripsi_sikap : '<?php echo $jenis_deskripsi_sikap; ?>'
-         },
-         dataType:"JSON",
-         beforeSend: function(){
-              $(".overlay").show();
-              document.getElementById("datanya").innerHTML = "";
-          },
-         success:function(response){
-           console.log(response);
-           $(".overlay").hide();
-           $("#datanya").html(response.content);
-         }
-       })
+       console.log(msg);
+       window.location.reload();
     }
 });
 

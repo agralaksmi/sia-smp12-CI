@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<?php error_reporting(0); ?>
 <html>
 <head>
   <?php $this->load->view('template/links') ?>
@@ -191,7 +190,6 @@ td {
                 <div class="col-md-4" style="margin-left:5px;">
                   <form class=""  action="" method="post">
 
-
                     <div class="form-group">
                       <label>Kelas</label>
                       <select class="form-control" name="id_kelas">
@@ -217,31 +215,23 @@ td {
                       <input class="form-control" type="text" name="semester" value="<?php echo $semester_sekarang?>" readonly>
                     </div>
                     <div class="text-center form-group">
-                      <button type="submit" name="cek" class="btn btn-success">Cek</button>
+                      <button type="submit" name="cek" class="btn btn-success">Search</button>
                     </div>
                   </form>
                 </div>
               </div>
               <br>
-                <div class="panel panel-primary">
-                  <div class="panel-heading">
-                    <h3 class="panel-title">Keterangan</h3>
-                  </div>
-                  <div class="panel-body">
-                    <?php for ($i=0; $i <1 ; $i++) {?>
-                      <h3>Mapel : <?php echo $tb_detail_pengetahuan[0]->nama_mapel; ?></h3>
-                      <h3>Wali Kelas : <?php echo $tb_detail_pengetahuan[0]->nama_guru; ?></h3>
-                      <h3>Kelas   : <?php echo $tb_detail_pengetahuan[0]->tingkat;echo $tb_detail_pengetahuan[0]->nama_kelas; ?></h3>
-                      <input type="hidden" name="id_kelas" id="id_kelas" value="<?php echo $id_kelas; ?>">
-                      <input type="hidden" name="id_mapel" id="id_mapel" value="<?php echo $id_mapel; ?>">
-                    <?php } ?>
-                  </div>
-                </div>
-              <div class="table-responsive" id="datanya">
+              <?php if ($mapel!=""): ?>
+                <h1 align='right'><?php echo $mapel; ?></h1>
+              <?php endif; ?>
+              <div class="table-responsive">
                 <table id="table-data" class="table table-hover table-bordered table-responsive">
                   <thead>
                     <tr class="bg-blue" align="center">
                       <th>No</th>
+                      <th>Wali Kelas</th>
+                      <th>Mata Pelajaran</th>
+                      <th>Kelas</th>
                       <th>Nama Siswa</th>
                       <th>T1</th>
                       <th>T2</th>
@@ -255,39 +245,6 @@ td {
                       <th>Aksi</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <?php $no =1; foreach ($tb_detail_pengetahuan as $input_detail_pengetahuan):?>
-                      <tr data-id='<?php echo $input_detail_pengetahuan->id_detail_pengetahuan; ?>'>
-                        <td><?php echo $no++ ?></td>
-
-                        <!-- <td data-id='<?php echo $input_detail_pengetahuan->id_detail_pengetahuan; ?>'><?php echo $input_detail_pengetahuan->nama_guru?></td>
-                        <td><?php echo $input_detail_pengetahuan->nama_mapel?></td>
-                        <td><?php echo $input_detail_pengetahuan->tingkat?><?php echo $input_detail_pengetahuan->nama_kelas?></td> -->
-                        <td><?php echo $input_detail_pengetahuan->nama_siswa?></td>
-                        <td ><span class='span-tugas1 caption' data-id='<?php echo $input_detail_pengetahuan->id_detail_pengetahuan; ?>'><?php echo $input_detail_pengetahuan->tugas1?></span> <input style="display:none;width:50px" type='text' class='field-tugas1 form-control editor' value='<?php echo $input_detail_pengetahuan->tugas1?>' data-id='<?php echo $input_detail_pengetahuan->id_detail_pengetahuan; ?>' /></td>
-                        <td><span class='span-tugas2 caption' data-id='<?php echo $input_detail_pengetahuan->id_detail_pengetahuan; ?>'><?php echo $input_detail_pengetahuan->tugas2?></span> <input style="display:none;width:50px" type='text' class='field-tugas2 form-control editor' value='<?php echo $input_detail_pengetahuan->tugas2?>' data-id='<?php echo $input_detail_pengetahuan->id_detail_pengetahuan; ?>' /></td>
-                        <td><span class='span-tugas3 caption' data-id='<?php echo $input_detail_pengetahuan->id_detail_pengetahuan; ?>'><?php echo $input_detail_pengetahuan->tugas3?></span> <input style="display:none;width:50px" type='text' class='field-tugas3 form-control editor' value='<?php echo $input_detail_pengetahuan->tugas3?>' data-id='<?php echo $input_detail_pengetahuan->id_detail_pengetahuan; ?>' /></td>
-                        <td><span class='span-tugas4 caption' data-id='<?php echo $input_detail_pengetahuan->id_detail_pengetahuan; ?>'><?php echo $input_detail_pengetahuan->tugas4?></span> <input style="display:none;width:50px" type='text' class='field-tugas4 form-control editor' value='<?php echo $input_detail_pengetahuan->tugas4?>' data-id='<?php echo $input_detail_pengetahuan->id_detail_pengetahuan; ?>' /></td>
-                        <td><span class='span-uts caption' data-id='<?php echo $input_detail_pengetahuan->id_detail_pengetahuan; ?>'><?php echo $input_detail_pengetahuan->uts?></span> <input style="display:none;width:50px" type='text' class='field-uts form-control editor' value='<?php echo $input_detail_pengetahuan->uts?>' data-id='<?php echo $input_detail_pengetahuan->id_detail_pengetahuan; ?>' /></td>
-                        <td><span class='span-uas caption' data-id='<?php echo $input_detail_pengetahuan->id_detail_pengetahuan; ?>'><?php echo $input_detail_pengetahuan->uas?></span> <input style="display:none;width:50px" type='text' class='field-uas form-control editor' value='<?php echo $input_detail_pengetahuan->uas?>' data-id='<?php echo $input_detail_pengetahuan->id_detail_pengetahuan; ?>' /></td>
-                        <td><span class='span-ulangan_harian caption' data-id='<?php echo $input_detail_pengetahuan->id_detail_pengetahuan; ?>'><?php echo $input_detail_pengetahuan->ulangan_harian?></span> <input style="display:none" type='text' class='field-ulangan_harian form-control editor' value='<?php echo $input_detail_pengetahuan->ulangan_harian?>' data-id='<?php echo $input_detail_pengetahuan->id_detail_pengetahuan; ?>' /></td>
-                        <td><?php echo $input_detail_pengetahuan->nilai?></td>
-                        <td><?php echo $input_detail_pengetahuan->deskripsi?></td>
-                        <td>
-                          <form class="" action="<?php echo base_url('admin/delete_detail_pengetahuan') ?>" method="post">
-                            <input type="hidden" name="id_detail_pengetahuan" value="<?php echo @$input_detail_pengetahuan->id_detail_pengetahuan; ?>">
-                              <!-- Kelima-->
-                              <!-- <button type="button" class="btn btn-warning" onclick="edit_detail_pengetahuan('<?php echo @$input_detail_pengetahuan->id_detail_pengetahuan; ?>')">
-                                <i class="fa fa-edit"></i>
-                              </button> -->
-                              <button type="submit" class="btn btn-danger" name="delete_detail_pengetahuan" onclick="return confirm('Apakah ANda Yakin Ingin Menghapus Data ini ? ?')">
-                                <i class="fa fa-trash-o"></i>
-                              </button>
-                          </form>
-                        </td>
-                      </tr>
-                    <?php endforeach; ?>
-                  </tbody>
                 </table>
               </div>
 
@@ -365,8 +322,7 @@ function edit_detail_pengetahuan(id_detail_pengetahuan){
 </script>
 
 <script type="text/javascript">
-var id_kelas = document.getElementById('id_kelas').value;
-var id_mapel = document.getElementById('id_mapel').value;
+
 $(function(){
 
 $.ajaxSetup({
@@ -380,6 +336,7 @@ $(document).on("click","td",function(){
 $(this).find("span[class~='caption']").hide();
 $(this).find("input[class~='editor']").fadeIn().focus();
 });
+
 $(document).on("keydown",".editor",function(e){
 if(e.keyCode==13){
 var target=$(e.target);
@@ -411,27 +368,10 @@ $.ajax({
 	data:data,
 	url:"<?php echo base_url('kurikulum/update_detail_pengetahuan'); ?>",
 	success: function(a){
+   console.log(a);
 	 target.hide();
 	 target.siblings("span[class~='caption']").html(value).fadeIn();
-   //window.location.reload();
-   $.ajax({
-     url:"<?php echo base_url('kurikulum/data_detail_pengetahuan'); ?>",
-     type:"POST",
-     data: {
-       id_kelas : id_kelas,
-       id_mapel : id_mapel
-     },
-     dataType:"JSON",
-     beforeSend: function(){
-          $(".overlay").show();
-          document.getElementById("datanya").innerHTML = "";
-      },
-     success:function(response){
-       $(".overlay").hide();
-       console.log(response);
-       $("#datanya").html(response.content);
-     }
-   })
+   window.location.reload();
 	}
 })
 

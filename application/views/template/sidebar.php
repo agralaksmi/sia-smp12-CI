@@ -16,18 +16,28 @@
         </a>
         <ul class="treeview-menu">
       <li>
-        <a href="<?php echo base_url('kurikulum/siswa')?>">
-          <i class="fa fa-circle-o"></i> <span>Data Siswa</span>
+        <a href="<?php echo base_url('kurikulum/guru')?>">
+          <i class="fa fa-circle-o"></i> <span>Data Guru</span>
         </a>
       </li>
       <li>
-          <a href="<?php echo base_url('kurikulum/kelas')?>">
+        <a href="<?php echo base_url('kurikulum/kelas')?>">
           <i class="fa fa-circle-o"></i> <span>Data Kelas</span>
         </a>
       </li>
       <li>
-          <a href="<?php echo base_url('kurikulum/tahun_ajaran')?>">
-          <i class="fa fa-circle-o"></i> <span>Data Tahun Ajaran</span>
+        <a href="<?php echo base_url('kurikulum/mapel')?>">
+          <i class="fa fa-circle-o"></i> <span>Data Mata Pelajaran</span>
+        </a>
+      </li>
+      <li>
+        <a href="<?php echo base_url('kurikulum/guru_ampu')?>">
+          <i class="fa fa-circle-o"></i> <span>Data Guru Ampu</span>
+        </a>
+      </li>
+      <li>
+        <a href="<?php echo base_url('kurikulum/siswa')?>">
+          <i class="fa fa-circle-o"></i> <span>Data Siswa</span>
         </a>
       </li>
       <li>
@@ -38,23 +48,13 @@
       <?php }?>
       </li>
       <li>
-        <a href="<?php echo base_url('kurikulum/guru')?>">
-          <i class="fa fa-circle-o"></i> <span>Data Guru</span>
-        </a>
-      </li>
-      <li>
-        <a href="<?php echo base_url('kurikulum/guru_ampu')?>">
-          <i class="fa fa-circle-o"></i> <span>Data Guru Ampu</span>
+        <a href="<?php echo base_url('kurikulum/tahun_ajaran')?>">
+          <i class="fa fa-circle-o"></i> <span>Data Tahun Ajaran</span>
         </a>
       </li>
       <li>
         <a href="<?php echo base_url('kurikulum/wali_kelas')?>">
           <i class="fa fa-circle-o"></i> <span>Data Wali Kelas</span>
-        </a>
-      </li>
-      <li>
-        <a href="<?php echo base_url('kurikulum/mapel')?>">
-          <i class="fa fa-circle-o"></i> <span>Data Mata Pelajaran</span>
         </a>
       </li>
       <li>
@@ -120,9 +120,11 @@
     </a>
   </li>
 <?php } ?>
+
 </ul>
 </li>
 </ul>
+
 <ul class="sidebar-menu">
 <li class="header">Laporan</li>
 <!-- Optionally, you can add icons to the links -->
@@ -143,8 +145,14 @@
         <?php }?>
 
       </ul>
+      <ul class="sidebar-menu">
+      <li class="header">Menu</li>
+      <li class="treeview">
+        <a href="<?php echo base_url('Auth/logout')?>">
+          <i class="fa fa-dashboard"></i> <span>Logout</span>
+        </a>
+      </ul>
     </li>
     </ul>
-
 </ul>
 <!-- /.sidebar-menu -->

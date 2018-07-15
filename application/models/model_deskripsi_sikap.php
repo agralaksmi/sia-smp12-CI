@@ -40,6 +40,9 @@ class model_deskripsi_sikap extends CI_Model
     'nilai'=>$nilai,
     'deskripsi'=>$deskripsi
     );
+    // echo "<pre>";
+    // var_dump($data);
+    // die();
     $query = $this->db->update('tb_deskripsi_sikap',$data);
     return $query;
   }

@@ -5,6 +5,7 @@
     <title>Rapor Hal 1</title>
   </head>
   <body onload="window.print();">
+    <!-- window.print(); -->
     <h1 align="center">Pencapaian Kompetensi Siswa</h1>
     <table align="center" width="80%">
       <tr>
@@ -17,7 +18,7 @@
         <td>Alamat</td>
         <td> : Jl. Tentara Pelajar 9 Yogyakarta</td>
         <td>Semester </td>
-        <td> : <?php echo $tb_rapor->semester ?></td>
+        <td> : <?php echo $semester_sekarang ?></td>
       </tr>
       <tr>
         <td>Nama </td>
@@ -45,7 +46,7 @@
               </p>
               <br>
               <p>
-                <?php echo $tb_siswa[0]->nama_siswa?>
+                <?php echo $tb_rapor->nama_siswa?>
                 <?php echo $tb_siswa[0]->deskripsi ?>
               </p>
             </td>
@@ -63,14 +64,14 @@
               </p>
               <br>
               <p>
-                <?php echo $tb_siswa[0]->nama_siswa?>
+                <?php echo $tb_rapor->nama_siswa?>
                 <?php echo $tb_siswa[0]->deskripsi ?>
               </p>
             </td>
           </tr>
         </table>
         <div align="right">
-          Raport <?php echo $tb_rapor->tingkat ?><?php echo $tb_rapor->nama_kelas ?> Semester 1(Satu) Tahun Ajaran <?php echo $tb_rapor->tahun_ajaran ?></td> : <?php echo $tb_rapor->nama_siswa ?>
+          Raport <?php echo $tb_rapor->tingkat ?><?php echo $tb_rapor->nama_kelas ?> Semester <?php echo $semester_sekarang;?> Tahun Ajaran <?php echo $tb_rapor->tahun_ajaran ?></td> : <?php echo $tb_rapor->nama_siswa ?>
         </div>
       </li>
     </ol>

@@ -26,23 +26,22 @@
     <tr>
       <td colspan="9"><b>Kelompok A</b></td>
     </tr>
-    <?php $no=1; ?>
-    <?php foreach ($tb_nilai_matkul as $item_tb_nilai_matkul): ?>
+    <?php for ($i=0; $i <count($tb_nilai_matkul) ; $i++) { ?>
       <tr>
-        <td><?php echo $no++ ?></td>
-        <td><?php echo $item_tb_nilai_matkul->nama_mapel ?></td>
-        <td><?php echo $item_tb_nilai_matkul->kkm ?></td>
-        <td><?php echo $item_tb_nilai_matkul->ulangan_harian ?></td>
-        <td><?php echo $item_tb_nilai_matkul->nilai_peng ?></td>
-        <td><?php echo $item_tb_nilai_matkul->desk_peng ?></td>
-        <td><?php echo $item_tb_nilai_matkul->nilai_akhir ?></td>
-        <td><?php echo $item_tb_nilai_matkul->nilai_ket ?></td>
-        <td><?php echo $item_tb_nilai_matkul->desk_ket ?></td>
+        <td><?php echo $i+1; ?></td>
+        <td><?php echo $tb_nilai_matkul[$i]->nama_mapel ?></td>
+        <td><?php echo $tb_nilai_matkul[$i]->kkm ?></td>
+        <td><?php echo $tb_nilai_matkul[$i]->ulangan_harian ?></td>
+        <td><?php echo $tb_nilai_matkul[$i]->nilai ?></td>
+        <td><?php echo $tb_nilai_matkul[$i]->deskripsi ?></td>
+        <td><?php echo $tb_nilai_ketrampilan[$i]->nilai_akhir_ket ?></td>
+        <td><?php echo $tb_nilai_ketrampilan[$i]->nilai_ket ?></td>
+        <td><?php echo $tb_nilai_ketrampilan[$i]->desk_ket ?></td>
       </tr>
-    <?php endforeach; ?>
+    <?php $i++; } ?>
   </table>
   <div align="right">
-    Raport <?php echo $tb_rapor->tingkat ?><?php echo $tb_rapor->nama_kelas ?> Semester 1(Satu) Tahun Ajaran <?php echo $tb_rapor->tahun_ajaran ?></td> : <?php echo $tb_rapor->nama_siswa ?>
+    Rapor <?php echo $tb_rapor->tingkat ?><?php echo $tb_rapor->nama_kelas ?> Semester <?php echo $semester_sekarang ?> Tahun Ajaran <?php echo $tb_rapor->tahun_ajaran ?></td> : <?php echo $tb_rapor->nama_siswa ?>
   </div>
 </body>
 </html>

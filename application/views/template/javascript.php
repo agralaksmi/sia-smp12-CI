@@ -13,6 +13,7 @@
     $('.isi').load('home.html');
     $('.content-header h1').html('Halaman Kurikulum');
     $('table').DataTable({
+        destroy: true,
         "language":{
           "lengthMenu":"Tampilkan _MENU_ data per halaman.",
           "info":"Menampilkan _START_ - _END_ dari _TOTAL_ data.",

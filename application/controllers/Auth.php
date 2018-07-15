@@ -35,7 +35,9 @@ class Auth extends CI_Controller
         'hak_akses'     => $akun->hak_akses,
         'nama'     => $akun->nama,
         'id_guru'     => $akun->id_guru
+
       );
+      //print_r($data);die();
 
       $this->session->set_userdata($data);
       // terus baru redirect (arahin)  ke halaman awal/home berdasarkan hak_akses

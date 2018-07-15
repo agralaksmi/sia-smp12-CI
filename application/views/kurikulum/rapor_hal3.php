@@ -24,7 +24,7 @@
       <tr>
         <td colspan="9"><b>Kelompok B</b></td>
       </tr>
-      <?php $no=1; ?>
+      <!-- <?php $no=1; ?>
       <?php foreach ($tb_nilai_matkul as $item_tb_nilai_matkul): ?>
       <tr>
         <td><?php echo $no++ ?></td>
@@ -37,7 +37,21 @@
         <td><?php echo $item_tb_nilai_matkul->nilai_ket ?></td>
         <td><?php echo $item_tb_nilai_matkul->desk_ket ?></td>
       </tr>
-      <?php endforeach; ?>
+      <?php endforeach; ?> -->
+      <?php //print_r($tb_nilai_ketrampilan);die(); ?>
+      <?php for ($i=0; $i <count($tb_nilai_matkul) ; $i++) { ?>
+        <tr>
+          <td><?php echo $i+1; ?></td>
+          <td><?php echo $tb_nilai_matkul[$i]->nama_mapel ?></td>
+          <td><?php echo $tb_nilai_matkul[$i]->kkm ?></td>
+          <td><?php echo $tb_nilai_matkul[$i]->ulangan_harian ?></td>
+          <td><?php echo $tb_nilai_matkul[$i]->nilai ?></td>
+          <td><?php echo $tb_nilai_matkul[$i]->deskripsi ?></td>
+          <td><?php echo $tb_nilai_ketrampilan[$i]->nilai_akhir_ket ?></td>
+          <td><?php echo $tb_nilai_ketrampilan[$i]->nilai_ket ?></td>
+          <td><?php echo $tb_nilai_ketrampilan[$i]->desk_ket ?></td>
+        </tr>
+      <?php $i++; } ?>
     </table>
 <h3>C. Ekstrakulikuler</h3>
 <table border="1" width=" 70%">
@@ -80,9 +94,9 @@
         <td>&ensp;</td>
         <td align="right">
           <table border="1" align="left" width="80%">
-            <tr>
+            <tr colspan="5" >
               <td>
-                Keputusan :
+                Keputusan : <?php echo $tb_rapor->catatan;?>
               </td>
             </tr>
           </table>
@@ -108,7 +122,7 @@
           </tr>
           <tr>
             <br>
-            <td>..................</td>
+            <td><?php echo $tb_rapor->nama_ortu;?></td>
           </tr>
         </table>
       </td>
@@ -129,7 +143,12 @@
           </tr>
           <tr>
               <br>
-                <td>AVICA s.Kom</td></br>
+                <td><?php echo $tb_rapor->nama_guru;?></td></br>
+          </tr>
+
+          <tr>
+              <br>
+                <td>NIP.<?php echo $tb_rapor->nip;?></td></br>
           </tr>
         </table>
       </td>
@@ -158,7 +177,7 @@
     </tr>
   </table>
   <div align="right">
-    Raport 7C Semester 1(Satu) Tahun Ajaran 2017/2018 : NAMA KAMU SIAPA
+    Rapor <?php echo $tb_rapor->tingkat ?><?php echo $tb_rapor->nama_kelas ?> Semester <?php echo $semester_sekarang ?> Tahun Ajaran <?php echo $tb_rapor->tahun_ajaran ?></td> : <?php echo $tb_rapor->nama_siswa ?>
   </div>
   </body>
 </html>

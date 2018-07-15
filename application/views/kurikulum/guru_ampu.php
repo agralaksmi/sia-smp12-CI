@@ -93,12 +93,12 @@
               <select class="form-control" id="" name="id_mapel" required>
                 <option value="">.:Pilih:.</option>
                 <?php foreach ($tb_mapel as $data_tb_mapel): ?>
-                  <option value="<?php echo $data_tb_mapel->id_mapel ?>"><?php echo $data_tb_mapel->nama_mapel ?></option>
+                  <option value="<?php echo $data_tb_mapel->id_mapel ?>#<?php echo $data_tb_mapel->id_kelas ?>"><?php echo $data_tb_mapel->nama_mapel ?> Kelas <?php echo $data_tb_mapel->tingkat ?><?php echo $data_tb_mapel->nama_kelas ?></option>
                 <?php endforeach; ?>
               </select>
               <p class="help-block"></p>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
               <label for="">Kelas</label>
               <select class="form-control" id="" name="id_kelas" required>
                 <option value="">.:Pilih:.</option>
@@ -107,7 +107,7 @@
                 <?php endforeach; ?>
               </select>
               <p class="help-block"></p>
-            </div>
+            </div> -->
             <div class="form-group">
               <label for="">Semester</label>
               <input type="text"  class="form-control" name="semester" value="<?php echo $semester_sekarang?>" readonly>

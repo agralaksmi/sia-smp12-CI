@@ -9,6 +9,11 @@ class model_nilai_sikap extends CI_Model
   {
     $this->load->database();
   }
+  public function update_nilai_sikap_new($id,$value,$modul){
+    $this->db->where(array("id_nilai_sikap"=>$id));
+    $this->db->update("tb_nilai_sikap",array($modul=>$value));
+
+  }
   public function get_inputnilaisikap(){
     $this->db->from('tb_nilai_sikap');
         $this->db->join('tb_siswa_pertahun','tb_siswa_pertahun.id_siswa_pertahun = tb_nilai_sikap.id_siswa_pertahun');
@@ -20,7 +25,7 @@ class model_nilai_sikap extends CI_Model
         $query = $this->db->get();
         return $query->result();
   }
-  public function get_inputnilaisikapsearch($id_kelas){
+  public function get_inputnilaisikapsearch($id_kelas,$jenis_deskripsi_sikap){
     $this->db->from('tb_nilai_sikap');
         $this->db->join('tb_siswa_pertahun','tb_siswa_pertahun.id_siswa_pertahun = tb_nilai_sikap.id_siswa_pertahun');
         $this->db->join('tb_siswa','tb_siswa.id_siswa = tb_nilai_sikap.id_siswa');
@@ -80,7 +85,7 @@ class model_nilai_sikap extends CI_Model
 
     $this->db->where('id_nilai_sikap',$id_nilai_sikap);
     $data=array(
-    'id_deskripsi_sikap'=>$id_deskripsi_sikap,
+    'id_deskripsi_sikap'=>$id_deskripsi,
     'nilai_akhir'=>$nilai_akhir
     );
     $query = $this->db->update('tb_nilai_sikap',$data);

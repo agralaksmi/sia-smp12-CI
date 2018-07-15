@@ -14,7 +14,7 @@
       <form class="" action="<?php echo base_url('admin/update_deskripsi_sikap') ?>" method="post">
       <div class="modal-body">
         <!-- MULAI MEMBUAT FORM MENU -->
-          <input type="hidden" class="form-control" id="id_deskripsi_sikap" placeholder="" name="id_deskripsi_sikap">
+          <input type="text" class="form-control" id="id_deskripsi_sikap" placeholder="" name="id_deskripsi_sikap">
             <div class="form-group">
               <label for="">Jenis Deskripsi</label>
               <select class="form-control" id="jenis_deskripsi" name="jenis_deskripsi" required>

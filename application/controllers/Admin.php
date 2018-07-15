@@ -183,21 +183,73 @@ class Admin extends CI_Controller {
   public function create_guru_ampu(){
     $id_guru= $this->input->post('id_guru');
     $id_mapel=$this->input->post('id_mapel');
-    $id_kelas=$this->input->post('id_kelas');
+    $explodemapel=explode("#",$id_mapel);
+    //print_r($explodemapel);die();
     $semester=$this->input->post('semester');
     $tahun_ajaran=$this->input->post('id_tahun_ajaran');
 
-    $cek=$this->db->where('id_kelas',$id_kelas)->where('id_guru',$id_guru)->get('tb_guru_ampu')->result_array();
+    $cek=$this->db->where('id_kelas',$id_kelas)->where('id_guru',$id_guru)->where('id_mapel',$explodemapel[0])->get('tb_guru_ampu')->result_array();
     if ($cek) {
       $this->session->set_flashdata('exist', 'DATA GURU AMPU SUDAH ADA');
       redirect(base_url('kurikulum/guru_ampu'));
     }
     else {
-      $guru_ampu= $this->model_guru_ampu->input_guru_ampu($id_guru,$id_mapel,$id_kelas,$semester,$tahun_ajaran);
+      $list_siswa_pertahun=$this->db
+                              ->join('tb_siswa','tb_siswa.id_siswa = tb_siswa_pertahun.id_siswa')
+                              ->join('tb_wali_kelas','tb_siswa_pertahun.id_kelas = tb_wali_kelas.id_kelas')
+                              ->get('tb_siswa_pertahun')->result();
+      //var_dump($list_siswa_pertahun);die();
+      foreach ($list_siswa_pertahun as $key => $value) {
+        $data_detail_pengetahuan = array(
+          'id_mapel' => $explodemapel[0],
+          'id_siswa' => $value->id_siswa,
+          'id_deskripsi_mapel' => 0,
+          'tugas1' => 0,
+          'tugas2' => 0,
+          'tugas3' => 0,
+          'tugas4' => 0,
+          'uts' => 0,
+          'uas' => 0,
+          'ulangan_harian' => 0,
+          'id_wali_kelas' => $value->id_wali_kelas,
+          'id_kelas' => $value->id_kelas,
+          'id_siswa_pertahun' => $value->id_siswa_pertahun,
+        );
+
+        $cek=$this->db->where('id_siswa',$value->id_siswa)
+                      ->where('id_mapel',$explodemapel[0])
+                      ->where('id_kelas',$value->id_kelas)
+                      ->get('tb_detail_pengetahuan')->num_rows();
+        if ($cek==0) {
+          $this->db->replace('tb_detail_pengetahuan', $data_detail_pengetahuan);
+        }
+      }
+      foreach ($list_siswa_pertahun as $key => $value) {
+        $data_detail_ketrampilan = array(
+          'id_mapel' => $explodemapel[0],
+          'id_siswa' => $value->id_siswa,
+          'nilai_praktek' => 0,
+          'nilai_folio' => 0,
+          'nilai_proyek' => 0,
+          'nilai_akhir' => 0,
+          'id_wali_kelas' => $value->id_wali_kelas,
+          'id_kelas' => $value->id_kelas,
+          'id_siswa_pertahun' => $value->id_siswa_pertahun,
+        );
+        $ceknya=$this->db->where('id_siswa',$value->id_siswa)
+                      ->where('id_mapel',$explodemapel[0])
+                      ->where('id_kelas',$value->id_kelas)
+                      ->get('tb_detail_ketrampilan')->num_rows();
+        if ($ceknya==0) {
+          $this->db->replace('tb_detail_ketrampilan', $data_detail_ketrampilan);
+        }
+      }
+      $guru_ampu= $this->model_guru_ampu->input_guru_ampu($id_guru,$explodemapel[0],$explodemapel[1],$semester,$tahun_ajaran);
       $data = array(
                'id_guru' => $id_guru
-            );
-      $this->db->where('id_mapel', $id_mapel);
+      );
+      $this->db->where('id_mapel', $explodemapel[0]);
+      $this->db->where('id_kelas',$explodemapel[1]);
       $this->db->update('tb_mapel', $data);
       $this->session->set_flashdata('sukses', 'DATA BERHASIL DISIMPAN');
       redirect(base_url('kurikulum/guru_ampu'));
@@ -221,7 +273,46 @@ class Admin extends CI_Controller {
     }
   }
 
-  public function create_siswa_pertahun(){
+  // public function create_siswa_pertahun(){
+  //   $id_wali_kelas= $this->input->post('id_wali_kelas');
+  //   $id_siswa= $this->input->post('id_siswa');
+  //   $id_kelas=$this->input->post('id_kelas');
+  //   $id_tahun_ajaran=$this->input->post('id_tahun_ajaran');
+  //   $mapel=$this->input->post('mapel');
+  //   $jumlah=$this->input->post('jumlah');
+  //
+  //   $cek=$this->db->where('id_siswa',$id_siswa)->get('tb_siswa_pertahun')->result_array();
+  //   if ($cek) {
+  //     $this->session->set_flashdata('exist', 'DATA SISWA SUDAH ADA');
+  //     redirect(base_url('kurikulum/siswa_pertahun'));
+  //   }
+  //   else {
+  //     // $cek_count_kelas=$this->model_mapel->ambil_kelas_mapel($id_kelas);
+  //     // echo "<pre>";
+  //     // var_dump($cek_count_kelas);
+  //     // die();
+  //
+  //   $siswa_pertahun= $this->model_siswa_pertahun->input_siswa_pertahun($id_siswa,$id_kelas,$id_tahun_ajaran);
+  //   $id_siswa_pertahun=$siswa_pertahun['last_id'];
+  //
+  //     for ($i=0; $i < $jumlah ; $i++) {
+  //       $data_mapel="mapel".$mapel.$i;
+  //       $id_mapel = $this->input->post($data_mapel);
+  //
+  //       $detail_pengetahuan=$this->model_detail_pengetahuan->insert_siswa_pertahun_detail_pengetahuan($id_wali_kelas,$id_siswa,$id_kelas,$id_siswa_pertahun,$id_mapel);
+  //       $detail_ketrampilan=$this->model_detail_ketrampilan->insert_siswa_pertahun_detail_ketrampilan($id_wali_kelas,$id_siswa,$id_kelas,$id_siswa_pertahun,$id_mapel);
+  //     }
+  //
+  //     $nilai_sikap=$this->model_nilai_sikap->input_nilai_sikap($id_wali_kelas,$id_siswa,$id_kelas,$id_siswa_pertahun);
+  //
+  //     $presensi=$this->model_presensi->input_presensi($id_wali_kelas,$id_kelas,$id_siswa,$id_siswa_pertahun);
+  //
+  //     $this->session->set_flashdata('sukses', 'Berhasil Tambah Data');
+  //     redirect(base_url('kurikulum/siswa_pertahun'));
+  //   }
+  // }
+
+public function create_siswa_pertahun(){
     $id_wali_kelas= $this->input->post('id_wali_kelas');
     $id_siswa= $this->input->post('id_siswa');
     $id_kelas=$this->input->post('id_kelas');
@@ -235,17 +326,46 @@ class Admin extends CI_Controller {
       redirect(base_url('kurikulum/siswa_pertahun'));
     }
     else {
+
       $siswa_pertahun= $this->model_siswa_pertahun->input_siswa_pertahun($id_siswa,$id_kelas,$id_tahun_ajaran);
 
       $id_siswa_pertahun=$siswa_pertahun['last_id'];
-      for ($i=0; $i < $jumlah ; $i++) {
-        $data_mapel="mapel".$mapel.$i;
-        $id_mapel = $this->input->post($data_mapel);
 
-      $detail_pengetahuan=$this->model_detail_pengetahuan->insert_siswa_pertahun_detail_pengetahuan($id_wali_kelas,$id_siswa,$id_kelas,$id_siswa_pertahun,$id_mapel);
-      $detail_ketrampilan=$this->model_detail_ketrampilan->insert_siswa_pertahun_detail_ketrampilan($id_wali_kelas,$id_siswa,$id_kelas,$id_siswa_pertahun,$id_mapel);
+      // $last_id_siswa=$this->db->order_by('id_siswa_pertahun')->get('tb_siswa_pertahun')->result_array();
+      // print_r($last_id_siswa);die();
+
+//       $id_siswanya=$last_id_siswa[0]['id_siswa'];
+      // print_r($id_siswa);
+//       $id_kelasnya=$last_id_siswa[0]['id_kelas'];
+// print_r($id_kelas);
+//       $id_siswa_pertahunnya=$last_id_siswa[0]['id_siswa_pertahun'];
+// print_r($id_siswa_pertahun);
+      $mapel_terkait=$this->db->join('tb_wali_kelas','tb_wali_kelas.id_kelas=tb_mapel.id_kelas')
+                              ->where('tb_mapel.id_kelas',$id_kelas)->get('tb_mapel')->result_array();
+
+      // print_r($mapel_terkait);die();
+
+      for ($i=0; $i < count($mapel_terkait); $i++) {
+
+        $detail_pengetahuan=$this->model_detail_pengetahuan->insert_siswa_pertahun_detail_pengetahuan($mapel_terkait[$i]['id_wali_kelas'],$id_siswa,$mapel_terkait[$i]['id_kelas'],$id_siswa_pertahun,$mapel_terkait[$i]['id_mapel']);
+
+        $detail_ketrampilan=$this->model_detail_ketrampilan->insert_siswa_pertahun_detail_ketrampilan($mapel_terkait[$i]['id_wali_kelas'],$id_siswa,$mapel_terkait[$i]['id_kelas'],$id_siswa_pertahun,$mapel_terkait[$i]['id_mapel']);
       }
+      //print_r($mapel_terkait);die();
+
+
+      // for ($i=0; $i < $jumlah ; $i++) {
+      //   $data_mapel="mapel".$mapel.$i;
+      //   $id_mapel = $this->input->post($data_mapel);
+      //
+      // $detail_pengetahuan=$this->model_detail_pengetahuan->insert_siswa_pertahun_detail_pengetahuan($id_wali_kelas,$id_siswa,$id_kelas,$id_siswa_pertahun,$id_mapel);
+      // $detail_ketrampilan=$this->model_detail_ketrampilan->insert_siswa_pertahun_detail_ketrampilan($id_wali_kelas,$id_siswa,$id_kelas,$id_siswa_pertahun,$id_mapel);
+      // }
+
       $nilai_sikap=$this->model_nilai_sikap->input_nilai_sikap($id_wali_kelas,$id_siswa,$id_kelas,$id_siswa_pertahun);
+
+      $presensi=$this->model_presensi->input_presensi($id_wali_kelas,$id_kelas,$id_siswa,$id_siswa_pertahun);
+
       $this->session->set_flashdata('sukses', 'Berhasil Tambah Data');
       redirect(base_url('kurikulum/siswa_pertahun'));
     }
@@ -273,18 +393,18 @@ class Admin extends CI_Controller {
     redirect(base_url('kurikulum/deskripsi_mapel'));
   }
 
-  public function create_presensi(){
-    $id_siswa=$this->input->post('id_siswa');
-    $id_kelas=$this->input->post('id_kelas');
-    $id_wali_kelas=$this->input->post('id_wali_kelas');
-    $sakit= $this->input->post('sakit');
-    $ijin=$this->input->post('ijin');
-    $tanpa_ket=$this->input->post('tanpa_ket');
-    $presensi=$this->model_presensi->input_presensi($id_wali_kelas,$id_kelas,$id_siswa,$sakit,$ijin,$tanpa_ket);
-    // echo "<pre>";var_dump($presensi);die(var_dump($_POST));
-    $this->session->set_flashdata('sukses', 'Berhasil Tambah Data');
-    redirect(base_url('kurikulum/presensi'));
-  }
+  // public function create_presensi(){
+  //   $id_siswa=$this->input->post('id_siswa');
+  //   $id_kelas=$this->input->post('id_kelas');
+  //   $id_wali_kelas=$this->input->post('id_wali_kelas');
+  //   $sakit= $this->input->post('sakit');
+  //   $ijin=$this->input->post('ijin');
+  //   $tanpa_ket=$this->input->post('tanpa_ket');
+  //   $presensi=$this->model_presensi->input_presensi($id_wali_kelas,$id_kelas,$id_siswa,$sakit,$ijin,$tanpa_ket);
+  //   // echo "<pre>";var_dump($presensi);die(var_dump($_POST));
+  //   $this->session->set_flashdata('sukses', 'Berhasil Tambah Data');
+  //   redirect(base_url('kurikulum/presensi'));
+  // }
 
   function get_siswa(){
     $id_siswa=$this->input->get('id_siswa');
@@ -374,10 +494,10 @@ class Admin extends CI_Controller {
   }
 
   public function create_rapor(){
-    $id_siswa=$this->input->post('id_siswa');
-    $catatan=$this->input->post('username');
+    $id_siswa_pertahun=$this->input->post('id_siswa_pertahun');
+    $catatan=$this->input->post('catatan');
 
-    $rapor= $this->model_rapor->input_rapor($id_nilai_sikap,$id_detail_pengetahuan,$id_detail_ketrampilan,$id_nilai_ekskul,$id_presensi,$id_siswa,$id_guru,$catatan);
+    $rapor= $this->model_rapor->input_rapor($catatan,$id_siswa_pertahun);
     $this->session->set_flashdata('sukses', 'Berhasil Tambah Data');
     redirect(base_url('kurikulum/rapor'));
   }
@@ -537,8 +657,8 @@ class Admin extends CI_Controller {
     $foto=$this->input->post('foto');
 
     $cek=$this->db->where('nisn',$nisn)
-    ->or_where('nama_siswa',$nama_siswa)
-    ->or_where('kode_pos',$kode_pos)
+    ->where('nama_siswa',$nama_siswa)
+    ->where('kode_pos',$kode_pos)
     ->get('tb_siswa')->result_array();
 
     if ($cek) {
@@ -609,7 +729,7 @@ class Admin extends CI_Controller {
     $kelompok=$this->input->post('kelompok');
     $kkm=$this->input->post('kkm');
 
-    $cek=$this->db->where('id_kelas',$id_kelas)->where('nama_mapel',$nama_mapel)->get('tb_mapel')->result_array();
+    $cek=$this->db->where('id_kelas',$id_kelas)->where('nama_mapel',$nama_mapel)->where('kelompok',$kelompok)->get('tb_mapel')->result_array();
     if ($cek) {
       $this->session->set_flashdata('exist', 'DATA MAPEL SUDAH ADA');
       redirect(base_url('kurikulum/mapel'));
@@ -641,7 +761,7 @@ class Admin extends CI_Controller {
     $deskripsi=$this->input->post('deskripsi');
 
 
-    $cek=$this->db->where('jenis_deskripsi',$jenis_deskripsi)->get('tb_deskripsi_sikap')->result_array();
+    $cek=$this->db->where('nilai',$nilai)->where('deskripsi',$deskripsi)->get('tb_deskripsi_sikap')->result_array();
     if ($cek) {
     $this->session->set_flashdata('exist', 'DATA DESKRIPSI SUDAH ADA');
     redirect(base_url('kurikulum/deskripsi_sikap'));
@@ -685,8 +805,7 @@ class Admin extends CI_Controller {
     $presensi = $this->model_presensi->ubah_presensi($id_presensi);
     foreach ($presensi as $presensi) {
       echo '<div id="id_presensi">'.$id_presensi.'</div>';
-      echo '<div id="id_siswa">'.$presensi->id_siswa.'</div>';
-      // echo '<div id="id_kelas">'.$presensi->id_kelas.'</div>';
+      echo '<div id="nama_siswa">'.$presensi->nama_siswa.'</div>';
       echo '<div id="sakit">'.$presensi->sakit.'</div>';
       echo '<div id="ijin">'.$presensi->ijin.'</div>';
       echo '<div id="tanpa_ket">'.$presensi->tanpa_ket.'</div>';
@@ -696,19 +815,17 @@ class Admin extends CI_Controller {
   //keempat edit presensi
   public function update_presensi(){
     $id_presensi = $this->input->post('id_presensi');
-    $id_siswa= $this->input->post('id_siswa');
-    // $id_kelas= $this->input->post('id_kelas');
     $sakit=$this->input->post('sakit');
     $ijin=$this->input->post('ijin');
     $tanpa_ket=$this->input->post('tanpa_ket');
 
-    $presensi= $this->model_presensi->update_presensi($id_presensi,$id_siswa,$sakit,$ijin,$tanpa_ket);
+    $presensi= $this->model_presensi->update_presensi($id_presensi,$sakit,$ijin,$tanpa_ket);
     $this->session->set_flashdata('edit', 'Sukses edit data');
     redirect(base_url('kurikulum/presensi'));
   }
 
   // Kedua Edit guru_ampu
-  public function edit_guru_ampu(){
+    public function edit_guru_ampu(){
     $id_guru_ampu = $this->input->get('id_guru_ampu');
     $guru_ampu = $this->model_guru_ampu->ubah_guru_ampu($id_guru_ampu);
     foreach ($guru_ampu as $data_guru_ampu) {
@@ -730,7 +847,7 @@ class Admin extends CI_Controller {
     $semester= $this->input->post('semester');
     $id_tahun_ajaran=$this->input->post('id_tahun_ajaran');
 
-    $cek=$this->db->where('id_kelas',$id_kelas)->get('tb_guru_ampu')->result_array();
+    $cek=$this->db->where('id_kelas',$id_kelas)->where('id_guru',$id_guru)->where('id_mapel',$id_mapel)->get('tb_guru_ampu')->result_array();
     if ($cek) {
       $this->session->set_flashdata('exist', 'DATA GURU AMPU SUDAH ADA');
       redirect(base_url('kurikulum/guru_ampu'));
@@ -919,7 +1036,7 @@ class Admin extends CI_Controller {
   public function update_nilai_sikap(){
     $id_nilai_sikap = $this->input->post('id_nilai_sikap');
     $nilai_akhir= $this->input->post('nilai_akhir');
-    $jenis_deskripsi_sikap=$this->input->post('jenis_deskripsi_sikap');
+    $jenis_deskripsi_sikap= $this->input->post('jenis_deskripsi_sikap');
 
     $nilai_sikap= $this->model_nilai_sikap->update_nilai_sikap($id_nilai_sikap,$nilai_akhir,$jenis_deskripsi_sikap);
     redirect(base_url('kurikulum/nilai_sikap'));

@@ -19,15 +19,15 @@
             <div class="col-md-6">
               <!-- MULAI MEMBUAT FORM MENU -->
               <div class="form-group">
-                <label for="">No Induk</label>
-                <input type="text" class="form-control" id="kode_pos" placeholder="Masukkan No Induk" name="kode_pos" required>
-                <p class="help-block"></p>
-              </div>
-              <div class="form-group">
                 <input type="hidden" class="form-control" id="id_siswa" placeholder="" name="id_siswa">
                 <div class="form-group">
                   <label for="">NISN</label>
-                  <input type="text" class="form-control" id="nisn" placeholder="Masukkan NISN" name="nisn" required>
+                  <input type="text" class="form-control" id="nisn" placeholder="Masukkan NISN" name="nisn" required readonly>
+                  <p class="help-block"></p>
+                </div>
+                <div class="form-group">
+                  <label for="">No Induk</label>
+                  <input type="text" class="form-control" id="kode_pos" placeholder="Masukkan No Induk" name="kode_pos" required readonly>
                   <p class="help-block"></p>
                 </div>
                 <div class="form-group">

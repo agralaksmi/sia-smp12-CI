@@ -83,6 +83,11 @@ class model_siswa extends CI_Model
   {
     $this->db->where('id_siswa',$id_siswa);
     $query = $this->db->delete('tb_siswa');
+    $this->db->where('id_siswa',$id_siswa)->delete('tb_siswa_pertahun');
+    $this->db->where('id_siswa',$id_siswa)->delete('tb_detail_pengetahuan');
+    $this->db->where('id_siswa',$id_siswa)->delete('tb_detail_ketrampilan');
+    $this->db->where('id_siswa',$id_siswa)->delete('tb_nilai_sikap');
+    $this->db->where('id_siswa',$id_siswa)->delete('tb_nilai_ekskul');
     return $query;
   }
 }

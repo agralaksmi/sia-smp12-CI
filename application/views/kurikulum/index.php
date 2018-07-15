@@ -53,20 +53,16 @@ desired effect
           <ul class="nav navbar-nav">
 
             <!-- User Account: style can be found in dropdown.less -->
-            <li class="dropdown user user-menu">
+            <!-- <li class="dropdown user user-menu">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <!-- <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image"> -->
                 <p><?php echo $_SESSION['nama']; ?></p>
-                <!-- <span class="hidden-xs">Agra Laksmi Maitri</span> -->
               </a>
               <ul class="dropdown-menu">
-                <!-- User image -->
                 <li class="user-header">
-                  <img <img src="<?php echo base_url('assets/images/avatar5.png');?>" class="img-circle" alt="User Image">
+                  <img <img src="<?php echo base_url('assets/images/J.png');?>" class="img-circle" alt="User Image">
                     <p><?php echo $_SESSION['nama']; ?></p>
                 </li>
 
-                <!-- Menu Footer-->
                 <li class="user-footer">
                   <div class="pull-left">
                     <a href="#" class="btn btn-default btn-flat">Profile</a>
@@ -76,7 +72,7 @@ desired effect
                   </div>
                 </li>
               </ul>
-            </li>
+            </li> -->
 
           </ul>
         </div>
@@ -89,7 +85,7 @@ desired effect
         <!-- Sidebar user panel -->
         <div class="user-panel">
           <div class="pull-left image">
-            <img <img src="<?php echo base_url('assets/images/avatar5.png');?>" class="img-circle" alt="User Image">
+            <img <img src="<?php echo base_url('assets/images/J.png');?>" class="img-circle" alt="User Image">
           </div>
           <div class="pull-left info">
             <p><?php echo $_SESSION['nama']; ?></p>
@@ -111,191 +107,42 @@ desired effect
       <section class="content">
         <!-- Main content -->
         <section class="content">
-          <!-- Small boxes (Stat box) -->
-          <div class="row">
-            <div class="col-lg-3 col-xs-6">
-              <!-- small box -->
-              <div class="small-box bg-aqua">
-                <div class="inner">
-                  <h3>Data Siswa</h3>
-                  <!-- <p>Data Siswa</p> -->
-                </div>
-                <div class="icon">
-                  <i class="ion ion-people"></i>
-                </div>
-                <a href="<?php echo base_url('kurikulum/siswa')?>" class="small-box-footer">Detail <i class="fa fa-arrow-circle-right"></i></a>
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h1 class="text-center">SELAMAT DATANG</h1>
+            </div>
+            <div class="panel-body">
+              <div class="text">
+                <h2>
+                  <br>
+                  <p>A.	VISI SEKOLAH</p>
+                  <p>Menjadi SMP unggulan dalam pengembangan pendidikan berkarakter, ketaqwaan, kecerdasan dan ketrampilan dengan berwawasan lingkungan yang bertumpu pada kemandirian.</p>
+                  <br>
+                  <p>B.	INDIKATOR VISI SEKOLAH</p>
+                  <p>1.	Unggul dalam peningkatan gain skor</p>
+                  <p>2.	Unggul dalam pengembangan akademik</p>
+                  <p>3.	Unggul dalam pengembangan keagamaan</p>
+                  <p>4.	Unggul dalam olah raga dan kesenian</p>
+                  <p>5.	Unggul dalam kedisiplinan, kebersihan, keindahan, kesehatan dan kenyamanan</p>
+                  <br>
+                  <p>C.	MISI SEKOLAH</p>
+                  <p>1.	Melaksanakan pembelajaran secara efektif dan professional</p>
+                  <p>2.	Menanamkan semangat keunggulan dan budaya mutu secara efektif kepada seluruh warga sekolah</p>
+                  <p>3.	Menumbuhkan dan mengembangkan penghayatan terhadap agama yang dianut</p>
+                  <p>4.	Menanamkan budi pekerti luhur sehingga warga sekolah memiliki akhlak mulia</p>
+                  <p>5.	Menumbuhkan dan mengembangkan ilmu pengetahuan dan teknologi</p>
+                  <p>6.	Mendorong dan membantu siswa untuk mengembangkan bakat prestasinya.</p>
+                  <p>7.	 Membentuk pribadi yang peduli lingkungan</p>
+                  <br>
+                  <p>D. TUJUAN PENDIDIKAN</p>
+                  <p>Meletakkan dasar pendidikan, keagamaan, kecerdasan, pengetahuan dan ketrampilan untuk hidup mandiri dan mengikuti pendidikan lanjutan</p>
+
+                </h2>
+
+
               </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-              <!-- small box -->
-              <div class="small-box bg-green">
-                <div class="inner">
-                  <h3>Data Guru</h3>
-                  <!-- <p>Data Siswa</p> -->
-                </div>
-                <div class="icon">
-                  <i class="ion ion-people"></i>
-                </div>
-                <a href="<?php echo base_url('kurikulum/guru')?>" class="small-box-footer">Detail <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-              <!-- small box -->
-              <div class="small-box bg-yellow">
-                <div class="inner">
-                  <h3>Data Guru Ampu</h3>
-                  <!-- <p>Data Siswa</p> -->
-                </div>
-                <div class="icon">
-                  <i class="ion ion-people"></i>
-                </div>
-                <a href="<?php echo base_url('kurikulum/guru_ampu')?>" class="small-box-footer">Detail <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-              <!-- small box -->
-              <div class="small-box bg-red">
-                <div class="inner">
-                  <h3>Data Ekskul</h3>
-                  <!-- <p>Data Siswa</p> -->
-                </div>
-                <div class="icon">
-                  <i class="ion ion-people"></i>
-                </div>
-                <a href="<?php echo base_url('kurikulum/ekskul')?>" class="small-box-footer">Detail <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-              <!-- small box -->
-              <div class="small-box bg-orange">
-                <div class="inner">
-                  <h3>Data Ortu</h3>
-                  <!-- <p>Data Siswa</p> -->
-                </div>
-                <div class="icon">
-                  <i class="ion ion-people"></i>
-                </div>
-                <a href="<?php echo base_url('kurikulum/ortu')?>" class="small-box-footer">Detail <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-              <!-- small box -->
-              <div class="small-box bg-purple">
-                <div class="inner">
-                  <h3>Data Mapel</h3>
-                  <!-- <p>Data Siswa</p> -->
-                </div>
-                <div class="icon">
-                  <i class="ion ion-people"></i>
-                </div>
-                <a href="<?php echo base_url('kurikulum/mapel')?>" class="small-box-footer">Detail <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-              <!-- small box -->
-              <div class="small-box bg-black">
-                <div class="inner">
-                  <h3>Data Kelas</h3>
-                  <!-- <p>Data Siswa</p> -->
-                </div>
-                <div class="icon">
-                  <i class="ion ion-people"></i>
-                </div>
-                <a href="<?php echo base_url('kurikulum/kelas')?>" class="small-box-footer">Detail <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-              <!-- small box -->
-              <div class="small-box bg-navy">
-                <div class="inner">
-                  <h3>Data Presensi</h3>
-                  <!-- <p>Data Siswa</p> -->
-                </div>
-                <div class="icon">
-                  <i class="ion ion-people"></i>
-                </div>
-                <a href="<?php echo base_url('kurikulum/presensi')?>" class="small-box-footer">Detail <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-              <!-- small box -->
-              <div class="small-box bg-maroon">
-                <div class="inner">
-                  <h3>Deskripsi Sikap</h3>
-                  <!-- <p>Data Siswa</p> -->
-                </div>
-                <div class="icon">
-                  <i class="ion ion-people"></i>
-                </div>
-                <a href="<?php echo base_url('kurikulum/deskripsi_sikap')?>" class="small-box-footer">Detail <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-              <!-- small box -->
-              <div class="small-box bg-teal">
-                <div class="inner">
-                  <h3>Deskripsi Mapel</h3>
-                  <!-- <p>Data Siswa</p> -->
-                </div>
-                <div class="icon">
-                  <i class="ion ion-people"></i>
-                </div>
-                <a href="<?php echo base_url('kurikulum/deskripsi_mapel')?>" class="small-box-footer">Detail <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-              <!-- small box -->
-              <div class="small-box bg-green">
-                <div class="inner">
-                  <h3>Nilai Pengetahuan</h3>
-                  <!-- <p>Data Siswa</p> -->
-                </div>
-                <div class="icon">
-                  <i class="ion ion-people"></i>
-                </div>
-                <a href="<?php echo base_url('kurikulum/detail_pengetahuan')?>" class="small-box-footer">Detail <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-              <!-- small box -->
-              <div class="small-box bg-blue">
-                <div class="inner">
-                  <h3>Nilai Ketrampilan</h3>
-                  <!-- <p>Data Siswa</p> -->
-                </div>
-                <div class="icon">
-                  <i class="ion ion-people"></i>
-                </div>
-                <a href="<?php echo base_url('kurikulum/detail_ketrampilan')?>" class="small-box-footer">Detail <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-              <!-- small box -->
-              <div class="small-box bg-red">
-                <div class="inner">
-                  <h3>Nilai Ekskul</h3>
-                  <!-- <p>Data Siswa</p> -->
-                </div>
-                <div class="icon">
-                  <i class="ion ion-people"></i>
-                </div>
-                <a href="<?php echo base_url('kurikulum/nilai_ekskul')?>" class="small-box-footer">Detail <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div><!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-              <!-- small box -->
-              <div class="small-box bg-navy">
-                <div class="inner">
-                  <h3>Nilai Sikap</h3>
-                  <!-- <p>Data Siswa</p> -->
-                </div>
-                <div class="icon">
-                  <i class="ion ion-people"></i>
-                </div>
-                <a href="<?php echo base_url('kurikulum/nilai_sikap')?>" class="small-box-footer">Detail <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
-            </div><!-- ./col -->
-          </div><!-- /.row -->
+            </div>
+          </div>
         </section>
         <!-- /.content -->
       </div>

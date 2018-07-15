@@ -199,22 +199,8 @@ td {
                   </div>
                 </div>
                 <br>
-                <div class="panel panel-primary">
-                  <div class="panel-heading">
-                    <h3 class="panel-title">Keterangan</h3>
-                  </div>
-                  <div class="panel-body">
-                    <?php for ($i=0; $i <1 ; $i++) {?>
-                      <h3>Mapel : <?php echo $tb_detail_ketrampilan[0]->nama_mapel; ?></h3>
-                      <h3>Wali Kelas : <?php echo $tb_detail_ketrampilan[0]->nama_guru; ?></h3>
-                      <h3>Kelas   : <?php echo $tb_detail_ketrampilan[0]->tingkat;echo $tb_detail_ketrampilan[0]->nama_kelas; ?></h3>
-                      <input type="hidden" name="id_kelas" id="id_kelas" value="<?php echo $id_kelas; ?>">
-                      <input type="hidden" name="id_mapel" id="id_mapel" value="<?php echo $id_mapel; ?>">
-                    <?php } ?>
-                  </div>
-                </div>
                 <!-- menampilkan Tabel -->
-                <div class="box-body table-responsive" id="datanya">
+                <div class="box-body table-responsive">
                   <table class="table table-hover table-bordered table-responsive">
                     <thead>
                       <tr class="bg-blue" align="center">
@@ -229,32 +215,6 @@ td {
                         <th>Aksi</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <?php $no =1; foreach ($tb_detail_ketrampilan as $input_detail_ketrampilan):?>
-                        <tr>
-                          <td><?php echo @$no++ ?></td>
-                          <td><?php echo @$input_detail_ketrampilan->nama_siswa?></td>
-                          <td><span class='span-nilai_praktek caption' data-id='<?php echo $input_detail_ketrampilan->id_detail_ketrampilan; ?>'><?php echo $input_detail_ketrampilan->nilai_praktek?></span> <input style="display:none;width:50px" type='text' class='field-nilai_praktek form-control editor' value='<?php echo $input_detail_ketrampilan->nilai_praktek?>' data-id='<?php echo $input_detail_ketrampilan->id_detail_ketrampilan; ?>' /></td>
-                          <td><span class='span-nilai_folio caption' data-id='<?php echo $input_detail_ketrampilan->id_detail_ketrampilan; ?>'><?php echo $input_detail_ketrampilan->nilai_folio?></span> <input style="display:none;width:50px" type='text' class='field-nilai_folio form-control editor' value='<?php echo $input_detail_ketrampilan->nilai_folio?>' data-id='<?php echo $input_detail_ketrampilan->id_detail_ketrampilan; ?>' /></td>
-                          <td><span class='span-nilai_proyek caption' data-id='<?php echo $input_detail_ketrampilan->id_detail_ketrampilan; ?>'><?php echo $input_detail_ketrampilan->nilai_proyek?></span> <input style="display:none;width:50px" type='text' class='field-nilai_proyek form-control editor' value='<?php echo $input_detail_ketrampilan->nilai_proyek?>' data-id='<?php echo $input_detail_ketrampilan->id_detail_ketrampilan; ?>' /></td>
-                          <td><span class='span-nilai_akhir caption' data-id='<?php echo $input_detail_ketrampilan->id_detail_ketrampilan; ?>'><?php echo $input_detail_ketrampilan->nilai_akhir?></span> <input style="display:none;width:50px" type='text' class='field-nilai_akhir form-control editor' value='<?php echo $input_detail_ketrampilan->nilai_akhir?>' data-id='<?php echo $input_detail_ketrampilan->id_detail_ketrampilan; ?>' /></td>
-                          <td><?php echo @$input_detail_ketrampilan->nilai?></td>
-                          <td><?php echo @$input_detail_ketrampilan->deskripsi?></td>
-                          <td>
-                            <form class="" action="<?php echo base_url('admin/delete_detail_ketrampilan') ?>" method="post">
-                              <input type="hidden" name="id_detail_ketrampilan" value="<?php echo @$input_detail_ketrampilan->id_detail_ketrampilan; ?>">
-                                <!-- Kelima-->
-                                <!-- <button type="button" class="btn btn-warning" onclick="edit_detail_ketrampilan('<?php echo $input_detail_ketrampilan->id_detail_ketrampilan; ?>')">
-                                  <i class="fa fa-edit"></i>
-                                </button> -->
-                                <button type="submit" class="btn btn-danger" name="delete_detail_ketrampilan" onclick="return confirm('Apakah ANda Yakin Ingin Menghapus Data ini ? ?')">
-                                  <i class="fa fa-trash-o"></i>
-                                </button>
-                            </form>
-                          </td>
-                        </tr>
-                      <?php endforeach; ?>
-                    </tbody>
                   </table>
                 </div> <!-- /.box-body -->
               </div> <!-- /.box -->
@@ -322,14 +282,16 @@ td {
     }
   </script>
   <script type="text/javascript">
-    var id_kelas = document.getElementById('id_kelas').value;
-    var id_mapel = document.getElementById('id_mapel').value;
+
     $(function(){
+
     $.ajaxSetup({
     	type:"post",
     	cache:false,
     	dataType: "json"
     })
+
+
     $(document).on("click","td",function(){
     $(this).find("span[class~='caption']").hide();
     $(this).find("input[class~='editor']").fadeIn().focus();
@@ -358,25 +320,7 @@ td {
     	success: function(a){
     	 target.hide();
     	 target.siblings("span[class~='caption']").html(value).fadeIn();
-       //window.location.reload();
-       $.ajax({
-         url:"<?php echo base_url('kurikulum/data_detail_ketrampilan'); ?>",
-         type:"POST",
-         data: {
-           id_kelas : id_kelas,
-           id_mapel : id_mapel
-         },
-         dataType:"JSON",
-         beforeSend: function(){
-              $(".overlay").show();
-              document.getElementById("datanya").innerHTML = "";
-          },
-         success:function(response){
-           $(".overlay").hide();
-           console.log(response);
-           $("#datanya").html(response.content);
-         }
-       })
+       window.location.reload();
     	}
     })
 

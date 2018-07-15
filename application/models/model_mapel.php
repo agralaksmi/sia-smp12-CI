@@ -1,7 +1,4 @@
 <?php
-/**
- *
- */
 class model_mapel extends CI_Model
 {
 
@@ -18,8 +15,14 @@ class model_mapel extends CI_Model
     $query = $this->db->get('tb_mapel');
     return $query->result();
   }
-  public function get_inputmapel2($kd){
+  public function get_inputmapelbaru(){
     // $this->db->join('tb_guru','tb_mapel.id_guru=tb_guru.id_guru');
+    $this->db->join('tb_kelas','tb_mapel.id_kelas=tb_kelas.id_kelas');
+    $query = $this->db->get('tb_mapel');
+    return $query->result();
+  }
+  public function get_inputmapel2($kd){
+    $this->db->join('tb_guru','tb_mapel.id_guru=tb_guru.id_guru');
     $this->db->join('tb_kelas','tb_mapel.id_kelas=tb_kelas.id_kelas')->where('tb_guru.id_guru',$kd);
     $query = $this->db->get('tb_mapel');
     return $query->result();
@@ -68,6 +71,25 @@ class model_mapel extends CI_Model
     $query = $this->db->delete('tb_mapel');
     return $query;
       }
+
+    //count kelas tabel mapel
+    public function count_kelas_mapel($id_kelas)
+    {
+    $this->db->where('id_kelas',$id_kelas);
+    $query = $this->db->delete('tb_mapel');
+    return $query->num_rows();
+      }
+
+      //count kelas tabel mapel
+      public function ambil_kelas_mapel($id_kelas)
+      {
+      $this->db->from('tb_mapel');
+      $this->db->where('id_kelas',$id_kelas);
+      $query = $this->db->get();
+      return $query->result();
+      }
+
+
 }
 
  ?>
